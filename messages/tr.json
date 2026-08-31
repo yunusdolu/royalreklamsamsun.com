@@ -1,0 +1,335 @@
+{
+  "meta": {
+    "defaultTitle": "Royal Reklam | Samsun Tabela, Kutu Harf ve Cephe Giydirme",
+    "defaultDescription": "Samsun'da ışıklı tabela, kutu harf, totem, cephe giydirme ve araç giydirme. Keşiften montaja tek elden, kendi atölyemizde imalat, 2 yıl garanti.",
+    "skipToContent": "İçeriğe geç"
+  },
+
+  "nav": {
+    "home": "Anasayfa",
+    "services": "Hizmetler",
+    "portfolio": "Referanslar",
+    "regions": "Hizmet Bölgeleri",
+    "about": "Hakkımızda",
+    "blog": "Rehber",
+    "faq": "S.S.S.",
+    "contact": "İletişim",
+    "quote": "Teklif Al",
+    "openMenu": "Menüyü aç",
+    "closeMenu": "Menüyü kapat",
+    "allServices": "Tüm hizmetler",
+    "servicesIntro": "Tabela imalatından cephe giydirmeye, tasarımdan montaja kadar tüm açık hava reklam çözümleri.",
+    "languageLabel": "Dil",
+    "switchToEnglish": "English",
+    "switchToTurkish": "Türkçe"
+  },
+
+  "common": {
+    "readMore": "Detaylı bilgi",
+    "learnMore": "İncele",
+    "viewAll": "Tümünü gör",
+    "callNow": "Hemen Ara",
+    "whatsapp": "WhatsApp",
+    "sendEmail": "E-posta gönder",
+    "getDirections": "Yol tarifi al",
+    "getQuote": "Ücretsiz Teklif Al",
+    "phone": "Telefon",
+    "email": "E-posta",
+    "address": "Adres",
+    "instagram": "Instagram",
+    "workingHours": "Çalışma Saatleri",
+    "weekdays": "Pazartesi – Cuma",
+    "saturday": "Cumartesi",
+    "sunday": "Pazar",
+    "closed": "Kapalı",
+    "backToServices": "Tüm hizmetlere dön",
+    "backToPortfolio": "Tüm referanslara dön",
+    "backToRegions": "Tüm bölgelere dön",
+    "backToBlog": "Tüm yazılara dön",
+    "backHome": "Anasayfaya dön",
+    "breadcrumbHome": "Anasayfa",
+    "leadTime": "Ortalama teslim",
+    "days": "iş günü",
+    "specsTitle": "Teknik Özellikler",
+    "priceTitle": "Fiyatı Ne Belirler?",
+    "useCasesTitle": "Kimler İçin Uygun?",
+    "faqTitle": "Sık Sorulan Sorular",
+    "highlightsTitle": "Öne Çıkanlar",
+    "popularServices": "Bu bölgede en çok tercih edilenler",
+    "quoteCtaTitle": "Bu iş için fiyat mı öğrenmek istiyorsunuz?",
+    "quoteCtaText": "Yerinde keşif ücretsiz. Ölçüyü aldıktan sonra net fiyat ve teslim tarihi veriyoruz.",
+    "artDirector": "Art Direktör"
+  },
+
+  "home": {
+    "hero": {
+      "eyebrow": "Samsun · Açık Hava Reklamcılığı",
+      "title": "Cephenizi markanızın en güçlü vitrinine çeviriyoruz",
+      "subtitle": "Işıklı tabela, kutu harf, totem, cephe ve araç giydirme. Keşiften montaja kadar her aşama kendi ekibimizde — Samsun'daki atölyemizde üretiyor, Türkiye'nin her iline monte ediyoruz.",
+      "primaryCta": "Ücretsiz Teklif Alın",
+      "secondaryCta": "Projelerimizi İnceleyin",
+      "scrollHint": "Keşfedin",
+      "badgeOne": "Kendi atölyemizde imalat",
+      "badgeTwo": "2 yıl garanti",
+      "badgeThree": "Türkiye geneli montaj"
+    },
+    "stats": {
+      "title": "Rakamlarla Royal Reklam",
+      "projects": "Tamamlanan uygulama",
+      "years": "Yıllık saha tecrübesi",
+      "districts": "Samsun ilçesinde hizmet",
+      "warranty": "Yıl imalat ve LED garantisi"
+    },
+    "services": {
+      "eyebrow": "Hizmetlerimiz",
+      "title": "Tabeladan cepheye, tasarımdan montaja",
+      "description": "Bir markanın dış dünyaya dokunduğu her yüzeyi tek bir estetik disiplin içinde ele alıyoruz. On hizmet kalemi, tek sorumluluk.",
+      "cta": "Tüm hizmetleri inceleyin"
+    },
+    "process": {
+      "eyebrow": "Nasıl Çalışırız",
+      "title": "Beş adım, tek muhatap",
+      "description": "Tabela işinde en sık yaşanan sorun sorumluluğun dağılmasıdır. Bizde tasarım, imalat, montaj ve garanti tek sözleşmede toplanır.",
+      "steps": {
+        "discovery": {
+          "title": "Keşif & Ölçü",
+          "description": "Cepheye geliyor; ölçüyü, elektrik altyapısını, montaj erişimini ve varsa belediye veya AVM kısıtlarını yerinde kaydediyoruz. Samsun içinde keşif ücretsizdir."
+        },
+        "design": {
+          "title": "Tasarım & Onay",
+          "description": "Tabelayı kendi cephenize giydirilmiş hâlde, üç boyutlu görselle sunuyoruz. Onay vermeden önce sonucu görüyorsunuz — tahmine yer yok."
+        },
+        "production": {
+          "title": "İmalat",
+          "description": "Üretim Samsun'daki kendi atölyemizde yapılır: CNC kesim, kaynak, elektrostatik boya ve LED montajı. Hiçbir aşama taşerona verilmez."
+        },
+        "installation": {
+          "title": "Montaj",
+          "description": "Sepetli araç veya cephe iskelesiyle, sigortalı ekiple ve planlanan günde. Faal işletmelerde çalışma saatini sizinle birlikte belirliyoruz."
+        },
+        "delivery": {
+          "title": "Teslim & Garanti",
+          "description": "İki yıl imalat ve LED garantisi. Bir sorun olduğunda arayacağınız tek numara var; sorumluluk kimseye devredilmiyor."
+        }
+      }
+    },
+    "why": {
+      "eyebrow": "Neden Royal Reklam",
+      "title": "Farkı yaratan dört şey",
+      "items": {
+        "workshop": {
+          "title": "Kendi atölyemiz",
+          "description": "İmalat dışarıya verilmediği için teslim tarihini taahhüt edebiliyor, kaliteyi her aşamada kontrol edebiliyoruz."
+        },
+        "single": {
+          "title": "Tek muhatap, tek garanti",
+          "description": "Tasarım, üretim, montaj ve satış sonrası aynı sözleşmede. Sorun çıktığında kimse birbirini işaret etmiyor."
+        },
+        "nationwide": {
+          "title": "Türkiye geneli montaj",
+          "description": "Şubeleşen markalar için her ilde aynı standart. Montaj ekibimiz Samsun dışına kendi ekipmanıyla çıkıyor."
+        },
+        "materials": {
+          "title": "Malzemeden ödün yok",
+          "description": "IP65 LED, paslanmaz bağlantı elemanı, döküm folyo. Ucuz malzeme tasarruf değil, ertelenmiş masraftır."
+        }
+      }
+    },
+    "portfolio": {
+      "eyebrow": "Referanslarımız",
+      "title": "Sahadaki işlerimiz",
+      "description": "AVM mağazalarından cadde dükkânlarına, fabrika cephelerinden ticari filolara kadar tamamladığımız uygulamalar.",
+      "cta": "Tüm referansları gör",
+      "empty": "Proje görselleri çok yakında burada olacak."
+    },
+    "regions": {
+      "eyebrow": "Hizmet Bölgelerimiz",
+      "title": "Samsun'un her ilçesinde",
+      "description": "Merkez ilçelerden uzak ilçelere kadar Samsun'un tamamında keşif, imalat ve montaj yapıyoruz.",
+      "cta": "Bölge sayfalarını inceleyin",
+      "othersLabel": "Ayrıca hizmet verdiğimiz ilçeler"
+    },
+    "testimonials": {
+      "eyebrow": "Müşterilerimiz",
+      "title": "Bizimle çalışanlar ne diyor?"
+    },
+    "faq": {
+      "eyebrow": "Sık Sorulanlar",
+      "title": "Merak edilenler",
+      "description": "Tabela yaptırmadan önce en çok sorulan sorular ve net cevapları.",
+      "cta": "Tüm soruları gör"
+    },
+    "cta": {
+      "title": "Cephenizi konuşalım",
+      "description": "Ölçüyü biz alalım, tasarımı biz hazırlayalım. Keşif Samsun içinde tamamen ücretsiz — sonrasında karar sizin.",
+      "primary": "WhatsApp'tan yazın",
+      "secondary": "Hemen arayın"
+    }
+  },
+
+  "servicesPage": {
+    "title": "Hizmetlerimiz",
+    "metaTitle": "Hizmetlerimiz | Samsun Tabela ve Reklam Uygulamaları",
+    "metaDescription": "Samsun'da ışıklı tabela, kutu harf, totem, lightbox, cephe giydirme, araç giydirme, dijital baskı, kurumsal kimlik ve etiket üretimi.",
+    "lead": "Bir markanın dış dünyaya dokunduğu her yüzey için tek bir estetik disiplin. Aşağıdaki on hizmetin tamamı kendi ekibimiz tarafından, keşiften montaja kadar yürütülür.",
+    "answer": "Royal Reklam, Samsun merkezli bir açık hava reklamcılığı firmasıdır. Işıklı tabela, kutu harf, totem tabela, lightbox, cephe giydirme, araç giydirme, dijital baskı, kurumsal kimlik ve etiket üretimi yapar. Keşif, tasarım, imalat ve montaj tek elden yürütülür."
+  },
+
+  "portfolioPage": {
+    "title": "Referanslarımız",
+    "metaTitle": "Referanslarımız | Royal Reklam Samsun",
+    "metaDescription": "Samsun ve çevresinde tamamladığımız tabela, cephe giydirme ve araç giydirme uygulamaları.",
+    "lead": "AVM mağazalarından cadde dükkânlarına, sanayi tesislerinden ticari filolara kadar tamamladığımız işler.",
+    "filterAll": "Tümü",
+    "empty": "Bu kategoride henüz görsel eklenmedi.",
+    "comingSoon": "Proje arşivimiz yayına hazırlanıyor. Tamamladığımız işleri görmek için Instagram hesabımızı inceleyebilir veya doğrudan bize ulaşabilirsiniz."
+  },
+
+  "regionsPage": {
+    "title": "Hizmet Bölgelerimiz",
+    "metaTitle": "Hizmet Bölgelerimiz | Samsun ve İlçeleri — Royal Reklam",
+    "metaDescription": "Royal Reklam, Samsun'un tüm ilçelerinde tabela imalatı ve montajı yapar. İlkadım, Atakum, Canik, Tekkeköy, Bafra, Çarşamba ve diğer ilçeler.",
+    "lead": "Atölyemiz İlkadım'da; ekibimiz Samsun'un tüm ilçelerine kendi ekipmanıyla gidiyor. Aşağıdaki bölgelerde keşif, imalat ve montaj hizmeti veriyoruz.",
+    "answer": "Royal Reklam, Samsun'un 17 ilçesinin tamamında tabela imalatı ve montajı yapar. Atölye İlkadım'da bulunur; montaj ekibi Atakum, Canik, Tekkeköy, Bafra, Çarşamba, Terme, Vezirköprü, Havza ve diğer tüm ilçelere gider. İmalat Samsun'da tamamlanır, montaj yerinde yapılır.",
+    "otherDistricts": "Ayrıca hizmet verdiğimiz ilçeler",
+    "otherDistrictsNote": "Bu ilçelerde de keşif ve montaj yapıyoruz. Ayrı sayfası bulunmayan bir konum için doğrudan bize ulaşın."
+  },
+
+  "aboutPage": {
+    "title": "Hakkımızda",
+    "metaTitle": "Hakkımızda | Royal Reklam Samsun",
+    "metaDescription": "Royal Reklam, Samsun merkezli bir açık hava reklamcılığı firmasıdır. Art direktör İshak Bal yönetiminde tasarımdan montaja tek elden hizmet verir.",
+    "lead": "Tabelayı bir levha değil, markanın sokaktaki temsilcisi olarak görüyoruz.",
+    "answer": "Royal Reklam, Samsun İlkadım'da kendi atölyesinde üretim yapan bir açık hava reklamcılığı firmasıdır. Art direktör İshak Bal yönetiminde tasarım, imalat ve montaj süreçlerinin tamamını kendi ekibiyle yürütür ve Türkiye genelinde uygulama yapar.",
+    "storyTitle": "Kısaca biz",
+    "story": [
+      "Royal Reklam, Samsun İlkadım'da kendi atölyesinde üretim yapan bir açık hava reklamcılığı firmasıdır. İşimizin merkezinde tek bir fikir var: bir tabela, markanın sokaktaki temsilcisidir. Yanlış yapılmış bir cephe, ne kadar iyi bir işletme olursanız olun sizi olduğunuzdan daha küçük gösterir.",
+      "Bu yüzden süreci parçalamıyoruz. Tasarımı yapan, imalatı yapan ve montaja çıkan ekip aynı çatı altında. Bir kutu harfin kesim payını hesaplayan kişiyle, o harfi cepheye asan kişi birbirini tanıyor. Sahada karşılaşılan her sorun bir sonraki projenin tasarımına geri besleniyor.",
+      "Samsun merkezli çalışıyoruz ama işimiz Samsun'la sınırlı değil. Şubeleşen markalarla çalışırken imalatı burada tamamlayıp montaj ekibimizi Türkiye'nin herhangi bir iline gönderiyoruz — çünkü bir markanın Samsun'daki şubesiyle başka bir ildeki şubesi aynı görünmek zorunda."
+    ],
+    "valuesTitle": "Çalışma prensiplerimiz",
+    "values": {
+      "honesty": {
+        "title": "Keşifsiz fiyat vermeyiz",
+        "description": "Telefonda verilen metrekare fiyatı çoğu zaman yanıltıcıdır. Ölçüyü ve koşulları görmeden rakam söylemiyoruz."
+      },
+      "material": {
+        "title": "Malzemeyi yazılı belirtiriz",
+        "description": "Hangi kalınlıkta pleksi, hangi sınıf LED, hangi folyo — teklifte açıkça yazar. Sonradan malzeme değişmez."
+      },
+      "schedule": {
+        "title": "Tarihe sadık kalırız",
+        "description": "İmalat kendi atölyemizde olduğu için verdiğimiz teslim tarihi bir taşeronun programına bağlı değildir."
+      },
+      "aftercare": {
+        "title": "İş bitince kaybolmayız",
+        "description": "Garanti süresince imalat ve LED arızaları ücretsiz giderilir. Sonrasında da aynı numaradan bize ulaşırsınız."
+      }
+    },
+    "teamTitle": "Ekip",
+    "artDirectorBio": "Royal Reklam'ın tasarım yönünü belirler. Kurumsal kimlik çalışmalarından cephe uygulamalarına kadar tüm işlerin estetik tutarlılığından sorumludur."
+  },
+
+  "contactPage": {
+    "title": "İletişim",
+    "metaTitle": "İletişim | Royal Reklam Samsun — 0544 230 71 77",
+    "metaDescription": "Royal Reklam iletişim: Hürriyet Mah. Levent Özalpay Sok. No: 6/B İlkadım/Samsun. Telefon 0544 230 71 77, royalreklamsamsun@gmail.com",
+    "lead": "Keşif için arayın, WhatsApp'tan yazın ya da atölyeye uğrayın. Samsun içinde yerinde keşif ücretsizdir.",
+    "answer": "Royal Reklam'a Hürriyet Mah. Levent Özalpay Sok. No: 6/B, İlkadım / Samsun adresinden, 0544 230 71 77 numaralı telefondan veya royalreklamsamsun@gmail.com e-posta adresinden ulaşabilirsiniz. Samsun içinde yerinde keşif ücretsizdir.",
+    "mapTitle": "Atölyemizin konumu",
+    "mapLabel": "Royal Reklam atölyesinin Google Haritalar üzerindeki konumu",
+    "channelsTitle": "İletişim kanalları",
+    "whatsappNote": "En hızlı dönüş WhatsApp'tan olur. Cephenizin fotoğrafını gönderin, ön değerlendirmeyi hemen yapalım.",
+    "whatsappPrefill": "Merhaba, Royal Reklam'dan tabela hakkında bilgi almak istiyorum.",
+    "visitTitle": "Atölyeye gelin",
+    "visitNote": "Malzeme örneklerini ve tamamlanmış işleri yerinde görmek isterseniz atölyemize bekleriz."
+  },
+
+  "quotePage": {
+    "title": "Teklif Al",
+    "metaTitle": "Ücretsiz Teklif Alın | Royal Reklam Samsun",
+    "metaDescription": "Samsun'da tabela, cephe giydirme veya araç giydirme için ücretsiz keşif ve teklif alın. Birkaç soruyu yanıtlayın, WhatsApp'tan dönelim.",
+    "lead": "Aşağıdaki birkaç soruyu yanıtlayın; bilgiler WhatsApp mesajına dönüşsün, tek dokunuşla bize gönderin. Kayıt tutmuyoruz, form doldurmuyorsunuz.",
+    "howItWorks": "Nasıl çalışır?",
+    "steps": {
+      "one": "İhtiyacınızı seçin",
+      "two": "Birkaç detay ekleyin",
+      "three": "WhatsApp'tan gönderin"
+    },
+    "form": {
+      "serviceLabel": "Hangi hizmeti istiyorsunuz?",
+      "servicePlaceholder": "Bir hizmet seçin",
+      "regionLabel": "Uygulama nerede yapılacak?",
+      "regionPlaceholder": "İlçe veya şehir",
+      "sizeLabel": "Yaklaşık ölçü (biliyorsanız)",
+      "sizePlaceholder": "Örn. 4 metre x 80 cm",
+      "nameLabel": "Adınız",
+      "namePlaceholder": "Ad Soyad",
+      "businessLabel": "İşletme adı",
+      "businessPlaceholder": "Örn. Royal Kafe",
+      "detailsLabel": "Eklemek istedikleriniz",
+      "detailsPlaceholder": "Cephe fotoğrafınız varsa WhatsApp'tan da gönderebilirsiniz.",
+      "submit": "WhatsApp'tan Gönder",
+      "call": "Bunun yerine arayın",
+      "previewTitle": "Gönderilecek mesaj",
+      "required": "Bu alan gerekli",
+      "openingWhatsapp": "WhatsApp açılıyor…"
+    },
+    "reassure": {
+      "free": "Keşif ve teklif ücretsiz",
+      "noSpam": "Kayıt tutmuyoruz, e-posta listesine eklemiyoruz",
+      "fast": "Mesai saatlerinde genellikle aynı gün dönüş"
+    }
+  },
+
+  "faqPage": {
+    "title": "Sık Sorulan Sorular",
+    "metaTitle": "Sık Sorulan Sorular | Samsun Tabela — Royal Reklam",
+    "metaDescription": "Tabela fiyatları, teslim süresi, belediye izni, garanti ve montaj hakkında en çok sorulan soruların net cevapları.",
+    "lead": "Tabela yaptırmadan önce bilinmesi gereken her şey. Aradığınız soruyu bulamazsanız doğrudan arayın — telefonda da aynı netlikte cevaplıyoruz.",
+    "categories": {
+      "general": "Genel",
+      "pricing": "Fiyat ve Süre",
+      "permits": "İzin ve Mevzuat",
+      "technical": "Teknik",
+      "aftercare": "Garanti ve Bakım"
+    }
+  },
+
+  "blogPage": {
+    "title": "Rehber",
+    "metaTitle": "Tabela Rehberi | Royal Reklam Samsun",
+    "metaDescription": "Tabela seçimi, malzeme farkları, belediye izinleri ve maliyet hesabı üzerine sahadan yazılmış rehber içerikler.",
+    "lead": "Sahada on yılı aşkın sürede öğrendiklerimizi yazıyoruz. Satış metni değil, karar vermenize yarayacak bilgi.",
+    "readingTime": "dk okuma",
+    "publishedOn": "Yayın",
+    "updatedOn": "Güncelleme",
+    "relatedTitle": "İlgili yazılar",
+    "empty": "İlk rehber yazılarımız hazırlanıyor."
+  },
+
+  "footer": {
+    "tagline": "Samsun merkezli açık hava reklamcılığı. Keşiften montaja tek elden.",
+    "servicesTitle": "Hizmetler",
+    "regionsTitle": "Hizmet Bölgeleri",
+    "companyTitle": "Kurumsal",
+    "contactTitle": "İletişim",
+    "rights": "Tüm hakları saklıdır.",
+    "designedBy": "Samsun'da tasarlandı ve üretildi.",
+    "ctaTitle": "Cephenizi konuşalım",
+    "ctaText": "Keşif ücretsiz, teklif bağlayıcı değil."
+  },
+
+  "notFound": {
+    "title": "Sayfa bulunamadı",
+    "description": "Aradığınız sayfa taşınmış veya hiç var olmamış olabilir. Aşağıdaki bağlantılardan devam edebilirsiniz.",
+    "suggestionsTitle": "Bunlar işinize yarayabilir"
+  },
+
+  "quickBar": {
+    "call": "Ara",
+    "whatsapp": "WhatsApp",
+    "quote": "Teklif",
+    "label": "Hızlı iletişim"
+  }
+}
