@@ -1,7 +1,6 @@
 import { ArrowUpRight } from "lucide-react";
 import { getTranslations } from "next-intl/server";
 
-import { MagneticCursor } from "@/components/ui/magnetic-cursor";
 import { siteConfig, whatsappLink } from "@/config/site";
 
 export async function CtaSection() {
@@ -11,11 +10,7 @@ export async function CtaSection() {
     "Merhaba, Royal Reklam — web sitenizden yazıyorum. Cephem için tabela yaptırmak istiyorum.";
 
   return (
-    <MagneticCursor
-      magneticFactor={0.55}
-      blendMode="exclusion"
-      cursorSize={40}
-    >
+    <>
       <section className="relative w-full overflow-hidden bg-white text-black font-sans selection:bg-gold-500 selection:text-white flex flex-col py-24 lg:py-32 border-t border-black/5">
         
         {/* Subtle Grid Background */}
@@ -43,7 +38,6 @@ export async function CtaSection() {
             href={whatsappLink(message)}
             target="_blank"
             rel="noopener noreferrer"
-            data-magnetic
             className="group relative flex h-32 w-full max-w-sm items-center justify-between overflow-hidden rounded-2xl bg-gold-500 px-8 text-black shadow-2xl transition-transform hover:scale-[1.02]"
           >
             <div className="flex flex-col gap-1 text-left">
@@ -66,6 +60,6 @@ export async function CtaSection() {
 
         </div>
       </section>
-    </MagneticCursor>
+    </>
   );
 }
