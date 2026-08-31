@@ -36,7 +36,7 @@ export async function Footer({ className, ...props }: Omit<FooterProps, 'childre
             />
           </div>
           <div>
-            <SocialCard title="Facebook" href="#" />
+            <SocialCard title="Facebook" href="/" />
             <LinksGroup
               title="Hizmetlerimiz"
               links={[
@@ -53,20 +53,20 @@ export async function Footer({ className, ...props }: Omit<FooterProps, 'childre
             <LinksGroup
               title="Destek"
               links={[
-                { title: 'S.S.S', href: '#' },
-                { title: 'Garanti Şartları', href: '#' },
+                { title: 'S.S.S', href: '/sss' },
+                { title: 'Garanti Şartları', href: '/' },
                 { title: 'İletişim', href: '/iletisim' },
               ]}
             />
           </div>
           <div>
-            <SocialCard title="LinkedIn" href="#" />
+            <SocialCard title="LinkedIn" href="/" />
             <LinksGroup
               title="Yasal"
               links={[
-                { title: 'Gizlilik', href: '#' },
-                { title: 'Çerez', href: '#' },
-                { title: 'KVKK', href: '#' },
+                { title: 'Gizlilik', href: '/' },
+                { title: 'Çerez', href: '/' },
+                { title: 'KVKK', href: '/' },
               ]}
             />
           </div>
@@ -95,7 +95,7 @@ function LinksGroup({ title, links }: LinksGroupProps) {
         {links.map((link) => (
           <li key={link.title}>
             <Link
-              href={link.href}
+              href={link.href as any}
               className="text-zinc-600 hover:text-gold-500 transition-colors text-[13px] font-semibold"
             >
               {link.title}

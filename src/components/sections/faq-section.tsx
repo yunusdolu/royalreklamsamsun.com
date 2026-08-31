@@ -11,8 +11,10 @@ import type { Faq } from "@/content/faq";
 
 export async function FaqSection({
   faqs,
+  showCta = true,
 }: {
   faqs: Faq[];
+  showCta?: boolean;
 }) {
   const t = await getTranslations("home.faq");
 
@@ -51,12 +53,14 @@ export async function FaqSection({
           ))}
         </Accordion>
         
-        <p className="text-zinc-600 text-sm text-center md:text-left font-medium">
-          {t("cta")}{' '}
-          <Link href="/iletisim" className="text-gold-500 hover:underline font-semibold">
-            İletişime Geçin
-          </Link>
-        </p>
+        {showCta && (
+          <p className="text-zinc-600 text-sm text-center md:text-left font-medium">
+            {t("cta")}{' '}
+            <Link href="/iletisim" className="text-gold-500 hover:underline font-semibold">
+              İletişime Geçin
+            </Link>
+          </p>
+        )}
       </div>
     </section>
   );

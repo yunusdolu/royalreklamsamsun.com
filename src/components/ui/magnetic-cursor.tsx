@@ -2,7 +2,9 @@
 
 import React, { useRef, useEffect, FC, ReactNode, useState } from 'react';
 import gsap from 'gsap';
-import { vec2, Vec2 } from 'vecteur';
+import { vec2 } from 'vecteur';
+
+type Vec2Type = ReturnType<typeof vec2>;
 
 interface MagneticCursorProps {
   children: ReactNode;
@@ -30,9 +32,9 @@ interface MagneticCursorProps {
 interface CursorState {
   el: HTMLDivElement | null;
   pos: {
-    current: Vec2;
-    target: Vec2;
-    previous: Vec2;
+    current: Vec2Type;
+    target: Vec2Type;
+    previous: Vec2Type;
   };
   hover: { isHovered: boolean };
   isDetaching: boolean;
@@ -230,7 +232,7 @@ export const MagneticCursor: FC<MagneticCursorProps> = ({
           rotate: 0,
           duration: 0.3, 
           ease: 'power3.out',
-          overwrite: 'all'
+          overwrite: true
         });
       };
 
@@ -261,7 +263,7 @@ export const MagneticCursor: FC<MagneticCursorProps> = ({
           scaleY: 1,
           duration: detachDuration,
           ease: 'power3.out',
-          overwrite: 'all',
+          overwrite: true,
           onComplete: () => { state.isDetaching = false; }
         });
       };
