@@ -39,7 +39,7 @@ export function PageHeader({
         className="pointer-events-none absolute inset-x-0 top-0 h-56 bg-[radial-gradient(70%_100%_at_50%_0%,rgba(212,175,55,0.12)_0%,transparent_72%)]"
       />
 
-      <div className="container-royal relative py-12 lg:py-16">
+      <div className="container-royal relative pt-28 pb-12 lg:pt-44 lg:pb-16">
         <Breadcrumbs items={crumbs} />
 
         <div className="mt-7 max-w-3xl">

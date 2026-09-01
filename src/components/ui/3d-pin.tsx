@@ -31,7 +31,7 @@ export const PinContainer = ({
   }, []);
 
   const isInView = useInView(containerRef, {
-    margin: "-48% 0px -48% 0px", // Sadece tam ortadan geçen tek bir kart tetiklensin
+    margin: isMobile ? "-45% 0px -45% 0px" : "-48% 0px -48% 0px", // Sadece tam ortadan geçen tek bir kart tetiklensin
   });
 
   const isActive = isMobile ? isInView : isHovered;
@@ -58,6 +58,8 @@ export const PinContainer = ({
         style={{
           perspective: "1000px",
           transform: "rotateX(70deg) translateZ(0deg)",
+          transformStyle: "preserve-3d",
+          WebkitTransformStyle: "preserve-3d",
         }}
         className="absolute left-1/2 top-1/2 ml-[0.09375rem] mt-4 -translate-x-1/2 -translate-y-1/2"
       >
@@ -66,7 +68,7 @@ export const PinContainer = ({
             transform: transform,
           }}
           className={cn(
-            "absolute left-1/2 p-1.5 top-1/2 flex justify-start items-start rounded-3xl shadow-xl bg-white border transition duration-700 overflow-hidden",
+            "absolute left-1/2 p-1.5 top-1/2 flex justify-start items-start rounded-3xl shadow-xl bg-white border transition duration-700",
             isActive ? "border-black/10" : "border-black/5 group-hover/pin:border-black/10"
           )}
         >

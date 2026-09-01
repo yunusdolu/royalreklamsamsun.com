@@ -54,9 +54,7 @@ export async function CtaSection() {
             </div>
           </a>
 
-          <p className="max-w-md text-center text-sm text-zinc-600 leading-relaxed font-medium">
-            {t("description")}
-          </p>
+
 
         </div>
       </section>

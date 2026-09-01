@@ -10,6 +10,7 @@ import { projects } from "@/content/projects";
 import { getServiceById } from "@/content/services";
 import { Link } from "@/i18n/navigation";
 import type { Locale } from "@/i18n/routing";
+import { PortfolioCarousel } from "./portfolio-carousel";
 
 /**
  * Referans teaser'ı.
@@ -32,89 +33,57 @@ export async function PortfolioTeaser() {
         <SectionHeading
           eyebrow={t("eyebrow")}
           title={t("title")}
-          description={t("description")}
         />
-        {featured.length > 0 && (
-          <Link
-            href="/referanslar"
-            className="inline-flex shrink-0 items-center gap-1.5 text-sm font-semibold text-gold-300 transition-colors hover:text-gold-200"
-          >
-            {t("cta")}
-            <ArrowUpRight className="size-4" aria-hidden="true" />
-          </Link>
-        )}
       </div>
 
       {featured.length > 0 ? (
-        <RevealGroup
-          as="ul"
-          className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3"
-        >
-          {featured.map((project) => {
-            const copy = project.copy[locale];
-            const service = getServiceById(project.serviceId);
-            return (
-              <RevealItem as="li" key={project.id}>
-                <Link
-                  href={{
-                    pathname: "/referanslar/[slug]",
-                    params: { slug: project.slug[locale] },
-                  }}
-                  className="group relative block overflow-hidden rounded-xl border border-gold-500/12"
-                >
-                  <div className="relative aspect-4/3 overflow-hidden bg-royal-graphite">
-                    <Image
-                      src={project.cover}
-                      alt={copy.title}
-                      fill
-                      sizes="(min-width:1024px) 33vw, (min-width:640px) 50vw, 100vw"
-                      className="object-cover transition-transform duration-700 group-hover:scale-105"
-                    />
-                    <div
-                      className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-transparent"
-                      aria-hidden="true"
-                    />
-                  </div>
-                  <div className="absolute inset-x-0 bottom-0 p-5">
-                    {service && (
-                      <p className="text-[0.625rem] font-semibold uppercase tracking-[0.18em] text-gold-400">
-                        {service.copy[locale].shortName}
-                      </p>
-                    )}
-                    <h3 className="mt-1.5 font-display text-base font-bold text-white">
-                      {copy.title}
-                    </h3>
-                  </div>
-                </Link>
-              </RevealItem>
-            );
-          })}
-        </RevealGroup>
+        <Reveal className="mt-8 md:mt-12">
+          <PortfolioCarousel projects={featured} locale={locale} />
+        </Reveal>
       ) : (
         <Reveal className="mt-12">
-          <div className="surface-royal grain relative overflow-hidden rounded-2xl px-6 py-14 text-center sm:px-12">
-            <span className="mx-auto flex size-14 items-center justify-center rounded-full border border-gold-500/25 bg-gold-500/[0.06] text-gold-400">
-              <Images className="size-6" aria-hidden="true" />
-            </span>
-            <p className="mx-auto mt-6 max-w-xl text-[0.9375rem] leading-relaxed text-royal-muted">
+          {/* Swipable Carousel (Kaydırmalı Resimler) */}
+          <div className="w-full overflow-x-auto snap-x snap-mandatory flex gap-4 pb-6 px-4 -mx-4 sm:px-0 sm:mx-0 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
+            {[
+              "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=800&auto=format&fit=crop",
+              "https://images.unsplash.com/photo-1550684848-fac1c5b4e853?q=80&w=800&auto=format&fit=crop",
+              "https://images.unsplash.com/photo-1614850523459-c2f4c699c52e?q=80&w=800&auto=format&fit=crop",
+              "https://images.unsplash.com/photo-1550684376-efcbd6e3f031?q=80&w=800&auto=format&fit=crop",
+              "https://images.unsplash.com/photo-1518818414575-995ce88da208?q=80&w=800&auto=format&fit=crop"
+            ].map((src, i) => (
+              <div key={i} className="relative shrink-0 w-[85vw] sm:w-[380px] aspect-[4/3] snap-center sm:snap-start rounded-2xl overflow-hidden shadow-lg border border-black/5 group cursor-grab active:cursor-grabbing">
+                <img src={src} alt="Referans" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 pointer-events-none" />
+                <div className="absolute inset-0 bg-black/10 transition-colors duration-500 group-hover:bg-black/0 pointer-events-none" />
+              </div>
+            ))}
+          </div>
+
+          {/* Alt Bilgi ve Yenilenmiş Butonlar */}
+          <div className="mt-10 flex flex-col items-center justify-center text-center">
+            <h3 className="text-2xl font-bold text-black mb-3 tracking-tight">
+              Daha Fazla Proje Yükleniyor
+            </h3>
+            <p className="text-[15px] text-zinc-600 font-medium mb-8 max-w-lg leading-relaxed text-balance">
               {tPortfolio("comingSoon")}
             </p>
-            <div className="mt-7 flex flex-wrap justify-center gap-3">
+            
+            <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto justify-center px-4 sm:px-0">
               <a
                 href={siteConfig.contact.instagram}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex h-11 items-center gap-2 rounded-md border border-gold-500/40 px-5 text-sm font-semibold text-gold-200 transition-colors hover:bg-gold-500/10"
+                className="group/btn relative inline-flex h-14 items-center justify-center gap-2.5 rounded-xl bg-white border border-black/10 px-8 text-[15px] font-bold text-black transition-all duration-300 hover:scale-[1.03] hover:bg-zinc-50 shadow-sm"
               >
-                <InstagramIcon className="size-4" aria-hidden="true" />
-                {siteConfig.contact.instagramHandle}
+                <InstagramIcon className="size-5 text-pink-600 transition-transform duration-300 group-hover/btn:scale-110" aria-hidden="true" />
+                <span>Instagram'da İncele</span>
               </a>
+              
               <Link
                 href="/teklif-al"
-                className="inline-flex h-11 items-center gap-2 rounded-md bg-gradient-to-b from-gold-300 to-gold-600 px-5 text-sm font-bold text-royal-ink transition-all hover:from-gold-200 hover:to-gold-500"
+                className="group/btn relative inline-flex h-14 items-center justify-center gap-2.5 rounded-xl bg-gold-500 px-8 text-[15px] font-bold text-black transition-all duration-300 hover:scale-[1.03] hover:bg-gold-400 shadow-[0_8px_25px_rgba(212,175,55,0.3)]"
               >
-                {t("cta")}
-                <ArrowUpRight className="size-4" aria-hidden="true" />
+                <span>{t("cta")}</span>
+                <ArrowUpRight className="size-5 transition-transform duration-300 group-hover/btn:translate-x-1 group-hover/btn:-translate-y-1" aria-hidden="true" />
               </Link>
             </div>
           </div>

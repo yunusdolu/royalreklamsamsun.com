@@ -71,9 +71,7 @@ export const telLink = `tel:${siteConfig.contact.phoneE164}`;
 export const mailLink = `mailto:${siteConfig.contact.email}`;
 
 /** Adres için Google Haritalar yol tarifi bağlantısı. */
-export const mapsDirectionsLink = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(
-  `${siteConfig.address.full}`,
-)}`;
+export const mapsDirectionsLink = "https://www.google.com/maps/place/ROYAL+REKLAM/@41.2860489,36.3304063,17z/data=!3m1!4b1!4m6!3m5!1s0x408877aaba355701:0xbee1f0d2b79ca40c!8m2!3d41.2860449!4d36.3329812!16s%2Fg%2F11lynszrmg?hl=eu&entry=ttu&g_ep=EgoyMDI2MDgyNi4wIKXMDSoASAFQAw%3D%3D";
 
 /** Gömülü harita (API anahtarı gerektirmeyen embed biçimi). */
 export const mapsEmbedLink = `https://www.google.com/maps?q=${encodeURIComponent(

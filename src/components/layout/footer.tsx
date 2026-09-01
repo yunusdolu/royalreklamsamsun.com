@@ -2,7 +2,7 @@ import React from 'react';
 import { cn } from '@/lib/utils';
 import { ArrowRight } from 'lucide-react';
 import { getTranslations } from "next-intl/server";
-import { siteConfig } from "@/config/site";
+import { siteConfig, whatsappLink, mailLink, mapsDirectionsLink } from "@/config/site";
 import { Link } from "@/i18n/navigation";
 
 type FooterProps = React.ComponentProps<'footer'> & {
@@ -22,7 +22,7 @@ export async function Footer({ className, ...props }: Omit<FooterProps, 'childre
       {...props}
     >
       <div className="relative mx-auto max-w-[1400px] px-6">
-        <div className="relative grid grid-cols-1 border-x border-black/10 md:grid-cols-4 md:divide-x md:divide-black/10">
+        <div className="relative grid grid-cols-2 border-x border-black/10 md:grid-cols-4 md:divide-x md:divide-black/10 [&>*:nth-child(odd)]:border-r [&>*:nth-child(odd)]:border-black/10 md:[&>*:nth-child(odd)]:border-r-0">
           <div>
             <SocialCard title="Instagram" href={siteConfig.contact.instagram} />
             <LinksGroup
@@ -36,7 +36,7 @@ export async function Footer({ className, ...props }: Omit<FooterProps, 'childre
             />
           </div>
           <div>
-            <SocialCard title="Facebook" href="/" />
+            <SocialCard title="E-Posta" href={mailLink} />
             <LinksGroup
               title="Hizmetlerimiz"
               links={[
@@ -49,7 +49,7 @@ export async function Footer({ className, ...props }: Omit<FooterProps, 'childre
           </div>
 
           <div>
-            <SocialCard title="WhatsApp" href={siteConfig.contact.whatsapp} />
+            <SocialCard title="WhatsApp" href={whatsappLink("Merhaba Royal Reklam, web siteniz üzerinden ulaşıyorum. Hizmetleriniz hakkında bilgi almak istiyorum.")} />
             <LinksGroup
               title="Destek"
               links={[
@@ -60,7 +60,7 @@ export async function Footer({ className, ...props }: Omit<FooterProps, 'childre
             />
           </div>
           <div>
-            <SocialCard title="LinkedIn" href="/" />
+            <SocialCard title="Yol Tarifi" href={mapsDirectionsLink} />
             <LinksGroup
               title="Yasal"
               links={[
@@ -72,9 +72,12 @@ export async function Footer({ className, ...props }: Omit<FooterProps, 'childre
           </div>
         </div>
       </div>
-      <div className="flex justify-center border-t border-black/10 p-4 mt-6">
+      <div className="mx-auto max-w-[1400px] flex flex-col sm:flex-row items-center justify-between border-t border-black/10 p-4 mt-6 gap-4 px-6">
         <p className="text-zinc-500 text-xs font-medium">
           © {year} {siteConfig.legalName}. Tüm hakları saklıdır.
+        </p>
+        <p className="text-zinc-500 text-xs font-medium">
+          Designed by <a href="https://instagram.com/creasivcom" target="_blank" rel="noopener noreferrer" className="text-black hover:text-gold-500 transition-colors font-bold">creasiv</a>
         </p>
       </div>
     </footer>

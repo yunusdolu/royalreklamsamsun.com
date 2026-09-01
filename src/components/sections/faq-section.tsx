@@ -19,22 +19,19 @@ export async function FaqSection({
   const t = await getTranslations("home.faq");
 
   return (
-    <section className="bg-white py-20 lg:py-28 border-t border-black/5" id="sss">
-      <div className="mx-auto w-full max-w-3xl space-y-7 px-4">
+    <section className="bg-white py-20 lg:py-28" id="sss">
+      <div className="container-royal space-y-7">
         
-        <div className="space-y-2 text-center md:text-left">
+        <div className="space-y-2">
           <h2 className="text-3xl font-bold md:text-4xl text-black">
             {t("title")}
           </h2>
-          <p className="text-zinc-600 max-w-2xl font-medium">
-            {t("description")}
-          </p>
         </div>
 
         <Accordion
           type="single"
           collapsible
-          className="w-full -space-y-px rounded-xl bg-zinc-50"
+          className="w-full -space-y-px rounded-xl bg-white shadow-sm border border-black/5"
           defaultValue="faq-0"
         >
           {faqs.map((faq, index) => (
@@ -52,15 +49,6 @@ export async function FaqSection({
             </AccordionItem>
           ))}
         </Accordion>
-        
-        {showCta && (
-          <p className="text-zinc-600 text-sm text-center md:text-left font-medium">
-            {t("cta")}{' '}
-            <Link href="/iletisim" className="text-gold-500 hover:underline font-semibold">
-              İletişime Geçin
-            </Link>
-          </p>
-        )}
       </div>
     </section>
   );
