@@ -1,10 +1,9 @@
 {
   "meta": {
-    "defaultTitle": "Royal Reklam | Samsun Tabela, Kutu Harf ve Cephe Giydirme",
+    "defaultTitle": "Royal Reklam Samsun | Tabela, Kutu Harf ve Cephe Giydirme",
     "defaultDescription": "Samsun'da ışıklı tabela, kutu harf, totem, cephe giydirme ve araç giydirme. Keşiften montaja tek elden, kendi atölyemizde imalat, 2 yıl garanti.",
     "skipToContent": "İçeriğe geç"
   },
-
   "nav": {
     "home": "Anasayfa",
     "services": "Hizmetler",
@@ -21,9 +20,9 @@
     "servicesIntro": "Tabela imalatından cephe giydirmeye, tasarımdan montaja kadar tüm açık hava reklam çözümleri.",
     "languageLabel": "Dil",
     "switchToEnglish": "English",
-    "switchToTurkish": "Türkçe"
+    "switchToTurkish": "Türkçe",
+    "menuLabel": "Menü"
   },
-
   "common": {
     "readMore": "Detaylı bilgi",
     "learnMore": "İncele",
@@ -58,9 +57,12 @@
     "popularServices": "Bu bölgede en çok tercih edilenler",
     "quoteCtaTitle": "Bu iş için fiyat mı öğrenmek istiyorsunuz?",
     "quoteCtaText": "Yerinde keşif ücretsiz. Ölçüyü aldıktan sonra net fiyat ve teslim tarihi veriyoruz.",
-    "artDirector": "Art Direktör"
+    "artDirector": "Art Direktör",
+    "slide": "Slayt {number}",
+    "instagramMore": "Instagram’da Daha Fazlası",
+    "instagramBrowse": "Instagram’da İncele",
+    "dayDelivery": "Gün Teslim"
   },
-
   "home": {
     "hero": {
       "eyebrow": "Samsun · Açık Hava Reklamcılığı",
@@ -71,7 +73,24 @@
       "scrollHint": "Keşfedin",
       "badgeOne": "Kendi atölyemizde imalat",
       "badgeTwo": "2 yıl garanti",
-      "badgeThree": "Türkiye geneli montaj"
+      "badgeThree": "Türkiye geneli montaj",
+      "slides": {
+        "1": {
+          "title": "Görünürlüğünüzü",
+          "titleLine2": "Artırın.",
+          "description": "Etkili açık hava reklamlarıyla işletmenizi bir adım öne taşıyın."
+        },
+        "2": {
+          "title": "İlk İzlenim",
+          "titleLine2": "Önemlidir.",
+          "description": "Mağazanızı veya ofisinizi yansıtan modern tabela sistemleriyle müşterilerinizi etkileyin."
+        },
+        "3": {
+          "title": "Markanız Her Yerde",
+          "titleLine2": "Sizinle.",
+          "description": "Profesyonel araç giydirme uygulamalarımızla şehrin her noktasında reklamınızı yapın."
+        }
+      }
     },
     "stats": {
       "title": "Rakamlarla Royal Reklam",
@@ -111,7 +130,9 @@
           "title": "Teslim & Garanti",
           "description": "İki yıl imalat ve LED garantisi. Bir sorun olduğunda arayacağınız tek numara var; sorumluluk kimseye devredilmiyor."
         }
-      }
+      },
+      "headingTop": "Neden Bizi",
+      "headingAccent": "Seçmelisiniz?"
     },
     "why": {
       "eyebrow": "Neden Royal Reklam",
@@ -162,19 +183,22 @@
     "cta": {
       "title": "Cephenizi konuşalım",
       "description": "Ölçüyü biz alalım, tasarımı biz hazırlayalım. Keşif Samsun içinde tamamen ücretsiz — sonrasında karar sizin.",
-      "primary": "WhatsApp'tan yazın",
-      "secondary": "Hemen arayın"
+      "primary": "Teklif Al",
+      "secondary": "Doğrudan WhatsApp'tan yazın",
+      "eyebrow": "Hemen iletişime geçin",
+      "headingTop": "Cephenizi",
+      "headingAccent": "Konuşalım",
+      "whatsappPrefill": "Merhaba, Royal Reklam — web sitenizden yazıyorum. Cephem için tabela yaptırmak istiyorum."
     }
   },
-
   "servicesPage": {
     "title": "Hizmetlerimiz",
     "metaTitle": "Hizmetlerimiz | Samsun Tabela ve Reklam Uygulamaları",
     "metaDescription": "Samsun'da ışıklı tabela, kutu harf, totem, lightbox, cephe giydirme, araç giydirme, dijital baskı, kurumsal kimlik ve etiket üretimi.",
     "lead": "Bir markanın dış dünyaya dokunduğu her yüzey için tek bir estetik disiplin. Aşağıdaki on hizmetin tamamı kendi ekibimiz tarafından, keşiften montaja kadar yürütülür.",
-    "answer": "Royal Reklam, Samsun merkezli bir açık hava reklamcılığı firmasıdır. Işıklı tabela, kutu harf, totem tabela, lightbox, cephe giydirme, araç giydirme, dijital baskı, kurumsal kimlik ve etiket üretimi yapar. Keşif, tasarım, imalat ve montaj tek elden yürütülür."
+    "answer": "Royal Reklam, Samsun merkezli bir açık hava reklamcılığı firmasıdır. Işıklı tabela, kutu harf, totem tabela, lightbox, cephe giydirme, araç giydirme, dijital baskı, kurumsal kimlik ve etiket üretimi yapar. Keşif, tasarım, imalat ve montaj tek elden yürütülür.",
+    "whatsappPrefill": "Merhaba, Royal Reklam — \"{service}\" hakkında bilgi ve fiyat almak istiyorum."
   },
-
   "portfolioPage": {
     "title": "Referanslarımız",
     "metaTitle": "Referanslarımız | Royal Reklam Samsun",
@@ -182,9 +206,11 @@
     "lead": "AVM mağazalarından cadde dükkânlarına, sanayi tesislerinden ticari filolara kadar tamamladığımız işler.",
     "filterAll": "Tümü",
     "empty": "Bu kategoride henüz görsel eklenmedi.",
-    "comingSoon": "Proje arşivimiz yayına hazırlanıyor. Tamamladığımız işleri görmek için Instagram hesabımızı inceleyebilir veya doğrudan bize ulaşabilirsiniz."
+    "comingSoon": "Proje arşivimiz yayına hazırlanıyor. Tamamladığımız işleri görmek için Instagram hesabımızı inceleyebilir veya doğrudan bize ulaşabilirsiniz.",
+    "loadMore": "Daha fazla göster",
+    "resultCount": "{count} iş",
+    "noProjectsYet": "Bu kategoride henüz fotoğraf yok"
   },
-
   "regionsPage": {
     "title": "Hizmet Bölgelerimiz",
     "metaTitle": "Hizmet Bölgelerimiz | Samsun ve İlçeleri — Royal Reklam",
@@ -192,9 +218,9 @@
     "lead": "Atölyemiz İlkadım'da; ekibimiz Samsun'un tüm ilçelerine kendi ekipmanıyla gidiyor. Aşağıdaki bölgelerde keşif, imalat ve montaj hizmeti veriyoruz.",
     "answer": "Royal Reklam, Samsun'un 17 ilçesinin tamamında tabela imalatı ve montajı yapar. Atölye İlkadım'da bulunur; montaj ekibi Atakum, Canik, Tekkeköy, Bafra, Çarşamba, Terme, Vezirköprü, Havza ve diğer tüm ilçelere gider. İmalat Samsun'da tamamlanır, montaj yerinde yapılır.",
     "otherDistricts": "Ayrıca hizmet verdiğimiz ilçeler",
-    "otherDistrictsNote": "Bu ilçelerde de keşif ve montaj yapıyoruz. Ayrı sayfası bulunmayan bir konum için doğrudan bize ulaşın."
+    "otherDistrictsNote": "Bu ilçelerde de keşif ve montaj yapıyoruz. Ayrı sayfası bulunmayan bir konum için doğrudan bize ulaşın.",
+    "whatsappPrefill": "Merhaba, Royal Reklam — {region} bölgesinde tabela yaptırmak istiyorum."
   },
-
   "aboutPage": {
     "title": "Hakkımızda",
     "metaTitle": "Hakkımızda | Royal Reklam Samsun",
@@ -227,9 +253,12 @@
       }
     },
     "teamTitle": "Ekip",
-    "artDirectorBio": "Royal Reklam'ın tasarım yönünü belirler. Kurumsal kimlik çalışmalarından cephe uygulamalarına kadar tüm işlerin estetik tutarlılığından sorumludur."
+    "artDirectorBio": "Royal Reklam'ın tasarım yönünü belirler. Kurumsal kimlik çalışmalarından cephe uygulamalarına kadar tüm işlerin estetik tutarlılığından sorumludur.",
+    "factsTitle": "Künye",
+    "workshopLabel": "Atölye",
+    "serviceAreaLabel": "Hizmet alanı",
+    "foundedLabel": "Kuruluş"
   },
-
   "contactPage": {
     "title": "İletişim",
     "metaTitle": "İletişim | Royal Reklam Samsun — 0544 230 71 77",
@@ -242,9 +271,14 @@
     "whatsappNote": "En hızlı dönüş WhatsApp'tan olur. Cephenizin fotoğrafını gönderin, ön değerlendirmeyi hemen yapalım.",
     "whatsappPrefill": "Merhaba, Royal Reklam'dan tabela hakkında bilgi almak istiyorum.",
     "visitTitle": "Atölyeye gelin",
-    "visitNote": "Malzeme örneklerini ve tamamlanmış işleri yerinde görmek isterseniz atölyemize bekleriz."
+    "visitNote": "Malzeme örneklerini ve tamamlanmış işleri yerinde görmek isterseniz atölyemize bekleriz.",
+    "phoneNote": "Keşif randevusu ve acil işler için en doğrudan yol. Mesai saatleri içinde arayın.",
+    "emailNote": "Teknik çizim, kurumsal kimlik dosyası ve fatura yazışmaları için uygundur.",
+    "instagramNote": "Tamamlanmış işlerin güncel fotoğraflarını buradan takip edebilirsiniz.",
+    "serviceAreaTitle": "Hizmet alanı",
+    "serviceAreaNote": "Atölye İlkadım'da; keşif ve montaj ekibimiz Samsun'un tüm ilçelerine gidiyor. İmalat Samsun'da tamamlanır, montaj yerinde yapılır.",
+    "personLabel": "Görüşeceğiniz kişi"
   },
-
   "quotePage": {
     "title": "Teklif Al",
     "metaTitle": "Ücretsiz Teklif Alın | Royal Reklam Samsun",
@@ -257,7 +291,7 @@
       "three": "WhatsApp'tan gönderin"
     },
     "form": {
-      "serviceLabel": "Hangi hizmeti istiyorsunuz?",
+      "serviceLabel": "Hizmet seçin",
       "servicePlaceholder": "Bir hizmet seçin",
       "regionLabel": "Uygulama nerede yapılacak?",
       "regionPlaceholder": "İlçe veya şehir",
@@ -273,15 +307,63 @@
       "call": "Bunun yerine arayın",
       "previewTitle": "Gönderilecek mesaj",
       "required": "Bu alan gerekli",
-      "openingWhatsapp": "WhatsApp açılıyor…"
+      "openingWhatsapp": "WhatsApp açılıyor…",
+      "sectionWhat": "Ne yaptırmak istiyorsunuz?",
+      "sectionSpec": "İşin detayları",
+      "sectionWho": "Size nasıl dönelim?",
+      "serviceHint": "Birden fazla seçebilirsiniz",
+      "quantityLabel": "Adet",
+      "widthLabel": "Genişlik (cm)",
+      "heightLabel": "Yükseklik (cm)",
+      "areaLabel": "Yaklaşık alan",
+      "lightingLabel": "Aydınlatma",
+      "lightingOptions": {
+        "lit": "Işıklı",
+        "unlit": "Işıksız",
+        "unsure": "Emin değilim"
+      },
+      "placementLabel": "Nereye uygulanacak?",
+      "placementOptions": {
+        "ground": "Zemin kat cephesi",
+        "upper": "Üst kat / yüksek cephe",
+        "freestanding": "Zemine oturan (totem, direk)",
+        "indoor": "İç mekân",
+        "vehicle": "Araç"
+      },
+      "timingLabel": "Ne zaman lazım?",
+      "timingOptions": {
+        "urgent": "Acil (1 hafta içinde)",
+        "normal": "2–4 hafta",
+        "flexible": "Esnek / planlama aşamasında"
+      },
+      "phoneLabel": "Telefon",
+      "phonePlaceholder": "05xx xxx xx xx",
+      "photoNote": "Cephenizin fotoğrafını WhatsApp konuşmasına ekleyebilirsiniz; ölçü tahmini çok daha isabetli olur.",
+      "summaryTitle": "Özet",
+      "emptySummary": "Henüz seçim yapılmadı",
+      "clear": "Seçimleri temizle"
     },
     "reassure": {
       "free": "Keşif ve teklif ücretsiz",
       "noSpam": "Kayıt tutmuyoruz, e-posta listesine eklemiyoruz",
       "fast": "Mesai saatlerinde genellikle aynı gün dönüş"
+    },
+    "message": {
+      "intro": "Merhaba Royal Reklam, web sitenizden teklif istiyorum.",
+      "service": "Hizmet",
+      "quantity": "Adet",
+      "size": "Ölçü",
+      "lighting": "Aydınlatma",
+      "placement": "Uygulama yeri",
+      "timing": "Termin",
+      "location": "Konum",
+      "business": "İşletme",
+      "name": "Ad Soyad",
+      "phone": "Telefon",
+      "summaryServices": "{count} hizmet",
+      "summaryQuantity": "{count} adet"
     }
   },
-
   "faqPage": {
     "title": "Sık Sorulan Sorular",
     "metaTitle": "Sık Sorulan Sorular | Samsun Tabela — Royal Reklam",
@@ -295,7 +377,6 @@
       "aftercare": "Garanti ve Bakım"
     }
   },
-
   "blogPage": {
     "title": "Rehber",
     "metaTitle": "Tabela Rehberi | Royal Reklam Samsun",
@@ -305,31 +386,40 @@
     "publishedOn": "Yayın",
     "updatedOn": "Güncelleme",
     "relatedTitle": "İlgili yazılar",
-    "empty": "İlk rehber yazılarımız hazırlanıyor."
+    "empty": "İlk rehber yazılarımız hazırlanıyor.",
+    "readPost": "Yazıyı oku",
+    "featured": "Öne çıkan"
   },
-
   "footer": {
-    "tagline": "Samsun merkezli açık hava reklamcılığı. Keşiften montaja tek elden.",
-    "servicesTitle": "Hizmetler",
-    "regionsTitle": "Hizmet Bölgeleri",
-    "companyTitle": "Kurumsal",
-    "contactTitle": "İletişim",
+    "corporate": "Kurumsal",
+    "servicesGroup": "Hizmetlerimiz",
+    "support": "Destek",
+    "legal": "Yasal",
+    "signSystems": "Tabela Sistemleri",
+    "printing": "Dijital Baskı",
+    "vehicleWrap": "Araç Giydirme",
+    "facade": "Cephe Sistemleri",
+    "warranty": "Garanti Şartları",
+    "privacy": "Gizlilik",
+    "cookies": "Çerez",
+    "kvkk": "KVKK",
+    "directions": "Yol Tarifi",
     "rights": "Tüm hakları saklıdır.",
-    "designedBy": "Samsun'da tasarlandı ve üretildi.",
-    "ctaTitle": "Cephenizi konuşalım",
-    "ctaText": "Keşif ücretsiz, teklif bağlayıcı değil."
+    "whatsappPrefill": "Merhaba Royal Reklam, web siteniz üzerinden ulaşıyorum. Hizmetleriniz hakkında bilgi almak istiyorum."
   },
-
   "notFound": {
     "title": "Sayfa bulunamadı",
     "description": "Aradığınız sayfa taşınmış veya hiç var olmamış olabilir. Aşağıdaki bağlantılardan devam edebilirsiniz.",
     "suggestionsTitle": "Bunlar işinize yarayabilir"
   },
-
   "quickBar": {
     "call": "Ara",
     "whatsapp": "WhatsApp",
     "quote": "Teklif",
-    "label": "Hızlı iletişim"
+    "label": "Hızlı iletişim",
+    "prefill": "Merhaba, Royal Reklam — web sitenizden yazıyorum. Tabela hakkında bilgi almak istiyorum."
+  },
+  "legal": {
+    "updated": "Son güncelleme"
   }
 }

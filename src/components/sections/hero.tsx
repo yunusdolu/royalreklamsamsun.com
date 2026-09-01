@@ -8,25 +8,11 @@ import { AnimatePresence, motion, type Variants } from "framer-motion";
 
 import { Link } from "@/i18n/navigation";
 
-const slides = [
-  {
-    image: "/images/hero/hero1.jpeg",
-    title: "Görünürlüğünüzü",
-    titleLine2: "Artırın.",
-    description: "Etkili açık hava reklamlarıyla işletmenizi bir adım öne taşıyın.",
-  },
-  {
-    image: "/images/hero/hero2.jpeg",
-    title: "İlk İzlenim",
-    titleLine2: "Önemlidir.",
-    description: "Mağazanızı veya ofisinizi yansıtan modern tabela sistemleriyle müşterilerinizi etkileyin.",
-  },
-  {
-    image: "/images/hero/hero3.jpeg",
-    title: "Markanız Her Yerde",
-    titleLine2: "Sizinle.",
-    description: "Profesyonel araç giydirme uygulamalarımızla şehrin her noktasında reklamınızı yapın.",
-  },
+/** Slayt görselleri; başlık ve açıklamalar çeviri dosyasından gelir. */
+const slideImages = [
+  "/images/hero/hero1.jpeg",
+  "/images/hero/hero2.jpeg",
+  "/images/hero/hero3.jpeg",
 ];
 
 const container: Variants = {
@@ -76,15 +62,22 @@ function Reveal({
 
 export function Hero() {
   const t = useTranslations("home.hero");
+  const tCommon = useTranslations("common");
   const [currentSlide, setCurrentSlide] = useState(0);
 
   useEffect(() => {
     const timer = setInterval(() => {
-      setCurrentSlide((prev) => (prev + 1) % slides.length);
+      setCurrentSlide((prev) => (prev + 1) % slideImages.length);
     }, 5000);
     return () => clearInterval(timer);
   }, []);
 
+  const slides = slideImages.map((image, index) => ({
+    image,
+    title: t(`slides.${index + 1}.title`),
+    titleLine2: t(`slides.${index + 1}.titleLine2`),
+    description: t(`slides.${index + 1}.description`),
+  }));
   const activeSlide = slides[currentSlide];
 
   return (
@@ -124,7 +117,7 @@ export function Hero() {
                       ? "w-8 bg-white"
                       : "w-2 bg-white/50 hover:bg-white/80"
                   }`}
-                  aria-label={`Slayt ${index + 1}`}
+                  aria-label={tCommon("slide", { number: index + 1 })}
                 />
               ))}
             </div>

@@ -29,7 +29,7 @@ export function QuickContactBar() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  const message = `Merhaba, ${siteConfig.name} — web sitenizden yazıyorum. Tabela hakkında bilgi almak istiyorum.`;
+  const message = t("prefill");
 
   return (
     <>

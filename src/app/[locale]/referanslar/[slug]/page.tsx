@@ -1,4 +1,3 @@
-import { ArrowUpRight } from "lucide-react";
 import type { Metadata } from "next";
 import Image from "next/image";
 import { notFound } from "next/navigation";
@@ -8,6 +7,7 @@ import { PageHeader } from "@/components/layout/page-header";
 import { Reveal } from "@/components/motion/reveal";
 import { CtaSection } from "@/components/sections/cta-section";
 import { JsonLd } from "@/components/seo/json-ld";
+import { PillLink } from "@/components/ui/pill-button";
 import { getProjectBySlug, projects } from "@/content/projects";
 import { getServiceById } from "@/content/services";
 import { Link } from "@/i18n/navigation";
@@ -99,7 +99,7 @@ export default async function ProjectDetailPage({
                 {images.map((src, index) => (
                   <div
                     key={src}
-                    className="relative aspect-4/3 overflow-hidden rounded-xl border border-gold-500/12 bg-royal-graphite"
+                    className="relative aspect-4/3 overflow-hidden rounded-2xl bg-royal-graphite shadow-[0_1px_2px_rgba(0,0,0,0.05)]"
                   >
                     <Image
                       src={src}
@@ -128,70 +128,92 @@ export default async function ProjectDetailPage({
             </Reveal>
           </div>
 
+          {/* Proje künyesi — fotoğrafın yanında koyu plaka, altında teklif eylemi */}
           <aside className="lg:col-span-4">
             <Reveal direction="left">
-              <div className="surface-royal rounded-xl p-6 lg:sticky lg:top-28">
-                <dl className="space-y-4 text-[0.875rem]">
+              <div className="overflow-hidden rounded-2xl bg-[linear-gradient(150deg,#141416_0%,#252017_58%,#141416_100%)] p-6 lg:sticky lg:top-28">
+                <span className="text-[0.6875rem] font-semibold uppercase tracking-[0.16em] text-gold-400">
+                  {locale === "tr" ? "Proje künyesi" : "Project details"}
+                </span>
+
+                <dl className="mt-5 divide-y divide-white/10 text-[0.875rem]">
                   {copy.client && (
-                    <div>
-                      <dt className="text-[0.6875rem] font-semibold uppercase tracking-[0.16em] text-royal-faint">
+                    <div className="flex items-baseline justify-between gap-4 py-3">
+                      <dt className="shrink-0 text-white/45">
                         {locale === "tr" ? "Müşteri" : "Client"}
                       </dt>
-                      <dd className="mt-1 text-royal-fg">{copy.client}</dd>
+                      <dd className="text-right font-medium text-white">
+                        {copy.client}
+                      </dd>
                     </div>
                   )}
                   {service && (
-                    <div>
-                      <dt className="text-[0.6875rem] font-semibold uppercase tracking-[0.16em] text-royal-faint">
+                    <div className="flex items-baseline justify-between gap-4 py-3">
+                      <dt className="shrink-0 text-white/45">
                         {locale === "tr" ? "Hizmet" : "Service"}
                       </dt>
-                      <dd className="mt-1">
+                      <dd className="text-right">
                         <Link
                           href={{
                             pathname: "/hizmetler/[slug]",
                             params: { slug: service.slug[locale] },
                           }}
-                          className="text-gold-300 transition-colors hover:text-gold-200"
+                          className="font-medium text-gold-300 underline-offset-4 transition-colors hover:text-gold-200 hover:underline"
                         >
                           {service.copy[locale].name}
                         </Link>
                       </dd>
                     </div>
                   )}
-                  <div>
-                    <dt className="text-[0.6875rem] font-semibold uppercase tracking-[0.16em] text-royal-faint">
+                  <div className="flex items-baseline justify-between gap-4 py-3">
+                    <dt className="shrink-0 text-white/45">
                       {locale === "tr" ? "Yıl" : "Year"}
                     </dt>
-                    <dd className="mt-1 text-royal-fg tabular-nums">{project.year}</dd>
-                  </div>
-                  <div>
-                    <dt className="text-[0.6875rem] font-semibold uppercase tracking-[0.16em] text-royal-faint">
-                      {locale === "tr" ? "Kapsam" : "Scope"}
-                    </dt>
-                    <dd className="mt-1.5 flex flex-wrap gap-1.5">
-                      {copy.scope.map((item) => (
-                        <span
-                          key={item}
-                          className="rounded-full border border-royal-border px-2.5 py-1 text-[0.75rem] text-royal-muted"
-                        >
-                          {item}
-                        </span>
-                      ))}
+                    <dd className="text-right font-medium tabular-nums text-white">
+                      {project.year}
                     </dd>
                   </div>
                 </dl>
+
+                <div className="mt-5">
+                  <span className="text-[0.6875rem] font-semibold uppercase tracking-[0.16em] text-white/45">
+                    {locale === "tr" ? "Kapsam" : "Scope"}
+                  </span>
+                  <div className="mt-2.5 flex flex-wrap gap-1.5">
+                    {copy.scope.map((item) => (
+                      <span
+                        key={item}
+                        className="rounded-full bg-white/[0.07] px-3 py-1 text-[0.75rem] text-white/75"
+                      >
+                        {item}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="mt-6 border-t border-white/10 pt-6">
+                  <p className="text-[0.8125rem] leading-relaxed text-white/55">
+                    {t("quoteCtaText")}
+                  </p>
+                  <PillLink
+                    href="/teklif-al"
+                    tone="onDark"
+                    block
+                    className="mt-4"
+                  >
+                    {t("getQuote")}
+                  </PillLink>
+                </div>
               </div>
             </Reveal>
           </aside>
         </div>
 
-        <Link
-          href="/referanslar"
-          className="mt-12 inline-flex items-center gap-1.5 text-sm font-semibold text-gold-300 transition-colors hover:text-gold-200"
-        >
-          {t("backToPortfolio")}
-          <ArrowUpRight className="size-4" aria-hidden="true" />
-        </Link>
+        <div className="mt-12">
+          <PillLink href="/referanslar" tone="light">
+            {t("backToPortfolio")}
+          </PillLink>
+        </div>
       </section>
 
       <CtaSection />

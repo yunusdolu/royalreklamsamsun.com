@@ -63,7 +63,7 @@ export function buildOpenGraph({
     title,
     description,
     url: localizedUrl(href, locale),
-    siteName: siteConfig.name,
+    siteName: siteConfig.siteName,
     locale: locale === "tr" ? "tr_TR" : "en_US",
     images: images?.map((url) => ({ url, width: 1200, height: 630, alt: title })),
   };

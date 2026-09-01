@@ -4,8 +4,8 @@ import { siteConfig } from "@/config/site";
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: `${siteConfig.name} — ${siteConfig.tagline.tr}`,
-    short_name: siteConfig.name,
+    name: `${siteConfig.siteName} — ${siteConfig.tagline.tr}`,
+    short_name: siteConfig.siteName,
     description:
       "Samsun'da ışıklı tabela, kutu harf, totem, cephe giydirme ve araç giydirme. Keşiften montaja tek elden.",
     start_url: "/",

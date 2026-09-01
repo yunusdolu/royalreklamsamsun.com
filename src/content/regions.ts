@@ -43,7 +43,7 @@ export const regions: Region[] = [
     copy: {
       tr: {
         heading: "İlkadım Tabela ve Reklam Uygulamaları",
-        metaTitle: "İlkadım Tabela İmalatı | Samsun İlkadım — Royal Reklam",
+        metaTitle: "İlkadım Tabela İmalatı | Samsun İlkadım — Royal Reklam Samsun",
         metaDescription:
           "Samsun İlkadım'da ışıklı tabela, kutu harf ve cephe giydirme. Atölyemiz İlkadım'da; keşif ve montaj aynı gün planlanabilir. 0544 230 71 77",
         answer:
@@ -67,7 +67,7 @@ export const regions: Region[] = [
       },
       en: {
         heading: "Signage in İlkadım, Samsun",
-        metaTitle: "Sign Manufacturing in İlkadım, Samsun — Royal Reklam",
+        metaTitle: "Sign Manufacturing in İlkadım, Samsun — Royal Reklam Samsun",
         metaDescription:
           "Illuminated signs, channel letters and façade cladding in İlkadım, Samsun. Our workshop is in İlkadım, so surveys can often be same-day.",
         answer:
@@ -101,7 +101,7 @@ export const regions: Region[] = [
     copy: {
       tr: {
         heading: "Atakum Tabela ve Reklam Uygulamaları",
-        metaTitle: "Atakum Tabela İmalatı | Samsun Atakum — Royal Reklam",
+        metaTitle: "Atakum Tabela İmalatı | Samsun Atakum — Royal Reklam Samsun",
         metaDescription:
           "Samsun Atakum'da kutu harf, ışıklı tabela ve lightbox uygulamaları. Kafe, restoran ve yeni açılan işletmeler için tasarım odaklı çözümler.",
         answer:
@@ -125,7 +125,7 @@ export const regions: Region[] = [
       },
       en: {
         heading: "Signage in Atakum, Samsun",
-        metaTitle: "Sign Manufacturing in Atakum, Samsun — Royal Reklam",
+        metaTitle: "Sign Manufacturing in Atakum, Samsun — Royal Reklam Samsun",
         metaDescription:
           "Channel letters, illuminated signs and lightboxes in Atakum, Samsun. Design-led signage for cafés, restaurants and new openings.",
         answer:
@@ -159,7 +159,7 @@ export const regions: Region[] = [
     copy: {
       tr: {
         heading: "Canik Tabela ve Reklam Uygulamaları",
-        metaTitle: "Canik Tabela İmalatı | Samsun Canik — Royal Reklam",
+        metaTitle: "Canik Tabela İmalatı | Samsun Canik — Royal Reklam Samsun",
         metaDescription:
           "Samsun Canik'te ışıklı tabela, dijital baskı ve araç giydirme. Esnaf işletmeleri ve ticari araç filoları için ekonomik çözümler.",
         answer:
@@ -183,7 +183,7 @@ export const regions: Region[] = [
       },
       en: {
         heading: "Signage in Canik, Samsun",
-        metaTitle: "Sign Manufacturing in Canik, Samsun — Royal Reklam",
+        metaTitle: "Sign Manufacturing in Canik, Samsun — Royal Reklam Samsun",
         metaDescription:
           "Illuminated signage, large format printing and vehicle wrapping in Canik, Samsun. Durable, budget-conscious solutions for local traders.",
         answer:
@@ -217,7 +217,7 @@ export const regions: Region[] = [
     copy: {
       tr: {
         heading: "Tekkeköy Tabela ve Endüstriyel Reklam Uygulamaları",
-        metaTitle: "Tekkeköy Tabela ve Totem İmalatı | Samsun — Royal Reklam",
+        metaTitle: "Tekkeköy Tabela ve Totem İmalatı | Samsun — Royal Reklam Samsun",
         metaDescription:
           "Samsun Tekkeköy'de totem tabela, fabrika cephe markalaması ve endüstriyel yönlendirme sistemleri. Sanayi tesisleri için anahtar teslim.",
         answer:
@@ -241,7 +241,7 @@ export const regions: Region[] = [
       },
       en: {
         heading: "Industrial Signage in Tekkeköy, Samsun",
-        metaTitle: "Totem & Industrial Signage in Tekkeköy — Royal Reklam",
+        metaTitle: "Totem & Industrial Signage in Tekkeköy — Royal Reklam Samsun",
         metaDescription:
           "Totem signs, factory façade branding and site wayfinding in Tekkeköy, Samsun. Turnkey delivery for industrial facilities.",
         answer:
@@ -275,7 +275,7 @@ export const regions: Region[] = [
     copy: {
       tr: {
         heading: "Bafra Tabela ve Reklam Uygulamaları",
-        metaTitle: "Bafra Tabela İmalatı | Samsun Bafra — Royal Reklam",
+        metaTitle: "Bafra Tabela İmalatı | Samsun Bafra — Royal Reklam Samsun",
         metaDescription:
           "Samsun Bafra'da ışıklı tabela, kutu harf ve dijital baskı. İlçe merkezindeki esnaf ve gıda işletmeleri için montaj dâhil hizmet.",
         answer:
@@ -299,7 +299,7 @@ export const regions: Region[] = [
       },
       en: {
         heading: "Signage in Bafra, Samsun",
-        metaTitle: "Sign Manufacturing in Bafra, Samsun — Royal Reklam",
+        metaTitle: "Sign Manufacturing in Bafra, Samsun — Royal Reklam Samsun",
         metaDescription:
           "Illuminated signs, channel letters and printing in Bafra, Samsun. Fabricated in our Samsun workshop, installed on site by our own crew.",
         answer:
@@ -333,7 +333,7 @@ export const regions: Region[] = [
     copy: {
       tr: {
         heading: "Çarşamba Tabela ve Reklam Uygulamaları",
-        metaTitle: "Çarşamba Tabela İmalatı | Samsun Çarşamba — Royal Reklam",
+        metaTitle: "Çarşamba Tabela İmalatı | Samsun Çarşamba — Royal Reklam Samsun",
         metaDescription:
           "Samsun Çarşamba'da totem tabela, ışıklı tabela ve araç giydirme. Havalimanı güzergâhındaki işletmeler için uzaktan görünür çözümler.",
         answer:
@@ -357,7 +357,7 @@ export const regions: Region[] = [
       },
       en: {
         heading: "Signage in Çarşamba, Samsun",
-        metaTitle: "Sign Manufacturing in Çarşamba, Samsun — Royal Reklam",
+        metaTitle: "Sign Manufacturing in Çarşamba, Samsun — Royal Reklam Samsun",
         metaDescription:
           "Totem signs, illuminated signage and vehicle wrapping in Çarşamba, Samsun. Long-sight-line solutions for the airport corridor.",
         answer:
@@ -391,7 +391,7 @@ export const regions: Region[] = [
     copy: {
       tr: {
         heading: "Terme Tabela ve Reklam Uygulamaları",
-        metaTitle: "Terme Tabela İmalatı | Samsun Terme — Royal Reklam",
+        metaTitle: "Terme Tabela İmalatı | Samsun Terme — Royal Reklam Samsun",
         metaDescription:
           "Samsun Terme'de ışıklı tabela, dijital baskı ve etiket uygulamaları. İlçe merkezi esnafı ve tarım işletmeleri için montaj dâhil hizmet.",
         answer:
@@ -411,7 +411,7 @@ export const regions: Region[] = [
       },
       en: {
         heading: "Signage in Terme, Samsun",
-        metaTitle: "Sign Manufacturing in Terme, Samsun — Royal Reklam",
+        metaTitle: "Sign Manufacturing in Terme, Samsun — Royal Reklam Samsun",
         metaDescription:
           "Illuminated signage, printing and labels in Terme, Samsun. Fabricated centrally, installed on site by our own crew.",
         answer:
@@ -441,7 +441,7 @@ export const regions: Region[] = [
     copy: {
       tr: {
         heading: "Vezirköprü Tabela ve Reklam Uygulamaları",
-        metaTitle: "Vezirköprü Tabela İmalatı | Samsun — Royal Reklam",
+        metaTitle: "Vezirköprü Tabela İmalatı | Samsun — Royal Reklam Samsun",
         metaDescription:
           "Samsun Vezirköprü'de ışıklı tabela, kutu harf ve dijital baskı. İlçe merkezindeki işletmeler için keşiften montaja tek elden.",
         answer:
@@ -461,7 +461,7 @@ export const regions: Region[] = [
       },
       en: {
         heading: "Signage in Vezirköprü, Samsun",
-        metaTitle: "Sign Manufacturing in Vezirköprü, Samsun — Royal Reklam",
+        metaTitle: "Sign Manufacturing in Vezirköprü, Samsun — Royal Reklam Samsun",
         metaDescription:
           "Illuminated signs, channel letters and printing in Vezirköprü, Samsun. Survey to installation handled by one team.",
         answer:
@@ -491,7 +491,7 @@ export const regions: Region[] = [
     copy: {
       tr: {
         heading: "Havza Tabela ve Reklam Uygulamaları",
-        metaTitle: "Havza Tabela İmalatı | Samsun Havza — Royal Reklam",
+        metaTitle: "Havza Tabela İmalatı | Samsun Havza — Royal Reklam Samsun",
         metaDescription:
           "Samsun Havza'da ışıklı tabela, lightbox ve kurumsal kimlik uygulamaları. Konaklama ve termal tesisler için tasarım odaklı çözümler.",
         answer:
@@ -511,7 +511,7 @@ export const regions: Region[] = [
       },
       en: {
         heading: "Signage in Havza, Samsun",
-        metaTitle: "Sign Manufacturing in Havza, Samsun — Royal Reklam",
+        metaTitle: "Sign Manufacturing in Havza, Samsun — Royal Reklam Samsun",
         metaDescription:
           "Illuminated signage, lightboxes and identity work in Havza, Samsun. Design-led solutions for thermal and hospitality venues.",
         answer:
@@ -541,7 +541,7 @@ export const regions: Region[] = [
     copy: {
       tr: {
         heading: "Ondokuzmayıs Tabela ve Reklam Uygulamaları",
-        metaTitle: "Ondokuzmayıs Tabela İmalatı | Samsun — Royal Reklam",
+        metaTitle: "Ondokuzmayıs Tabela İmalatı | Samsun — Royal Reklam Samsun",
         metaDescription:
           "Samsun Ondokuzmayıs ilçesinde ışıklı tabela, dijital baskı ve araç giydirme. Keşiften montaja kendi ekibimizle.",
         answer:
@@ -561,7 +561,7 @@ export const regions: Region[] = [
       },
       en: {
         heading: "Signage in Ondokuzmayıs, Samsun",
-        metaTitle: "Sign Manufacturing in Ondokuzmayıs, Samsun — Royal Reklam",
+        metaTitle: "Sign Manufacturing in Ondokuzmayıs, Samsun — Royal Reklam Samsun",
         metaDescription:
           "Illuminated signage, printing and vehicle wrapping in Ondokuzmayıs, Samsun, handled end to end by our own team.",
         answer:

@@ -10,7 +10,7 @@ export const servicesEn: Record<string, ServiceCopy> = {
       "LED-lit acrylic and composite cabinet signs. High night-time visibility with low running costs.",
     answer:
       "An illuminated sign is a shopfront sign that stays legible after dark thanks to internal LED lighting. Royal Reklam manufactures illuminated signage in Samsun, Türkiye using aluminium composite cabinets, acrylic faces and IP65-rated LED modules. Survey, design, production and installation typically take 5–10 business days.",
-    metaTitle: "Illuminated Signage in Samsun | LED Signs — Royal Reklam",
+    metaTitle: "Illuminated Signage in Samsun | LED Signs — Royal Reklam Samsun",
     metaDescription:
       "Illuminated sign manufacturing in Samsun: LED cabinets, acrylic and composite shopfront signs. Survey, design, production and installation in-house. 2-year warranty.",
     keywords: [
@@ -97,7 +97,7 @@ export const servicesEn: Record<string, ServiceCopy> = {
       "Individually fabricated three-dimensional letters with front-lit, halo or dual illumination.",
     answer:
       "Channel letter signage consists of individually fabricated, three-dimensional letters mounted separately onto a façade. Royal Reklam produces channel letters in Samsun with acrylic faces, aluminium returns and LED illumination — front-lit, halo (reverse-lit) or dual. Typical delivery is 7–12 business days.",
-    metaTitle: "Channel Letter Sign Manufacturing in Samsun — Royal Reklam",
+    metaTitle: "Channel Letter Sign Manufacturing in Samsun — Royal Reklam Samsun",
     metaDescription:
       "Channel letter signs in Samsun: acrylic faced, LED illuminated, halo-lit 3D letters for malls and high-street stores. CNC precision, 2-year warranty.",
     keywords: [
@@ -183,7 +183,7 @@ export const servicesEn: Record<string, ServiceCopy> = {
       "Free-standing double-sided illuminated pylon signs for roadsides, forecourts and entrances.",
     answer:
       "A totem or pylon sign is a free-standing vertical sign built on a steel structure anchored into a concrete foundation, usually double-sided. Royal Reklam manufactures and installs 2 to 8 metre illuminated totems in Samsun, including structural calculation, foundation works and electrical supply.",
-    metaTitle: "Totem & Pylon Sign Manufacturing in Samsun — Royal Reklam",
+    metaTitle: "Totem & Pylon Sign Manufacturing in Samsun — Royal Reklam Samsun",
     metaDescription:
       "Totem signs in Samsun: 2–8 m double-sided illuminated pylons with structural calculation, foundation and installation included. For malls, hotels and forecourts.",
     keywords: [
@@ -261,7 +261,7 @@ export const servicesEn: Record<string, ServiceCopy> = {
       "Slim-profile backlit panels with tensioned fabric or acrylic faces and edge-lit LED panels.",
     answer:
       "A lightbox is a slim aluminium frame containing an edge-lit LED panel that backlights the face evenly. Royal Reklam produces tensioned fabric (SEG) and acrylic-faced lightboxes in Samsun. With fabric systems the graphic can be swapped in minutes without tools.",
-    metaTitle: "Lightbox & Fabric Frame Signs in Samsun — Royal Reklam",
+    metaTitle: "Lightbox & Fabric Frame Signs in Samsun — Royal Reklam Samsun",
     metaDescription:
       "Lightbox signage in Samsun: slim frames, tensioned fabric or acrylic faces, evenly diffused LED backlighting for retail and interior use.",
     keywords: [
@@ -339,7 +339,7 @@ export const servicesEn: Record<string, ServiceCopy> = {
       "Aluminium composite panel and mesh vinyl cladding that turns a building into brand surface.",
     answer:
       "Façade cladding covers a building's exterior with aluminium composite panel, mesh vinyl or acrylic surfaces to turn it into brand identity. Royal Reklam delivers turnkey façade cladding in Samsun including survey, structural assessment, sub-frame and installation. Typical programmes run 1–4 weeks depending on area.",
-    metaTitle: "Façade Cladding in Samsun | Composite Panel — Royal Reklam",
+    metaTitle: "Façade Cladding in Samsun | Composite Panel — Royal Reklam Samsun",
     metaDescription:
       "Façade cladding in Samsun: aluminium composite panel, mesh vinyl and acrylic. Structural calculation, sub-frame and installation included.",
     keywords: [
@@ -421,7 +421,7 @@ export const servicesEn: Record<string, ServiceCopy> = {
       "Partial and full wraps in cast vinyl with UV laminate — no damage to the original paint.",
     answer:
       "Vehicle wrapping applies cut or digitally printed vinyl to a vehicle's surface, turning it into advertising space. Royal Reklam applies partial and full wraps in Samsun using laminated cast vinyl. Application takes 1–3 days depending on vehicle type and does not damage factory paint.",
-    metaTitle: "Vehicle Wrapping in Samsun | Fleet Graphics — Royal Reklam",
+    metaTitle: "Vehicle Wrapping in Samsun | Fleet Graphics — Royal Reklam Samsun",
     metaDescription:
       "Vehicle wrapping in Samsun: cut vinyl, full wraps and fleet graphics. Cast vinyl with UV laminate, paint-safe removal, 5–7 year durability.",
     keywords: [
@@ -502,7 +502,7 @@ export const servicesEn: Record<string, ServiceCopy> = {
       "High-resolution printing onto vinyl, banner, mesh, film and one-way vision materials.",
     answer:
       "Large format digital printing applies artwork directly to wide substrates such as vinyl, PVC banner, mesh and self-adhesive film. Royal Reklam produces banners, window graphics and façade images in Samsun using eco-solvent and UV technology, with Pantone-referenced colour matching and 1–3 day turnaround on standard work.",
-    metaTitle: "Large Format Printing in Samsun | Banners & Vinyl — Royal Reklam",
+    metaTitle: "Large Format Printing in Samsun | Banners & Vinyl — Royal Reklam Samsun",
     metaDescription:
       "Large format printing in Samsun: PVC banner, vinyl, mesh, one-way vision and self-adhesive film. Pantone colour matching, 1–3 day turnaround.",
     keywords: [
@@ -583,7 +583,7 @@ export const servicesEn: Record<string, ServiceCopy> = {
       "Logo, colour, typography and usage rules — a system that carries from stationery to façade.",
     answer:
       "Brand identity work defines a company's logo, colour palette, typography and usage rules as a single system. Royal Reklam delivers logo design, identity guidelines and applied materials in Samsun under art director İshak Bal, with signage, vehicle and façade applications drawing from the same system.",
-    metaTitle: "Brand Identity & Logo Design in Samsun — Royal Reklam",
+    metaTitle: "Brand Identity & Logo Design in Samsun — Royal Reklam Samsun",
     metaDescription:
       "Brand identity in Samsun: logo design, colour and typography systems, identity guidelines, stationery and applied materials.",
     keywords: [
@@ -664,7 +664,7 @@ export const servicesEn: Record<string, ServiceCopy> = {
       "Contour-cut product labels, window stickers, floor graphics and promotional decals.",
     answer:
       "Label and sticker production prints onto film or paper stock and contour-cuts it to shape. Royal Reklam produces product labels, window and door stickers, floor graphics and promotional decals in Samsun, with short runs supported and standard orders delivered in 1–3 business days.",
-    metaTitle: "Label & Sticker Printing in Samsun | Contour Cut — Royal Reklam",
+    metaTitle: "Label & Sticker Printing in Samsun | Contour Cut — Royal Reklam Samsun",
     metaDescription:
       "Label and sticker printing in Samsun: product labels, window stickers, floor graphics, contour cutting. Short runs welcome, 1–3 day turnaround.",
     keywords: [

@@ -31,8 +31,8 @@ export function ProcessSection() {
             className="flex flex-col max-w-lg lg:sticky lg:top-32"
           >
             <h2 className="font-display text-5xl md:text-6xl font-bold leading-tight text-white mb-6">
-              Neden Bizi <br/>
-              <span className="text-gold-500 italic">Seçmelisiniz?</span>
+              {t("headingTop")} <br/>
+              <span className="text-gold-500 italic">{t("headingAccent")}</span>
             </h2>
             <p className="text-zinc-400 text-sm md:text-base leading-relaxed">
               {t("description")}

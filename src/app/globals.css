@@ -208,6 +208,17 @@
     .container-royal { padding-inline: 2.5rem; }
   }
 
+  /* Yatay kaydırılan şeritlerde kaydırma çubuğunu gizle (kart karuseli,
+     filtre çubuğu). Firefox + modern Chrome `scrollbar-width`, WebKit ise
+     sözde eleman ister. */
+  .hide-scrollbar {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  .hide-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
   /* Altın metin gradienti — sadece başlık vurguları için */
   .text-gold {
     background-image: linear-gradient(

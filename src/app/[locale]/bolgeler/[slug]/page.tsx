@@ -1,4 +1,4 @@
-import { ArrowUpRight, MapPin, MessageCircle, Phone } from "lucide-react";
+import { MessageCircle, Phone } from "lucide-react";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getTranslations, setRequestLocale } from "next-intl/server";
@@ -7,11 +7,16 @@ import { PageHeader } from "@/components/layout/page-header";
 import { Reveal, RevealGroup, RevealItem } from "@/components/motion/reveal";
 import { FaqSection } from "@/components/sections/faq-section";
 import { JsonLd } from "@/components/seo/json-ld";
-import { ServiceIcon } from "@/components/ui/service-icon";
-import { siteConfig, telLink, whatsappLink } from "@/config/site";
+import { PillAnchor, PillLink } from "@/components/ui/pill-button";
+import { ServiceCard } from "@/components/ui/service-card";
+import {
+  mapsDirectionsLink,
+  siteConfig,
+  telLink,
+  whatsappLink,
+} from "@/config/site";
 import { getRegionBySlug, regions } from "@/content/regions";
 import { getServiceById } from "@/content/services";
-import { Link } from "@/i18n/navigation";
 import { type Locale, routing } from "@/i18n/routing";
 import {
   buildBreadcrumbSchema,
@@ -19,7 +24,11 @@ import {
   buildSpeakableSchema,
   schemaIds,
 } from "@/lib/schema";
-import { buildLocalizedAlternates, buildOpenGraph, localizedUrl } from "@/lib/seo";
+import {
+  buildLocalizedAlternates,
+  buildOpenGraph,
+  localizedUrl,
+} from "@/lib/seo";
 
 type Params = { locale: Locale; slug: string };
 
@@ -44,13 +53,19 @@ export async function generateMetadata({
     title: { absolute: copy.metaTitle },
     description: copy.metaDescription,
     alternates: buildLocalizedAlternates(
-      (l) => ({ pathname: "/bolgeler/[slug]", params: { slug: region.slug[l] } }),
+      (l) => ({
+        pathname: "/bolgeler/[slug]",
+        params: { slug: region.slug[l] },
+      }),
       locale,
     ),
     openGraph: buildOpenGraph({
       title: copy.metaTitle,
       description: copy.metaDescription,
-      href: { pathname: "/bolgeler/[slug]", params: { slug: region.slug[locale] } },
+      href: {
+        pathname: "/bolgeler/[slug]",
+        params: { slug: region.slug[locale] },
+      },
       locale,
     }),
   };
@@ -75,7 +90,7 @@ export default async function RegionDetailPage({
     .map((id) => getServiceById(id))
     .filter((service) => service !== undefined);
 
-  const whatsappMessage = `Merhaba, ${siteConfig.name} — ${region.name.tr} bölgesinde tabela yaptırmak istiyorum.`;
+  const whatsappMessage = tRegions("whatsappPrefill", { region: region.name[locale] });
 
   /**
    * Bölgeye özel `Service` şeması: sağlayıcı ana işletme, hizmet alanı ise
@@ -112,22 +127,16 @@ export default async function RegionDetailPage({
         answer={copy.answer}
       >
         <div className="mt-8 flex flex-wrap items-center gap-3">
-          <a
-            href={telLink}
-            className="inline-flex h-12 items-center gap-2 rounded-md bg-gradient-to-b from-gold-300 to-gold-600 px-6 text-sm font-bold text-royal-ink transition-all hover:from-gold-200 hover:to-gold-500"
-          >
-            <Phone className="size-4" aria-hidden="true" />
+          <PillAnchor href={telLink} external={false} icon={Phone}>
             {siteConfig.contact.phoneDisplay}
-          </a>
-          <a
+          </PillAnchor>
+          <PillAnchor
             href={whatsappLink(whatsappMessage)}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex h-12 items-center gap-2 rounded-md border border-gold-500/40 px-5 text-sm font-semibold text-gold-200 transition-colors hover:bg-gold-500/10"
+            tone="light"
+            icon={MessageCircle}
           >
-            <MessageCircle className="size-4" aria-hidden="true" />
             {t("whatsapp")}
-          </a>
+          </PillAnchor>
         </div>
       </PageHeader>
 
@@ -146,69 +155,109 @@ export default async function RegionDetailPage({
             </div>
           </Reveal>
 
+          {/* Bölgede en çok istenen hizmetler — fotoğraflı kartlar */}
           <div className="mt-14">
             <h2 className="underline-gold font-display text-xl font-bold text-royal-fg lg:text-2xl">
               {t("popularServices")}
             </h2>
-            <RevealGroup as="ul" className="mt-8 grid gap-4 sm:grid-cols-3">
+            <RevealGroup
+              as="ul"
+              className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-3"
+            >
               {popular.map((service) => (
                 <RevealItem as="li" key={service.id}>
-                  <Link
-                    href={{
-                      pathname: "/hizmetler/[slug]",
-                      params: { slug: service.slug[locale] },
-                    }}
-                    className="surface-royal surface-royal-hover group flex h-full flex-col rounded-lg p-5 transition-all duration-500"
-                  >
-                    <ServiceIcon
-                      name={service.icon}
-                      className="size-5 text-gold-500 transition-colors group-hover:text-gold-300"
-                    />
-                    <span className="mt-4 font-display text-[0.9375rem] font-bold text-royal-fg transition-colors group-hover:text-gold-100">
-                      {service.copy[locale].name}
-                    </span>
-                    <span className="mt-1.5 flex-1 text-[0.8125rem] leading-snug text-royal-faint">
-                      {service.copy[locale].tagline}
-                    </span>
-                  </Link>
+                  <ServiceCard
+                    service={service}
+                    locale={locale}
+                    daysLabel={t("days")}
+                    readMoreLabel={t("readMore")}
+                  />
                 </RevealItem>
               ))}
             </RevealGroup>
           </div>
         </div>
 
+        {/* Atölye künyesi + teklif — ikonsuz, çizgiyle ayrılmış satırlar */}
         <aside className="lg:col-span-5 xl:col-span-4">
           <div className="space-y-6 lg:sticky lg:top-28">
             <Reveal direction="left">
-              <div className="surface-royal rounded-xl p-6">
-                <h2 className="flex items-center gap-2 font-display text-base font-bold text-royal-fg">
-                  <MapPin className="size-4 text-gold-500" aria-hidden="true" />
+              <div className="rounded-2xl border border-black/[0.07] bg-white p-6 shadow-[0_1px_2px_rgba(0,0,0,0.04)]">
+                <h2 className="text-[0.6875rem] font-semibold uppercase tracking-[0.16em] text-royal-faint">
                   {t("address")}
                 </h2>
-                <p className="mt-3 text-[0.875rem] leading-relaxed text-royal-muted">
+                <p className="mt-3 font-display text-[0.9375rem] font-bold leading-relaxed text-royal-fg">
                   {siteConfig.address.full}
                 </p>
-                <p className="mt-4 border-t border-white/5 pt-4 text-[0.8125rem] leading-relaxed text-royal-faint">
-                  {tRegions("lead")}
-                </p>
+
+                <dl className="mt-5 divide-y divide-black/[0.06] text-[0.875rem]">
+                  <div className="flex items-baseline justify-between gap-4 py-2.5">
+                    <dt className="shrink-0 text-royal-faint">{t("phone")}</dt>
+                    <dd>
+                      <a
+                        href={telLink}
+                        className="font-medium text-royal-fg underline-offset-4 transition-colors hover:text-gold-600 hover:underline"
+                      >
+                        {siteConfig.contact.phoneDisplay}
+                      </a>
+                    </dd>
+                  </div>
+                  <div className="flex items-baseline justify-between gap-4 py-2.5">
+                    <dt className="shrink-0 text-royal-faint">
+                      {t("weekdays")}
+                    </dt>
+                    <dd className="font-medium tabular-nums text-royal-fg">
+                      {siteConfig.openingHours.weekdays.opens}–
+                      {siteConfig.openingHours.weekdays.closes}
+                    </dd>
+                  </div>
+                  <div className="flex items-baseline justify-between gap-4 py-2.5">
+                    <dt className="shrink-0 text-royal-faint">
+                      {t("saturday")}
+                    </dt>
+                    <dd className="font-medium tabular-nums text-royal-fg">
+                      {siteConfig.openingHours.saturday.opens}–
+                      {siteConfig.openingHours.saturday.closes}
+                    </dd>
+                  </div>
+                  <div className="flex items-baseline justify-between gap-4 py-2.5">
+                    <dt className="shrink-0 text-royal-faint">{t("sunday")}</dt>
+                    <dd className="font-medium text-royal-faint">
+                      {t("closed")}
+                    </dd>
+                  </div>
+                </dl>
+
+                <PillAnchor
+                  href={mapsDirectionsLink}
+                  tone="light"
+                  block
+                  className="mt-5"
+                >
+                  {t("getDirections")}
+                </PillAnchor>
               </div>
             </Reveal>
 
             <Reveal direction="left" delay={0.08}>
-              <div className="rounded-xl border border-gold-500/25 bg-gradient-to-b from-gold-500/[0.07] to-transparent p-6">
-                <h2 className="font-display text-base font-bold text-royal-fg">
+              <div className="overflow-hidden rounded-2xl bg-[linear-gradient(150deg,#141416_0%,#252017_58%,#141416_100%)] p-6">
+                <span className="text-[0.6875rem] font-semibold uppercase tracking-[0.16em] text-gold-400">
+                  {region.name[locale]}
+                </span>
+                <h2 className="mt-3 font-display text-lg font-bold text-white">
                   {t("quoteCtaTitle")}
                 </h2>
-                <p className="mt-2.5 text-[0.875rem] leading-relaxed text-royal-muted">
+                <p className="mt-2.5 text-[0.875rem] leading-relaxed text-white/60">
                   {t("quoteCtaText")}
                 </p>
-                <Link
+                <PillLink
                   href="/teklif-al"
-                  className="mt-5 flex h-11 items-center justify-center gap-2 rounded-md bg-gradient-to-b from-gold-300 to-gold-600 text-sm font-bold text-royal-ink transition-all hover:from-gold-200 hover:to-gold-500"
+                  tone="onDark"
+                  block
+                  className="mt-6"
                 >
                   {t("getQuote")}
-                  <ArrowUpRight className="size-4" aria-hidden="true" />
-                </Link>
+                </PillLink>
               </div>
             </Reveal>
           </div>
@@ -218,13 +267,9 @@ export default async function RegionDetailPage({
       <FaqSection faqs={copy.faqs} showCta={false} />
 
       <section className="container-royal pb-20 lg:pb-28">
-        <Link
-          href="/bolgeler"
-          className="inline-flex items-center gap-1.5 text-sm font-semibold text-gold-300 transition-colors hover:text-gold-200"
-        >
+        <PillLink href="/bolgeler" tone="light">
           {t("backToRegions")}
-          <ArrowUpRight className="size-4" aria-hidden="true" />
-        </Link>
+        </PillLink>
       </section>
 
       <JsonLd id="ld-region-service" data={areaSchema} />

@@ -44,7 +44,7 @@ export const projects: Project[] = [
   {
     id: "proje-10",
     slug: { tr: "proje-10", en: "project-10" },
-    serviceId: "kutu-harf-tabela",
+    serviceId: "kurumsal-kimlik",
     year: 2024,
     cover: "/images/portfolio/proje-10.jpg",
     copy: {
@@ -65,7 +65,7 @@ export const projects: Project[] = [
   {
     id: "proje-11",
     slug: { tr: "proje-11", en: "project-11" },
-    serviceId: "kutu-harf-tabela",
+    serviceId: "cephe-giydirme",
     year: 2024,
     cover: "/images/portfolio/proje-11.jpg",
     copy: {
@@ -107,7 +107,7 @@ export const projects: Project[] = [
   {
     id: "proje-13",
     slug: { tr: "proje-13", en: "project-13" },
-    serviceId: "kutu-harf-tabela",
+    serviceId: "cephe-giydirme",
     year: 2024,
     cover: "/images/portfolio/proje-13.jpg",
     copy: {
@@ -128,7 +128,7 @@ export const projects: Project[] = [
   {
     id: "proje-14",
     slug: { tr: "proje-14", en: "project-14" },
-    serviceId: "kutu-harf-tabela",
+    serviceId: "dijital-baski",
     year: 2024,
     cover: "/images/portfolio/proje-14.jpg",
     copy: {
@@ -149,7 +149,7 @@ export const projects: Project[] = [
   {
     id: "proje-15",
     slug: { tr: "proje-15", en: "project-15" },
-    serviceId: "kutu-harf-tabela",
+    serviceId: "dijital-baski",
     year: 2024,
     cover: "/images/portfolio/proje-15.jpg",
     copy: {
@@ -191,7 +191,7 @@ export const projects: Project[] = [
   {
     id: "proje-17",
     slug: { tr: "proje-17", en: "project-17" },
-    serviceId: "kutu-harf-tabela",
+    serviceId: "kurumsal-kimlik",
     year: 2024,
     cover: "/images/portfolio/proje-17.jpg",
     copy: {
@@ -212,7 +212,7 @@ export const projects: Project[] = [
   {
     id: "proje-18",
     slug: { tr: "proje-18", en: "project-18" },
-    serviceId: "kutu-harf-tabela",
+    serviceId: "isikli-tabela",
     year: 2024,
     cover: "/images/portfolio/proje-18.jpg",
     copy: {
@@ -233,7 +233,7 @@ export const projects: Project[] = [
   {
     id: "proje-19",
     slug: { tr: "proje-19", en: "project-19" },
-    serviceId: "kutu-harf-tabela",
+    serviceId: "isikli-tabela",
     year: 2024,
     cover: "/images/portfolio/proje-19.jpg",
     copy: {
@@ -254,7 +254,7 @@ export const projects: Project[] = [
   {
     id: "proje-20",
     slug: { tr: "proje-20", en: "project-20" },
-    serviceId: "kutu-harf-tabela",
+    serviceId: "dijital-baski",
     year: 2024,
     cover: "/images/portfolio/proje-20.jpg",
     copy: {
@@ -296,7 +296,7 @@ export const projects: Project[] = [
   {
     id: "proje-22",
     slug: { tr: "proje-22", en: "project-22" },
-    serviceId: "kutu-harf-tabela",
+    serviceId: "dijital-baski",
     year: 2024,
     cover: "/images/portfolio/proje-22.jpg",
     copy: {
@@ -317,7 +317,7 @@ export const projects: Project[] = [
   {
     id: "proje-23",
     slug: { tr: "proje-23", en: "project-23" },
-    serviceId: "kutu-harf-tabela",
+    serviceId: "dijital-baski",
     year: 2024,
     cover: "/images/portfolio/proje-23.jpg",
     copy: {
@@ -359,7 +359,7 @@ export const projects: Project[] = [
   {
     id: "proje-25",
     slug: { tr: "proje-25", en: "project-25" },
-    serviceId: "kutu-harf-tabela",
+    serviceId: "imalat-tasarim-montaj",
     year: 2024,
     cover: "/images/portfolio/proje-25.jpg",
     copy: {
@@ -380,7 +380,7 @@ export const projects: Project[] = [
   {
     id: "proje-26",
     slug: { tr: "proje-26", en: "project-26" },
-    serviceId: "kutu-harf-tabela",
+    serviceId: "dijital-baski",
     year: 2024,
     cover: "/images/portfolio/proje-26.jpg",
     copy: {
@@ -401,7 +401,7 @@ export const projects: Project[] = [
   {
     id: "proje-27",
     slug: { tr: "proje-27", en: "project-27" },
-    serviceId: "kutu-harf-tabela",
+    serviceId: "lightbox-tabela",
     year: 2024,
     cover: "/images/portfolio/proje-27.jpg",
     copy: {
@@ -422,7 +422,7 @@ export const projects: Project[] = [
   {
     id: "proje-28",
     slug: { tr: "proje-28", en: "project-28" },
-    serviceId: "kutu-harf-tabela",
+    serviceId: "dijital-baski",
     year: 2024,
     cover: "/images/portfolio/proje-28.jpg",
     copy: {
@@ -443,7 +443,7 @@ export const projects: Project[] = [
   {
     id: "proje-29",
     slug: { tr: "proje-29", en: "project-29" },
-    serviceId: "kutu-harf-tabela",
+    serviceId: "isikli-tabela",
     year: 2024,
     cover: "/images/portfolio/proje-29.jpg",
     copy: {
@@ -464,7 +464,7 @@ export const projects: Project[] = [
   {
     id: "proje-3",
     slug: { tr: "proje-3", en: "project-3" },
-    serviceId: "kutu-harf-tabela",
+    serviceId: "lightbox-tabela",
     year: 2024,
     cover: "/images/portfolio/proje-3.jpg",
     copy: {
@@ -485,7 +485,7 @@ export const projects: Project[] = [
   {
     id: "proje-30",
     slug: { tr: "proje-30", en: "project-30" },
-    serviceId: "kutu-harf-tabela",
+    serviceId: "cephe-giydirme",
     year: 2024,
     cover: "/images/portfolio/proje-30.jpg",
     copy: {
@@ -506,7 +506,7 @@ export const projects: Project[] = [
   {
     id: "proje-31",
     slug: { tr: "proje-31", en: "project-31" },
-    serviceId: "kutu-harf-tabela",
+    serviceId: "cephe-giydirme",
     year: 2024,
     cover: "/images/portfolio/proje-31.jpg",
     copy: {
@@ -527,7 +527,7 @@ export const projects: Project[] = [
   {
     id: "proje-32",
     slug: { tr: "proje-32", en: "project-32" },
-    serviceId: "kutu-harf-tabela",
+    serviceId: "totem-tabela",
     year: 2024,
     cover: "/images/portfolio/proje-32.jpg",
     copy: {
@@ -548,7 +548,7 @@ export const projects: Project[] = [
   {
     id: "proje-33",
     slug: { tr: "proje-33", en: "project-33" },
-    serviceId: "kutu-harf-tabela",
+    serviceId: "imalat-tasarim-montaj",
     year: 2024,
     cover: "/images/portfolio/proje-33.jpg",
     copy: {
@@ -569,7 +569,7 @@ export const projects: Project[] = [
   {
     id: "proje-34",
     slug: { tr: "proje-34", en: "project-34" },
-    serviceId: "kutu-harf-tabela",
+    serviceId: "cephe-giydirme",
     year: 2024,
     cover: "/images/portfolio/proje-34.jpg",
     copy: {
@@ -590,7 +590,7 @@ export const projects: Project[] = [
   {
     id: "proje-35",
     slug: { tr: "proje-35", en: "project-35" },
-    serviceId: "kutu-harf-tabela",
+    serviceId: "dijital-baski",
     year: 2024,
     cover: "/images/portfolio/proje-35.jpg",
     copy: {
@@ -611,7 +611,7 @@ export const projects: Project[] = [
   {
     id: "proje-36",
     slug: { tr: "proje-36", en: "project-36" },
-    serviceId: "kutu-harf-tabela",
+    serviceId: "imalat-tasarim-montaj",
     year: 2024,
     cover: "/images/portfolio/proje-36.jpg",
     copy: {
@@ -632,7 +632,7 @@ export const projects: Project[] = [
   {
     id: "proje-37",
     slug: { tr: "proje-37", en: "project-37" },
-    serviceId: "kutu-harf-tabela",
+    serviceId: "isikli-tabela",
     year: 2024,
     cover: "/images/portfolio/proje-37.jpg",
     copy: {
@@ -653,7 +653,7 @@ export const projects: Project[] = [
   {
     id: "proje-38",
     slug: { tr: "proje-38", en: "project-38" },
-    serviceId: "kutu-harf-tabela",
+    serviceId: "cephe-giydirme",
     year: 2024,
     cover: "/images/portfolio/proje-38.jpg",
     copy: {
@@ -674,7 +674,7 @@ export const projects: Project[] = [
   {
     id: "proje-39",
     slug: { tr: "proje-39", en: "project-39" },
-    serviceId: "kutu-harf-tabela",
+    serviceId: "cephe-giydirme",
     year: 2024,
     cover: "/images/portfolio/proje-39.jpg",
     copy: {
@@ -716,7 +716,7 @@ export const projects: Project[] = [
   {
     id: "proje-40",
     slug: { tr: "proje-40", en: "project-40" },
-    serviceId: "kutu-harf-tabela",
+    serviceId: "cephe-giydirme",
     year: 2024,
     cover: "/images/portfolio/proje-40.jpg",
     copy: {
@@ -737,7 +737,7 @@ export const projects: Project[] = [
   {
     id: "proje-41",
     slug: { tr: "proje-41", en: "project-41" },
-    serviceId: "kutu-harf-tabela",
+    serviceId: "etiket-sticker",
     year: 2024,
     cover: "/images/portfolio/proje-41.jpg",
     copy: {
@@ -758,7 +758,7 @@ export const projects: Project[] = [
   {
     id: "proje-42",
     slug: { tr: "proje-42", en: "project-42" },
-    serviceId: "kutu-harf-tabela",
+    serviceId: "etiket-sticker",
     year: 2024,
     cover: "/images/portfolio/proje-42.jpg",
     copy: {
@@ -779,7 +779,7 @@ export const projects: Project[] = [
   {
     id: "proje-43",
     slug: { tr: "proje-43", en: "project-43" },
-    serviceId: "kutu-harf-tabela",
+    serviceId: "lightbox-tabela",
     year: 2024,
     cover: "/images/portfolio/proje-43.jpg",
     copy: {
@@ -821,7 +821,7 @@ export const projects: Project[] = [
   {
     id: "proje-45",
     slug: { tr: "proje-45", en: "project-45" },
-    serviceId: "kutu-harf-tabela",
+    serviceId: "cephe-giydirme",
     year: 2024,
     cover: "/images/portfolio/proje-45.jpg",
     copy: {
@@ -842,7 +842,7 @@ export const projects: Project[] = [
   {
     id: "proje-46",
     slug: { tr: "proje-46", en: "project-46" },
-    serviceId: "kutu-harf-tabela",
+    serviceId: "imalat-tasarim-montaj",
     year: 2024,
     cover: "/images/portfolio/proje-46.jpg",
     copy: {
@@ -863,7 +863,7 @@ export const projects: Project[] = [
   {
     id: "proje-47",
     slug: { tr: "proje-47", en: "project-47" },
-    serviceId: "kutu-harf-tabela",
+    serviceId: "imalat-tasarim-montaj",
     year: 2024,
     cover: "/images/portfolio/proje-47.jpg",
     copy: {
@@ -905,7 +905,7 @@ export const projects: Project[] = [
   {
     id: "proje-49",
     slug: { tr: "proje-49", en: "project-49" },
-    serviceId: "kutu-harf-tabela",
+    serviceId: "cephe-giydirme",
     year: 2024,
     cover: "/images/portfolio/proje-49.jpg",
     copy: {
@@ -947,7 +947,7 @@ export const projects: Project[] = [
   {
     id: "proje-50",
     slug: { tr: "proje-50", en: "project-50" },
-    serviceId: "kutu-harf-tabela",
+    serviceId: "etiket-sticker",
     year: 2024,
     cover: "/images/portfolio/proje-50.jpg",
     copy: {
@@ -968,7 +968,7 @@ export const projects: Project[] = [
   {
     id: "proje-52",
     slug: { tr: "proje-52", en: "project-52" },
-    serviceId: "kutu-harf-tabela",
+    serviceId: "dijital-baski",
     year: 2024,
     cover: "/images/portfolio/proje-52.jpg",
     copy: {
@@ -989,7 +989,7 @@ export const projects: Project[] = [
   {
     id: "proje-6",
     slug: { tr: "proje-6", en: "project-6" },
-    serviceId: "kutu-harf-tabela",
+    serviceId: "imalat-tasarim-montaj",
     year: 2024,
     cover: "/images/portfolio/proje-6.jpg",
     copy: {
@@ -1052,7 +1052,7 @@ export const projects: Project[] = [
   {
     id: "proje-9",
     slug: { tr: "proje-9", en: "project-9" },
-    serviceId: "kutu-harf-tabela",
+    serviceId: "cephe-giydirme",
     year: 2024,
     cover: "/images/portfolio/proje-9.jpg",
     copy: {

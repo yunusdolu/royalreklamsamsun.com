@@ -1,4 +1,4 @@
-import { siteConfig } from "@/config/site";
+import { mapsDirectionsLink, siteConfig } from "@/config/site";
 import type { Service } from "@/content/services";
 import type { Locale } from "@/i18n/routing";
 
@@ -34,6 +34,7 @@ function postalAddress() {
     streetAddress: siteConfig.address.street,
     addressLocality: siteConfig.address.district,
     addressRegion: siteConfig.address.region,
+    postalCode: siteConfig.address.postalCode,
     addressCountry: siteConfig.address.country,
   };
 }
@@ -79,6 +80,11 @@ export function buildLocalBusinessSchema(locale: Locale) {
     priceRange: "$$",
     currenciesAccepted: "TRY",
     sameAs: [siteConfig.contact.instagram],
+    /**
+     * Google Business Profile kaydına açık bağlantı: sitedeki işletme ile
+     * haritadaki kaydın aynı varlık olduğunu doğrulamaya yardımcı olur.
+     */
+    hasMap: mapsDirectionsLink,
     founder: {
       "@type": "Person",
       "@id": schemaIds.founder,
@@ -99,7 +105,7 @@ export function buildWebSiteSchema(locale: Locale) {
     "@type": "WebSite",
     "@id": schemaIds.website,
     url: siteConfig.url,
-    name: siteConfig.name,
+    name: siteConfig.siteName,
     description: descriptions[locale],
     inLanguage: locale === "tr" ? "tr-TR" : "en",
     publisher: { "@id": schemaIds.localBusiness },

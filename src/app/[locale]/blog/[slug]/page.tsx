@@ -8,7 +8,7 @@ import { Reveal, RevealGroup, RevealItem } from "@/components/motion/reveal";
 import { CtaSection } from "@/components/sections/cta-section";
 import { PostBody } from "@/components/sections/post-body";
 import { JsonLd } from "@/components/seo/json-ld";
-import { ServiceIcon } from "@/components/ui/service-icon";
+import { PillLink } from "@/components/ui/pill-button";
 import { siteConfig } from "@/config/site";
 import { getPostBySlug, posts, sortedPosts } from "@/content/posts";
 import { getServiceById } from "@/content/services";
@@ -123,13 +123,14 @@ export default async function BlogPostPage({
 
         <aside className="lg:col-span-4">
           <div className="space-y-6 lg:sticky lg:top-28">
+            {/* İlgili hizmetler — ikonsuz, çizgiyle ayrılmış satırlar */}
             {relatedServices.length > 0 && (
               <Reveal direction="left">
-                <div className="surface-royal rounded-xl p-6">
-                  <h2 className="text-[0.6875rem] font-semibold uppercase tracking-[0.18em] text-gold-500">
+                <div className="rounded-2xl border border-black/[0.07] bg-white p-6 shadow-[0_1px_2px_rgba(0,0,0,0.04)]">
+                  <h2 className="text-[0.6875rem] font-semibold uppercase tracking-[0.16em] text-royal-faint">
                     {t("popularServices")}
                   </h2>
-                  <ul className="mt-4 space-y-1">
+                  <ul className="mt-3 divide-y divide-black/[0.06]">
                     {relatedServices.map((service) => (
                       <li key={service.id}>
                         <Link
@@ -137,15 +138,15 @@ export default async function BlogPostPage({
                             pathname: "/hizmetler/[slug]",
                             params: { slug: service.slug[locale] },
                           }}
-                          className="group flex items-center gap-3 rounded-md py-2.5 text-[0.875rem] text-royal-muted transition-colors hover:text-gold-200"
+                          className="group flex items-center gap-3 py-3 text-[0.875rem] font-medium text-royal-fg transition-colors hover:text-gold-600"
                         >
-                          <ServiceIcon
-                            name={service.icon}
-                            className="size-4 shrink-0 text-gold-600"
+                          <span
+                            className="h-px w-3.5 shrink-0 bg-gold-600 transition-all duration-500 group-hover:w-6"
+                            aria-hidden="true"
                           />
                           {service.copy[locale].shortName}
                           <ArrowUpRight
-                            className="ml-auto size-3.5 opacity-0 transition-opacity group-hover:opacity-100"
+                            className="ml-auto size-4 text-royal-faint transition-all duration-500 group-hover:text-gold-600"
                             aria-hidden="true"
                           />
                         </Link>
@@ -157,20 +158,24 @@ export default async function BlogPostPage({
             )}
 
             <Reveal direction="left" delay={0.08}>
-              <div className="rounded-xl border border-gold-500/25 bg-gradient-to-b from-gold-500/[0.07] to-transparent p-6">
-                <h2 className="font-display text-base font-bold text-royal-fg">
+              <div className="overflow-hidden rounded-2xl bg-[linear-gradient(150deg,#141416_0%,#252017_58%,#141416_100%)] p-6">
+                <span className="text-[0.6875rem] font-semibold uppercase tracking-[0.16em] text-gold-400">
+                  {tBlog("title")}
+                </span>
+                <h2 className="mt-3 font-display text-lg font-bold text-white">
                   {t("quoteCtaTitle")}
                 </h2>
-                <p className="mt-2.5 text-[0.875rem] leading-relaxed text-royal-muted">
+                <p className="mt-2.5 text-[0.875rem] leading-relaxed text-white/60">
                   {t("quoteCtaText")}
                 </p>
-                <Link
+                <PillLink
                   href="/teklif-al"
-                  className="mt-5 flex h-11 items-center justify-center gap-2 rounded-md bg-gradient-to-b from-gold-300 to-gold-600 text-sm font-bold text-royal-ink transition-all hover:from-gold-200 hover:to-gold-500"
+                  tone="onDark"
+                  block
+                  className="mt-6"
                 >
                   {t("getQuote")}
-                  <ArrowUpRight className="size-4" aria-hidden="true" />
-                </Link>
+                </PillLink>
               </div>
             </Reveal>
           </div>
@@ -182,7 +187,7 @@ export default async function BlogPostPage({
           <h2 className="underline-gold font-display text-xl font-bold text-royal-fg lg:text-2xl">
             {tBlog("relatedTitle")}
           </h2>
-          <RevealGroup as="ul" className="mt-8 grid gap-4 sm:grid-cols-2">
+          <RevealGroup as="ul" className="mt-8 border-t border-black/[0.08]">
             {otherPosts.map((item) => (
               <RevealItem as="li" key={item.id}>
                 <Link
@@ -190,26 +195,41 @@ export default async function BlogPostPage({
                     pathname: "/blog/[slug]",
                     params: { slug: item.slug[locale] },
                   }}
-                  className="surface-royal surface-royal-hover group flex h-full flex-col rounded-lg p-6 transition-all duration-500"
+                  className="group relative flex items-start gap-4 border-b border-black/[0.08] py-6 md:gap-10"
                 >
-                  <span className="font-display text-base font-bold leading-snug text-royal-fg transition-colors group-hover:text-gold-100">
-                    {item.copy[locale].title}
+                  <span
+                    className="absolute bottom-0 left-0 h-px w-0 bg-gold-500 transition-all duration-700 ease-out group-hover:w-full"
+                    aria-hidden="true"
+                  />
+
+                  <span className="hidden w-32 shrink-0 pt-1 text-[0.75rem] text-royal-faint md:block">
+                    <time dateTime={item.published}>
+                      {format.dateTime(new Date(item.published), "long")}
+                    </time>
                   </span>
-                  <span className="mt-2.5 flex-1 text-[0.8125rem] leading-relaxed text-royal-muted">
-                    {item.copy[locale].excerpt}
+
+                  <span className="min-w-0 flex-1">
+                    <span className="block font-display text-[1.125rem] font-bold leading-snug text-royal-fg transition-transform duration-500 ease-out group-hover:translate-x-1.5">
+                      {item.copy[locale].title}
+                    </span>
+                    <span className="mt-2 block max-w-2xl text-[0.875rem] leading-relaxed text-royal-muted">
+                      {item.copy[locale].excerpt}
+                    </span>
+                  </span>
+
+                  <span className="flex size-10 shrink-0 items-center justify-center self-center rounded-full bg-black/[0.045] text-royal-faint transition-all duration-500 group-hover:bg-black group-hover:text-white">
+                    <ArrowUpRight className="size-4" aria-hidden="true" />
                   </span>
                 </Link>
               </RevealItem>
             ))}
           </RevealGroup>
 
-          <Link
-            href="/blog"
-            className="mt-8 inline-flex items-center gap-1.5 text-sm font-semibold text-gold-300 transition-colors hover:text-gold-200"
-          >
-            {t("backToBlog")}
-            <ArrowUpRight className="size-4" aria-hidden="true" />
-          </Link>
+          <div className="mt-10">
+            <PillLink href="/blog" tone="light">
+              {t("backToBlog")}
+            </PillLink>
+          </div>
         </section>
       )}
 

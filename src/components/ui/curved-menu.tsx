@@ -23,10 +23,12 @@ interface iNavLinkProps extends iNavItem {
 interface iCurvedNavbarProps {
 	setIsActive: (isActive: boolean) => void;
 	navItems: iNavItem[];
+	menuLabel?: string;
 }
 
 interface iHeaderProps {
 	navItems?: iNavItem[];
+	menuLabel?: string;
 	footer?: React.ReactNode;
 }
 
@@ -210,7 +212,7 @@ const Curve: React.FC = () => {
 
 const CurvedNavbar: React.FC<
 	iCurvedNavbarProps & {footer?: React.ReactNode}
-> = ({setIsActive, navItems, footer}) => {
+> = ({setIsActive, navItems, footer, menuLabel}) => {
 	return (
 		<motion.div
 			variants={MENU_SLIDE_ANIMATION}
@@ -222,7 +224,7 @@ const CurvedNavbar: React.FC<
 			<div className="h-full pt-11 flex flex-col justify-between">
 				<div className="flex flex-col text-5xl gap-3 mt-0 px-10 md:px-24">
 					<div className="text-black border-b border-black/30 uppercase text-sm mb-0">
-						<p>Menü</p>
+						<p>{menuLabel ?? "Menü"}</p>
 					</div>
 					<section className="bg-transparent mt-0">
 						<div className="mx-auto max-w-7xl">
@@ -248,6 +250,7 @@ const CurvedNavbar: React.FC<
 
 const CurvedMenu: React.FC<iHeaderProps> = ({
 	navItems = defaultNavItems,
+	menuLabel,
 	footer = <CustomFooter />,
 }) => {
 	const [isActive, setIsActive] = useState(false);
@@ -289,6 +292,7 @@ const CurvedMenu: React.FC<iHeaderProps> = ({
 					<CurvedNavbar
 						setIsActive={setIsActive}
 						navItems={navItems}
+						menuLabel={menuLabel}
 						footer={footer}
 					/>
 				)}

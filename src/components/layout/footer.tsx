@@ -1,22 +1,32 @@
-import React from 'react';
-import { cn } from '@/lib/utils';
-import { ArrowRight } from 'lucide-react';
+import React from "react";
+import { cn } from "@/lib/utils";
+import { ArrowRight } from "lucide-react";
 import { getTranslations } from "next-intl/server";
-import { siteConfig, whatsappLink, mailLink, mapsDirectionsLink } from "@/config/site";
+import {
+  siteConfig,
+  whatsappLink,
+  mailLink,
+  mapsDirectionsLink,
+} from "@/config/site";
 import { Link } from "@/i18n/navigation";
 
-type FooterProps = React.ComponentProps<'footer'> & {
+type FooterProps = React.ComponentProps<"footer"> & {
   children?: React.ReactNode;
 };
 
-export async function Footer({ className, ...props }: Omit<FooterProps, 'children'>) {
+export async function Footer({
+  className,
+  ...props
+}: Omit<FooterProps, "children">) {
   const tNav = await getTranslations("nav");
+  const t = await getTranslations("footer");
+  const tCommon = await getTranslations("common");
   const year = new Date().getFullYear();
 
   return (
     <footer
       className={cn(
-        'border-t border-black/5 bg-white pt-8 text-black',
+        "border-t border-black/5 bg-white pt-8 text-black",
         className,
       )}
       {...props}
@@ -26,47 +36,50 @@ export async function Footer({ className, ...props }: Omit<FooterProps, 'childre
           <div>
             <SocialCard title="Instagram" href={siteConfig.contact.instagram} />
             <LinksGroup
-              title="Kurumsal"
+              title={t("corporate")}
               links={[
-                { title: tNav("about"), href: '/hakkimizda' },
-                { title: tNav("services"), href: '/hizmetler' },
-                { title: tNav("regions"), href: '/bolgeler' },
-                { title: tNav("contact"), href: '/iletisim' },
+                { title: tNav("about"), href: "/hakkimizda" },
+                { title: tNav("services"), href: "/hizmetler" },
+                { title: tNav("regions"), href: "/bolgeler" },
+                { title: tNav("contact"), href: "/iletisim" },
               ]}
             />
           </div>
           <div>
-            <SocialCard title="E-Posta" href={mailLink} />
+            <SocialCard title={tCommon("email")} href={mailLink} />
             <LinksGroup
-              title="Hizmetlerimiz"
+              title={t("servicesGroup")}
               links={[
-                { title: 'Tabela Sistemleri', href: '/hizmetler' },
-                { title: 'Dijital Baskı', href: '/hizmetler' },
-                { title: 'Araç Giydirme', href: '/hizmetler' },
-                { title: 'Cephe Sistemleri', href: '/hizmetler' },
+                { title: t("signSystems"), href: "/hizmetler" },
+                { title: t("printing"), href: "/hizmetler" },
+                { title: t("vehicleWrap"), href: "/hizmetler" },
+                { title: t("facade"), href: "/hizmetler" },
               ]}
             />
           </div>
 
           <div>
-            <SocialCard title="WhatsApp" href={whatsappLink("Merhaba Royal Reklam, web siteniz üzerinden ulaşıyorum. Hizmetleriniz hakkında bilgi almak istiyorum.")} />
+            <SocialCard
+              title="WhatsApp"
+              href={whatsappLink(t("whatsappPrefill"))}
+            />
             <LinksGroup
-              title="Destek"
+              title={t("support")}
               links={[
-                { title: 'S.S.S', href: '/sss' },
-                { title: 'Garanti Şartları', href: '/' },
-                { title: 'İletişim', href: '/iletisim' },
+                { title: tNav("faq"), href: "/sss" },
+                { title: t("warranty"), href: "/garanti" },
+                { title: tNav("contact"), href: "/iletisim" },
               ]}
             />
           </div>
           <div>
-            <SocialCard title="Yol Tarifi" href={mapsDirectionsLink} />
+            <SocialCard title={t("directions")} href={mapsDirectionsLink} />
             <LinksGroup
-              title="Yasal"
+              title={t("legal")}
               links={[
-                { title: 'Gizlilik', href: '/' },
-                { title: 'Çerez', href: '/' },
-                { title: 'KVKK', href: '/' },
+                { title: t("privacy"), href: "/gizlilik" },
+                { title: t("cookies"), href: "/cerez" },
+                { title: t("kvkk"), href: "/kvkk" },
               ]}
             />
           </div>
@@ -74,10 +87,18 @@ export async function Footer({ className, ...props }: Omit<FooterProps, 'childre
       </div>
       <div className="mx-auto max-w-[1400px] flex flex-col sm:flex-row items-center justify-between border-t border-black/10 p-4 mt-6 gap-4 px-6">
         <p className="text-zinc-500 text-xs font-medium">
-          © {year} {siteConfig.legalName}. Tüm hakları saklıdır.
+          © {year} {siteConfig.legalName}. {t("rights")}
         </p>
         <p className="text-zinc-500 text-xs font-medium">
-          Designed by <a href="https://instagram.com/creasivcom" target="_blank" rel="noopener noreferrer" className="text-black hover:text-gold-500 transition-colors font-bold">creasiv</a>
+          Designed by{" "}
+          <a
+            href="https://instagram.com/creasivcom"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-black hover:text-gold-500 transition-colors font-bold"
+          >
+            creasiv
+          </a>
         </p>
       </div>
     </footer>
@@ -111,14 +132,19 @@ function LinksGroup({ title, links }: LinksGroupProps) {
 }
 
 function SocialCard({ title, href }: { title: string; href: string }) {
+  // mailto: / tel: linkleri yeni sekmede açılmamalı, yoksa boş sekme açılıp mail istemcisi tetiklenmiyor
+  const isExternal = !href.startsWith("mailto:") && !href.startsWith("tel:");
+
   return (
     <a
       href={href}
-      target="_blank"
-      rel="noreferrer"
+      target={isExternal ? "_blank" : undefined}
+      rel={isExternal ? "noreferrer" : undefined}
       className="group flex items-center justify-between border-t border-b border-black/10 p-4 text-[13px] md:border-t-0 hover:bg-black/5 transition-colors"
     >
-      <span className="font-semibold text-black group-hover:text-gold-500 transition-colors">{title}</span>
+      <span className="font-semibold text-black group-hover:text-gold-500 transition-colors">
+        {title}
+      </span>
       <ArrowRight className="h-3.5 w-3.5 text-zinc-500 group-hover:text-gold-500 group-hover:translate-x-1 transition-all" />
     </a>
   );

@@ -19,7 +19,7 @@ export const servicesTr: Record<string, ServiceCopy> = {
       "LED aydınlatmalı pleksi ve kompozit kasa tabelalar. Yüksek gece görünürlüğü, düşük enerji tüketimi.",
     answer:
       "Işıklı tabela, LED aydınlatma sayesinde karanlıkta da net okunabilen cephe tanıtım levhasıdır. Royal Reklam, Samsun'da alüminyum kompozit kasa ve pleksiglas yüzey ile IP65 korumalı LED modüllü ışıklı tabela imalatı yapar. Keşif, tasarım, üretim ve montaj dâhil ortalama teslim süresi 5–10 iş günüdür.",
-    metaTitle: "Samsun Işıklı Tabela İmalatı | LED Tabela — Royal Reklam",
+    metaTitle: "Samsun Işıklı Tabela İmalatı | LED Tabela — Royal Reklam Samsun",
     metaDescription:
       "Samsun'da ışıklı tabela imalatı: LED kutu, pleksi ve kompozit kasa tabela. Keşif, tasarım, imalat ve montaj tek elden, 2 yıl garantili. 0544 230 71 77",
     keywords: [
@@ -110,7 +110,7 @@ export const servicesTr: Record<string, ServiceCopy> = {
       "Her harfin ayrı üretildiği, üç boyutlu ve ışıklı tabela çözümü. Kurumsal markaların ilk tercihi.",
     answer:
       "Kutu harf tabela, her harfin ayrı bir hacimli kutu olarak üretilip cepheye tek tek monte edildiği tabela türüdür. Royal Reklam, Samsun'da pleksi yüzlü, alüminyum yan bantlı ve LED aydınlatmalı kutu harf imalatı yapar. Önden, arkadan (halo) veya çift yönlü aydınlatma seçenekleriyle ortalama 7–12 iş gününde teslim edilir.",
-    metaTitle: "Samsun Kutu Harf Tabela İmalatı — Royal Reklam",
+    metaTitle: "Samsun Kutu Harf Tabela İmalatı — Royal Reklam Samsun",
     metaDescription:
       "Samsun kutu harf tabela: pleksi yüzlü, LED aydınlatmalı, halo ışıklı 3 boyutlu harf imalatı. AVM ve cadde mağazaları için kurumsal çözüm. 0544 230 71 77",
     keywords: [
@@ -201,7 +201,7 @@ export const servicesTr: Record<string, ServiceCopy> = {
       "Yol kenarı ve otopark girişleri için dikey, çift yüzlü, ışıklı totem tabela imalatı ve montajı.",
     answer:
       "Totem tabela, zemine sabitlenen çelik konstrüksiyon üzerine kurulan dikey ve genellikle çift yüzlü tanıtım tabelasıdır. Royal Reklam, Samsun'da 2 ile 8 metre arası ışıklı totem imalatı, temel betonu ve montajını üstlenir. Akaryakıt istasyonu, AVM, otel ve site girişlerinde uzaktan görünürlük sağlar.",
-    metaTitle: "Samsun Totem Tabela İmalatı ve Montajı — Royal Reklam",
+    metaTitle: "Samsun Totem Tabela İmalatı ve Montajı — Royal Reklam Samsun",
     metaDescription:
       "Samsun totem tabela: 2–8 metre çift yüzlü ışıklı totem imalatı, statik hesap, temel ve montaj dâhil. AVM, otel ve istasyonlar için. 0544 230 71 77",
     keywords: [
@@ -286,7 +286,7 @@ export const servicesTr: Record<string, ServiceCopy> = {
       "Gergi kumaş veya pleksi yüzeyli, arkadan homojen aydınlatmalı ince kasa ışıklı pano sistemleri.",
     answer:
       "Lightbox tabela, ince alüminyum kasa içine yerleştirilen LED panel ile arkadan homojen aydınlatılan ışıklı panodur. Royal Reklam, Samsun'da gergi kumaş (textile) ve pleksi yüzeyli lightbox imalatı yapar. Görsel değişimi kumaş baskının sökülüp takılmasıyla dakikalar içinde yapılabilir.",
-    metaTitle: "Samsun Lightbox Tabela ve Gergi Kumaş Pano — Royal Reklam",
+    metaTitle: "Samsun Lightbox Tabela ve Gergi Kumaş Pano — Royal Reklam Samsun",
     metaDescription:
       "Samsun lightbox tabela imalatı: ince kasa, gergi kumaş veya pleksi yüzey, homojen LED aydınlatma. Vitrin ve iç mekân için. 0544 230 71 77",
     keywords: [
@@ -370,7 +370,7 @@ export const servicesTr: Record<string, ServiceCopy> = {
       "Alüminyum kompozit panel ve mesh vinil ile bina cephelerinin kurumsal kimliğe uygun kaplanması.",
     answer:
       "Cephe giydirme, bir binanın dış yüzeyinin alüminyum kompozit panel, mesh vinil veya pleksi yüzeylerle kaplanarak marka kimliğine dönüştürülmesidir. Royal Reklam, Samsun'da keşif, statik değerlendirme, taşıyıcı konstrüksiyon ve montaj dâhil anahtar teslim cephe giydirme uygular. Ortalama uygulama süresi cephe büyüklüğüne göre 1–4 haftadır.",
-    metaTitle: "Samsun Cephe Giydirme | Kompozit Panel Kaplama — Royal Reklam",
+    metaTitle: "Samsun Cephe Giydirme | Kompozit Panel Kaplama — Royal Reklam Samsun",
     metaDescription:
       "Samsun cephe giydirme: alüminyum kompozit panel, mesh vinil ve pleksi kaplama. Statik hesap, konstrüksiyon ve montaj dâhil. 0544 230 71 77",
     keywords: [
@@ -455,7 +455,7 @@ export const servicesTr: Record<string, ServiceCopy> = {
       "Kesim folyo ve tam kaplama uygulamalarıyla ticari araçlarınızı gezen bir reklam yüzeyine çevirin.",
     answer:
       "Araç giydirme, ticari araçların yüzeyinin kesim folyo veya dijital baskılı folyo ile kaplanarak reklam alanına dönüştürülmesidir. Royal Reklam, Samsun'da laminasyonlu döküm folyo ile kısmi ve tam araç kaplama uygular. Uygulama süresi araç tipine göre 1–3 gündür ve orijinal boyaya zarar vermez.",
-    metaTitle: "Samsun Araç Giydirme ve Araç Kaplama — Royal Reklam",
+    metaTitle: "Samsun Araç Giydirme ve Araç Kaplama — Royal Reklam Samsun",
     metaDescription:
       "Samsun araç giydirme: kesim folyo, tam kaplama, filo uygulamaları. Döküm folyo + laminasyon, orijinal boyaya zarar vermez. 0544 230 71 77",
     keywords: [
@@ -545,7 +545,7 @@ export const servicesTr: Record<string, ServiceCopy> = {
       "Vinil, branda, mesh, folyo ve one-way vision üzerine yüksek çözünürlüklü geniş format baskı.",
     answer:
       "Dijital baskı, vinil, branda, mesh ve folyo gibi geniş format malzemelere doğrudan görsel basılmasıdır. Royal Reklam, Samsun'da eko-solvent ve UV baskı teknolojisiyle afiş, branda, vitrin folyosu ve cephe görseli üretir. Kurumsal renkler Pantone eşleştirmesiyle korunur; standart işler 1–3 iş gününde teslim edilir.",
-    metaTitle: "Samsun Dijital Baskı | Branda, Vinil, Folyo — Royal Reklam",
+    metaTitle: "Samsun Dijital Baskı | Branda, Vinil, Folyo — Royal Reklam Samsun",
     metaDescription:
       "Samsun dijital baskı: branda, vinil, mesh, one-way vision ve folyo baskı. Pantone renk eşleştirme, 1–3 iş günü teslim. 0544 230 71 77",
     keywords: [
@@ -632,7 +632,7 @@ export const servicesTr: Record<string, ServiceCopy> = {
       "Logo, renk, tipografi ve uygulama kurallarını içeren; tabeladan araca tüm yüzeyleri kapsayan kimlik sistemi.",
     answer:
       "Kurumsal kimlik çalışması, bir markanın logo, renk paleti, tipografi ve uygulama kurallarını tanımlayan sistemin oluşturulmasıdır. Royal Reklam, Samsun'da art direktör İshak Bal yönetiminde logo tasarımı, kimlik kılavuzu ve tüm basılı/uygulamalı materyalleri üretir. Tabela, araç ve cephe uygulamaları aynı sistemden beslenir.",
-    metaTitle: "Samsun Kurumsal Kimlik ve Logo Tasarımı — Royal Reklam",
+    metaTitle: "Samsun Kurumsal Kimlik ve Logo Tasarımı — Royal Reklam Samsun",
     metaDescription:
       "Samsun kurumsal kimlik: logo tasarımı, renk ve tipografi sistemi, kimlik kılavuzu, kartvizit ve tüm uygulama materyalleri. 0544 230 71 77",
     keywords: [
@@ -718,7 +718,7 @@ export const servicesTr: Record<string, ServiceCopy> = {
       "Ürün etiketi, cam sticker, zemin etiketi ve promosyon çıkartmalarında kontur kesimli üretim.",
     answer:
       "Etiket ve sticker üretimi, folyo veya kuşe malzemeye baskı yapılıp kontur kesimle şekil verilmesidir. Royal Reklam, Samsun'da ürün etiketi, cam ve kapı stickerı, zemin etiketi ve promosyon çıkartması üretir. Küçük adetli işler dâhil, standart siparişler 1–3 iş gününde teslim edilir.",
-    metaTitle: "Samsun Etiket ve Sticker Baskı | Kontur Kesim — Royal Reklam",
+    metaTitle: "Samsun Etiket ve Sticker Baskı | Kontur Kesim — Royal Reklam Samsun",
     metaDescription:
       "Samsun etiket ve sticker baskı: ürün etiketi, cam sticker, zemin etiketi, kontur kesim. Küçük adetli işler dâhil, 1–3 gün teslim. 0544 230 71 77",
     keywords: [

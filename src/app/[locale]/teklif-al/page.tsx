@@ -57,17 +57,17 @@ export default async function QuotePage({
         title={t("title")}
         lead={t("lead")}
       >
-        <RevealGroup as="ul" className="mt-9 grid gap-3 sm:grid-cols-3">
+        {/* Adımlar — çerçeveli rakam yerine üstte altın çizgi + numara */}
+        <RevealGroup as="ul" className="mt-9 grid gap-6 sm:grid-cols-3">
           {steps.map((step, index) => (
-            <RevealItem
-              as="li"
-              key={step}
-              className="flex items-center gap-3 rounded-lg border border-royal-border bg-royal-graphite/60 px-4 py-3.5"
-            >
-              <span className="flex size-7 shrink-0 items-center justify-center rounded-full border border-gold-500/35 font-display text-xs font-bold text-gold-300">
-                {index + 1}
+            <RevealItem as="li" key={step}>
+              <span className="block h-px w-full bg-black/10" aria-hidden="true">
+                <span className="block h-px w-10 bg-gold-500" />
               </span>
-              <span className="text-[0.875rem] font-medium text-royal-fg">
+              <span className="mt-4 block font-display text-[0.6875rem] font-bold tabular-nums text-gold-600">
+                {String(index + 1).padStart(2, "0")}
+              </span>
+              <span className="mt-1.5 block text-[0.9375rem] font-medium text-royal-fg">
                 {step}
               </span>
             </RevealItem>

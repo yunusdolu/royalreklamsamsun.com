@@ -1,10 +1,9 @@
 {
   "meta": {
-    "defaultTitle": "Royal Reklam | Signage, Channel Letters & Façade Cladding in Samsun",
+    "defaultTitle": "Royal Reklam Samsun | Signage, Channel Letters & Façade Cladding",
     "defaultDescription": "Illuminated signage, channel letters, totems, façade cladding and vehicle wrapping in Samsun, Türkiye. Survey to installation in house, with a 2-year warranty.",
     "skipToContent": "Skip to content"
   },
-
   "nav": {
     "home": "Home",
     "services": "Services",
@@ -21,9 +20,9 @@
     "servicesIntro": "Every outdoor advertising solution, from sign fabrication and façade cladding through to design and installation.",
     "languageLabel": "Language",
     "switchToEnglish": "English",
-    "switchToTurkish": "Türkçe"
+    "switchToTurkish": "Türkçe",
+    "menuLabel": "Menu"
   },
-
   "common": {
     "readMore": "Read more",
     "learnMore": "Explore",
@@ -58,9 +57,12 @@
     "popularServices": "Most requested in this area",
     "quoteCtaTitle": "Want a price for this work?",
     "quoteCtaText": "On-site survey is free. Once we have the measurements we give you a firm price and delivery date.",
-    "artDirector": "Art Director"
+    "artDirector": "Art Director",
+    "slide": "Slide {number}",
+    "instagramMore": "More on Instagram",
+    "instagramBrowse": "Browse on Instagram",
+    "dayDelivery": "Day Delivery"
   },
-
   "home": {
     "hero": {
       "eyebrow": "Samsun · Outdoor Advertising",
@@ -71,7 +73,24 @@
       "scrollHint": "Explore",
       "badgeOne": "Fabricated in our own workshop",
       "badgeTwo": "2-year warranty",
-      "badgeThree": "Nationwide installation"
+      "badgeThree": "Nationwide installation",
+      "slides": {
+        "1": {
+          "title": "Make your brand",
+          "titleLine2": "impossible to miss.",
+          "description": "Outdoor advertising that puts your business a step ahead on the street."
+        },
+        "2": {
+          "title": "First impressions",
+          "titleLine2": "are made outside.",
+          "description": "Modern signage that reflects your shop or office and holds a passer-by's attention."
+        },
+        "3": {
+          "title": "Your brand travels",
+          "titleLine2": "with you.",
+          "description": "Professional vehicle wraps that advertise you in every part of the city."
+        }
+      }
     },
     "stats": {
       "title": "Royal Reklam in numbers",
@@ -111,7 +130,9 @@
           "title": "Handover & Warranty",
           "description": "Two years of fabrication and LED warranty. If something goes wrong there is one number to call — responsibility is never passed on."
         }
-      }
+      },
+      "headingTop": "Why work",
+      "headingAccent": "with us?"
     },
     "why": {
       "eyebrow": "Why Royal Reklam",
@@ -162,19 +183,22 @@
     "cta": {
       "title": "Let's talk about your façade",
       "description": "We will take the measurements and prepare the design. Surveys within Samsun are entirely free — the decision stays yours.",
-      "primary": "Message on WhatsApp",
-      "secondary": "Call now"
+      "primary": "Request a quote",
+      "secondary": "Or message us on WhatsApp",
+      "eyebrow": "Get in touch",
+      "headingTop": "Let’s talk about",
+      "headingAccent": "your façade",
+      "whatsappPrefill": "Hello Royal Reklam, I am writing from your website. I would like signage for my premises."
     }
   },
-
   "servicesPage": {
     "title": "Our Services",
     "metaTitle": "Our Services | Signage & Advertising in Samsun",
     "metaDescription": "Illuminated signage, channel letters, totems, lightboxes, façade cladding, vehicle wrapping, large format printing, brand identity and labels in Samsun.",
     "lead": "One aesthetic discipline for every surface where a brand meets the outside world. All ten services below are carried out by our own team, from survey to installation.",
-    "answer": "Royal Reklam is an outdoor advertising company based in Samsun, Türkiye. It produces illuminated signage, channel letters, totem signs, lightboxes, façade cladding, vehicle wraps, large format printing, brand identity and labels, handling survey, design, fabrication and installation in house."
+    "answer": "Royal Reklam is an outdoor advertising company based in Samsun, Türkiye. It produces illuminated signage, channel letters, totem signs, lightboxes, façade cladding, vehicle wraps, large format printing, brand identity and labels, handling survey, design, fabrication and installation in house.",
+    "whatsappPrefill": "Hello Royal Reklam, I would like information and pricing for \"{service}\"."
   },
-
   "portfolioPage": {
     "title": "Our Work",
     "metaTitle": "Our Work | Royal Reklam Samsun",
@@ -182,9 +206,11 @@
     "lead": "From mall units and high-street shops to industrial facilities and commercial fleets.",
     "filterAll": "All",
     "empty": "No images have been added to this category yet.",
-    "comingSoon": "Our project archive is being prepared for publication. In the meantime you can see completed work on our Instagram, or contact us directly."
+    "comingSoon": "Our project archive is being prepared for publication. In the meantime you can see completed work on our Instagram, or contact us directly.",
+    "loadMore": "Load more",
+    "resultCount": "{count} projects",
+    "noProjectsYet": "No photos in this category yet"
   },
-
   "regionsPage": {
     "title": "Service Areas",
     "metaTitle": "Service Areas | Samsun and Its Districts — Royal Reklam",
@@ -192,9 +218,9 @@
     "lead": "Our workshop is in İlkadım and our crews travel to every district of Samsun with their own equipment. We survey, fabricate and install throughout the areas below.",
     "answer": "Royal Reklam manufactures and installs signage across all 17 districts of Samsun province. The workshop is located in İlkadım, and installation crews travel to Atakum, Canik, Tekkeköy, Bafra, Çarşamba, Terme, Vezirköprü, Havza and every other district.",
     "otherDistricts": "Districts we also serve",
-    "otherDistrictsNote": "We survey and install in these districts too. For a location without its own page, contact us directly."
+    "otherDistrictsNote": "We survey and install in these districts too. For a location without its own page, contact us directly.",
+    "whatsappPrefill": "Hello Royal Reklam, I would like signage installed in the {region} area."
   },
-
   "aboutPage": {
     "title": "About Us",
     "metaTitle": "About Us | Royal Reklam Samsun",
@@ -227,9 +253,12 @@
       }
     },
     "teamTitle": "Team",
-    "artDirectorBio": "Sets the design direction at Royal Reklam and is responsible for aesthetic consistency across everything from brand identity work to façade installations."
+    "artDirectorBio": "Sets the design direction at Royal Reklam and is responsible for aesthetic consistency across everything from brand identity work to façade installations.",
+    "factsTitle": "Company details",
+    "workshopLabel": "Workshop",
+    "serviceAreaLabel": "Service area",
+    "foundedLabel": "Founded"
   },
-
   "contactPage": {
     "title": "Contact",
     "metaTitle": "Contact | Royal Reklam Samsun — +90 544 230 71 77",
@@ -242,9 +271,14 @@
     "whatsappNote": "WhatsApp gets the fastest response. Send a photo of your façade and we will give you an initial assessment straight away.",
     "whatsappPrefill": "Hello, I would like some information about signage from Royal Reklam.",
     "visitTitle": "Visit the workshop",
-    "visitNote": "If you would like to see material samples and completed work in person, you are welcome at our workshop."
+    "visitNote": "If you would like to see material samples and completed work in person, you are welcome at our workshop.",
+    "phoneNote": "The most direct route for booking a survey or an urgent job. Call during working hours.",
+    "emailNote": "Best for technical drawings, brand asset files and invoicing correspondence.",
+    "instagramNote": "Current photographs of completed work are posted here.",
+    "serviceAreaTitle": "Service area",
+    "serviceAreaNote": "The workshop is in İlkadım; our survey and installation teams cover every district of Samsun. Fabrication is completed in Samsun and installed on site.",
+    "personLabel": "Who you will speak to"
   },
-
   "quotePage": {
     "title": "Get a Quote",
     "metaTitle": "Get a Free Quote | Royal Reklam Samsun",
@@ -257,7 +291,7 @@
       "three": "Send it on WhatsApp"
     },
     "form": {
-      "serviceLabel": "Which service do you need?",
+      "serviceLabel": "Choose a service",
       "servicePlaceholder": "Select a service",
       "regionLabel": "Where will the work be done?",
       "regionPlaceholder": "District or city",
@@ -273,15 +307,63 @@
       "call": "Call instead",
       "previewTitle": "Message to be sent",
       "required": "This field is required",
-      "openingWhatsapp": "Opening WhatsApp…"
+      "openingWhatsapp": "Opening WhatsApp…",
+      "sectionWhat": "What do you need?",
+      "sectionSpec": "Job details",
+      "sectionWho": "How should we get back to you?",
+      "serviceHint": "You can pick more than one",
+      "quantityLabel": "Quantity",
+      "widthLabel": "Width (cm)",
+      "heightLabel": "Height (cm)",
+      "areaLabel": "Approximate area",
+      "lightingLabel": "Illumination",
+      "lightingOptions": {
+        "lit": "Illuminated",
+        "unlit": "Non-illuminated",
+        "unsure": "Not sure"
+      },
+      "placementLabel": "Where will it go?",
+      "placementOptions": {
+        "ground": "Ground floor shopfront",
+        "upper": "Upper floor / high façade",
+        "freestanding": "Freestanding (totem, pole)",
+        "indoor": "Indoors",
+        "vehicle": "Vehicle"
+      },
+      "timingLabel": "When do you need it?",
+      "timingOptions": {
+        "urgent": "Urgent (within a week)",
+        "normal": "2–4 weeks",
+        "flexible": "Flexible / still planning"
+      },
+      "phoneLabel": "Phone",
+      "phonePlaceholder": "+90 5xx xxx xx xx",
+      "photoNote": "You can attach a photo of your façade in the WhatsApp chat — it makes the estimate far more accurate.",
+      "summaryTitle": "Summary",
+      "emptySummary": "Nothing selected yet",
+      "clear": "Clear selections"
     },
     "reassure": {
       "free": "Survey and quotation are free",
       "noSpam": "We keep no records and add you to no mailing list",
       "fast": "Usually a same-day reply during working hours"
+    },
+    "message": {
+      "intro": "Hello Royal Reklam, I would like a quote from your website.",
+      "service": "Service",
+      "quantity": "Quantity",
+      "size": "Size",
+      "lighting": "Illumination",
+      "placement": "Placement",
+      "timing": "Timing",
+      "location": "Location",
+      "business": "Business",
+      "name": "Name",
+      "phone": "Phone",
+      "summaryServices": "{count} services",
+      "summaryQuantity": "{count} pcs"
     }
   },
-
   "faqPage": {
     "title": "Frequently Asked Questions",
     "metaTitle": "Frequently Asked Questions | Signage in Samsun — Royal Reklam",
@@ -295,7 +377,6 @@
       "aftercare": "Warranty & Aftercare"
     }
   },
-
   "blogPage": {
     "title": "Guides",
     "metaTitle": "Signage Guides | Royal Reklam Samsun",
@@ -305,31 +386,40 @@
     "publishedOn": "Published",
     "updatedOn": "Updated",
     "relatedTitle": "Related guides",
-    "empty": "Our first guides are being written."
+    "empty": "Our first guides are being written.",
+    "readPost": "Read the guide",
+    "featured": "Featured"
   },
-
   "footer": {
-    "tagline": "Outdoor advertising based in Samsun. Survey to installation, handled in house.",
-    "servicesTitle": "Services",
-    "regionsTitle": "Service Areas",
-    "companyTitle": "Company",
-    "contactTitle": "Contact",
+    "corporate": "Company",
+    "servicesGroup": "Our services",
+    "support": "Support",
+    "legal": "Legal",
+    "signSystems": "Signage systems",
+    "printing": "Large format printing",
+    "vehicleWrap": "Vehicle wrapping",
+    "facade": "Façade systems",
+    "warranty": "Warranty terms",
+    "privacy": "Privacy",
+    "cookies": "Cookies",
+    "kvkk": "Data protection",
+    "directions": "Directions",
     "rights": "All rights reserved.",
-    "designedBy": "Designed and made in Samsun.",
-    "ctaTitle": "Let's talk about your façade",
-    "ctaText": "The survey is free and the quote is non-binding."
+    "whatsappPrefill": "Hello Royal Reklam, I am contacting you through your website. I would like information about your services."
   },
-
   "notFound": {
     "title": "Page not found",
     "description": "The page you are looking for may have moved, or may never have existed. You can continue from the links below.",
     "suggestionsTitle": "These might help"
   },
-
   "quickBar": {
     "call": "Call",
     "whatsapp": "WhatsApp",
     "quote": "Quote",
-    "label": "Quick contact"
+    "label": "Quick contact",
+    "prefill": "Hello Royal Reklam, I am writing from your website. I would like information about signage."
+  },
+  "legal": {
+    "updated": "Last updated"
   }
 }

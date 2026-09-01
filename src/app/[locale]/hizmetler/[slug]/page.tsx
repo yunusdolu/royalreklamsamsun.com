@@ -1,4 +1,4 @@
-import { ArrowUpRight, Check, MessageCircle, Phone } from "lucide-react";
+import { MessageCircle, Phone } from "lucide-react";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getTranslations, setRequestLocale } from "next-intl/server";
@@ -7,10 +7,10 @@ import { PageHeader } from "@/components/layout/page-header";
 import { Reveal, RevealGroup, RevealItem } from "@/components/motion/reveal";
 import { FaqSection } from "@/components/sections/faq-section";
 import { JsonLd } from "@/components/seo/json-ld";
-import { ServiceIcon } from "@/components/ui/service-icon";
+import { PillAnchor, PillLink } from "@/components/ui/pill-button";
+import { ServiceCard } from "@/components/ui/service-card";
 import { siteConfig, telLink, whatsappLink } from "@/config/site";
 import { getServiceBySlug, services } from "@/content/services";
-import { Link } from "@/i18n/navigation";
 import { type Locale, routing } from "@/i18n/routing";
 import {
   buildBreadcrumbSchema,
@@ -95,7 +95,7 @@ export default async function ServiceDetailPage({
     { name: copy.shortName },
   ];
 
-  const whatsappMessage = `Merhaba, ${siteConfig.name} — "${copy.name}" hakkında bilgi ve fiyat almak istiyorum.`;
+  const whatsappMessage = tServices("whatsappPrefill", { service: copy.name });
 
   return (
     <>
@@ -106,23 +106,15 @@ export default async function ServiceDetailPage({
         answer={copy.answer}
       >
         <div className="mt-8 flex flex-wrap items-center gap-3">
-          <Link
-            href="/teklif-al"
-            className="inline-flex h-12 items-center gap-2 rounded-md bg-gradient-to-b from-gold-300 to-gold-600 px-6 text-sm font-bold text-royal-ink transition-all hover:from-gold-200 hover:to-gold-500"
-          >
-            {t("getQuote")}
-            <ArrowUpRight className="size-4" aria-hidden="true" />
-          </Link>
-          <a
+          <PillLink href="/teklif-al">{t("getQuote")}</PillLink>
+          <PillAnchor
             href={whatsappLink(whatsappMessage)}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex h-12 items-center gap-2 rounded-md border border-gold-500/40 px-5 text-sm font-semibold text-gold-200 transition-colors hover:bg-gold-500/10"
+            tone="light"
+            icon={MessageCircle}
           >
-            <MessageCircle className="size-4" aria-hidden="true" />
             {t("whatsapp")}
-          </a>
-          <span className="text-[0.75rem] text-royal-faint">
+          </PillAnchor>
+          <span className="ml-1 text-[0.75rem] text-royal-faint">
             {t("leadTime")}: {service.leadTimeDays[0]}–{service.leadTimeDays[1]}{" "}
             {t("days")}
           </span>
@@ -150,21 +142,29 @@ export default async function ServiceDetailPage({
             <h2 className="underline-gold font-display text-xl font-bold text-royal-fg lg:text-2xl">
               {t("highlightsTitle")}
             </h2>
+            {/* Numaralı editoryal kartlar — çerçeveli ikon yerine hayalet rakam */}
             <RevealGroup as="ul" className="mt-8 grid gap-4 sm:grid-cols-2">
-              {copy.highlights.map((highlight) => (
+              {copy.highlights.map((highlight, index) => (
                 <RevealItem
                   as="li"
                   key={highlight.title}
-                  className="surface-royal rounded-lg p-5"
+                  className="group relative overflow-hidden rounded-2xl bg-royal-graphite/70 p-6 transition-colors duration-500 hover:bg-royal-graphite"
                 >
-                  <h3 className="flex items-start gap-2 font-display text-[0.9375rem] font-bold text-royal-fg">
-                    <Check
-                      className="mt-0.5 size-4 shrink-0 text-gold-500"
-                      aria-hidden="true"
-                    />
+                  <span
+                    className="pointer-events-none absolute -top-5 right-1 font-display text-[4.5rem] font-black leading-none text-black/[0.045] transition-colors duration-500 group-hover:text-gold-600/20"
+                    aria-hidden="true"
+                  >
+                    {String(index + 1).padStart(2, "0")}
+                  </span>
+
+                  <h3 className="relative font-display text-[0.9375rem] font-bold text-royal-fg">
                     {highlight.title}
                   </h3>
-                  <p className="mt-2 pl-6 text-[0.875rem] leading-relaxed text-royal-muted">
+                  <span
+                    className="relative mt-3 block h-px w-8 bg-gold-600/70 transition-all duration-500 group-hover:w-14"
+                    aria-hidden="true"
+                  />
+                  <p className="relative mt-3 text-[0.875rem] leading-relaxed text-royal-muted">
                     {highlight.description}
                   </p>
                 </RevealItem>
@@ -178,23 +178,21 @@ export default async function ServiceDetailPage({
               {t("specsTitle")}
             </h2>
             <Reveal>
-              <div className="mt-8 overflow-x-auto rounded-lg border border-royal-border">
-                <table className="w-full min-w-[30rem] border-collapse text-left text-[0.875rem]">
+              <div className="mt-8 overflow-x-auto">
+                <table className="w-full min-w-[26rem] border-collapse text-left text-[0.875rem]">
                   <tbody>
-                    {copy.specs.map((spec, index) => (
+                    {copy.specs.map((spec) => (
                       <tr
                         key={spec.label}
-                        className={
-                          index % 2 === 0 ? "bg-royal-graphite" : "bg-royal-surface"
-                        }
+                        className="border-b border-black/[0.07] last:border-0"
                       >
                         <th
                           scope="row"
-                          className="w-2/5 border-b border-royal-border px-4 py-3.5 font-medium text-royal-muted"
+                          className="w-2/5 py-4 pr-6 align-top text-[0.6875rem] font-semibold uppercase tracking-[0.12em] text-royal-faint"
                         >
                           {spec.label}
                         </th>
-                        <td className="border-b border-royal-border px-4 py-3.5 text-royal-fg">
+                        <td className="py-4 align-top font-medium text-royal-fg">
                           {spec.value}
                         </td>
                       </tr>
@@ -210,18 +208,22 @@ export default async function ServiceDetailPage({
             <h2 className="underline-gold font-display text-xl font-bold text-royal-fg lg:text-2xl">
               {t("priceTitle")}
             </h2>
-            <RevealGroup as="ul" className="mt-8 space-y-3" stagger={0.05}>
-              {copy.priceFactors.map((factor) => (
+            <RevealGroup as="ul" className="mt-8" stagger={0.05}>
+              {copy.priceFactors.map((factor, index) => (
                 <RevealItem
                   as="li"
                   key={factor}
-                  className="flex gap-3 text-[0.9375rem] leading-relaxed text-royal-muted"
+                  className="flex gap-5 border-b border-black/[0.06] py-3.5 last:border-0"
                 >
                   <span
-                    className="mt-2 size-1.5 shrink-0 rounded-full bg-gold-500"
+                    className="shrink-0 pt-0.5 font-display text-[0.75rem] font-bold tabular-nums text-gold-600"
                     aria-hidden="true"
-                  />
-                  {factor}
+                  >
+                    {String(index + 1).padStart(2, "0")}
+                  </span>
+                  <span className="text-[0.9375rem] leading-relaxed text-royal-muted">
+                    {factor}
+                  </span>
                 </RevealItem>
               ))}
             </RevealGroup>
@@ -231,19 +233,20 @@ export default async function ServiceDetailPage({
         {/* Yan panel */}
         <aside className="lg:col-span-5 xl:col-span-4">
           <div className="lg:sticky lg:top-28 space-y-6">
+            {/* Kimler için uygun — ikon yerine altın çizgi işaretleri */}
             <Reveal direction="left">
-              <div className="surface-royal rounded-xl p-6">
-                <h2 className="font-display text-base font-bold text-royal-fg">
+              <div className="rounded-2xl border border-black/[0.07] bg-white p-6 shadow-[0_1px_2px_rgba(0,0,0,0.04)]">
+                <h2 className="text-[0.6875rem] font-semibold uppercase tracking-[0.16em] text-royal-faint">
                   {t("useCasesTitle")}
                 </h2>
-                <ul className="mt-4 space-y-2.5">
+                <ul className="mt-4 divide-y divide-black/[0.06]">
                   {copy.useCases.map((useCase) => (
                     <li
                       key={useCase}
-                      className="flex gap-2.5 text-[0.875rem] leading-snug text-royal-muted"
+                      className="flex items-baseline gap-3.5 py-2.5 text-[0.875rem] leading-snug text-royal-fg"
                     >
-                      <Check
-                        className="mt-0.5 size-4 shrink-0 text-gold-600"
+                      <span
+                        className="h-px w-3.5 shrink-0 translate-y-[-0.3rem] bg-gold-600"
                         aria-hidden="true"
                       />
                       {useCase}
@@ -253,29 +256,40 @@ export default async function ServiceDetailPage({
               </div>
             </Reveal>
 
+            {/* Teklif kutusu — açık sayfada koyu panel, kontrast için */}
             <Reveal direction="left" delay={0.08}>
-              <div className="rounded-xl border border-gold-500/25 bg-gradient-to-b from-gold-500/[0.07] to-transparent p-6">
-                <h2 className="font-display text-base font-bold text-royal-fg">
+              <div className="overflow-hidden rounded-2xl bg-[linear-gradient(150deg,#141416_0%,#252017_58%,#141416_100%)] p-6">
+                <span className="text-[0.6875rem] font-semibold uppercase tracking-[0.16em] text-gold-400">
+                  {t("leadTime")}: {service.leadTimeDays[0]}–
+                  {service.leadTimeDays[1]} {t("days")}
+                </span>
+                <h2 className="mt-3 font-display text-lg font-bold text-white">
                   {t("quoteCtaTitle")}
                 </h2>
-                <p className="mt-2.5 text-[0.875rem] leading-relaxed text-royal-muted">
+                <p className="mt-2.5 text-[0.875rem] leading-relaxed text-white/60">
                   {t("quoteCtaText")}
                 </p>
-                <div className="mt-5 space-y-2.5">
-                  <a
+
+                <div className="mt-6 flex flex-col gap-3">
+                  <PillAnchor
                     href={telLink}
-                    className="flex h-11 items-center justify-center gap-2 rounded-md bg-gradient-to-b from-gold-300 to-gold-600 text-sm font-bold text-royal-ink transition-all hover:from-gold-200 hover:to-gold-500"
+                    external={false}
+                    tone="onDark"
+                    icon={Phone}
+                    block
                   >
-                    <Phone className="size-4" aria-hidden="true" />
                     {siteConfig.contact.phoneDisplay}
-                  </a>
+                  </PillAnchor>
                   <a
                     href={whatsappLink(whatsappMessage)}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex h-11 items-center justify-center gap-2 rounded-md border border-royal-border text-sm font-semibold text-royal-fg transition-colors hover:border-gold-500/40 hover:text-gold-200"
+                    className="group inline-flex items-center justify-center gap-2 text-[0.8125rem] font-semibold text-white/70 transition-colors hover:text-white"
                   >
-                    <MessageCircle className="size-4 text-[#25d366]" aria-hidden="true" />
+                    <MessageCircle
+                      className="size-4 text-[#25d366]"
+                      aria-hidden="true"
+                    />
                     {t("whatsapp")}
                   </a>
                 </div>
@@ -293,38 +307,24 @@ export default async function ServiceDetailPage({
         <h2 className="underline-gold font-display text-xl font-bold text-royal-fg lg:text-2xl">
           {tServices("title")}
         </h2>
-        <RevealGroup as="ul" className="mt-8 grid gap-4 sm:grid-cols-3">
+        <RevealGroup as="ul" className="mt-8 grid gap-5 sm:grid-cols-3">
           {related.map((item) => (
             <RevealItem as="li" key={item.id}>
-              <Link
-                href={{
-                  pathname: "/hizmetler/[slug]",
-                  params: { slug: item.slug[locale] },
-                }}
-                className="surface-royal surface-royal-hover group flex h-full flex-col rounded-lg p-5 transition-all duration-500"
-              >
-                <ServiceIcon
-                  name={item.icon}
-                  className="size-5 text-gold-500 transition-colors group-hover:text-gold-300"
-                />
-                <span className="mt-4 font-display text-[0.9375rem] font-bold text-royal-fg transition-colors group-hover:text-gold-100">
-                  {item.copy[locale].name}
-                </span>
-                <span className="mt-1.5 flex-1 text-[0.8125rem] leading-snug text-royal-faint">
-                  {item.copy[locale].tagline}
-                </span>
-              </Link>
+              <ServiceCard
+                service={item}
+                locale={locale}
+                daysLabel={t("days")}
+                readMoreLabel={t("readMore")}
+              />
             </RevealItem>
           ))}
         </RevealGroup>
 
-        <Link
-          href="/hizmetler"
-          className="mt-8 inline-flex items-center gap-1.5 text-sm font-semibold text-gold-300 transition-colors hover:text-gold-200"
-        >
-          {t("backToServices")}
-          <ArrowUpRight className="size-4" aria-hidden="true" />
-        </Link>
+        <div className="mt-10">
+          <PillLink href="/hizmetler" tone="light">
+            {t("backToServices")}
+          </PillLink>
+        </div>
       </section>
 
       <JsonLd id="ld-service" data={buildServiceSchema(service, locale)} />

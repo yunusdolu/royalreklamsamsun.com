@@ -24,6 +24,7 @@ export async function PortfolioTeaser() {
   const locale = (await getLocale()) as Locale;
   const t = await getTranslations("home.portfolio");
   const tPortfolio = await getTranslations("portfolioPage");
+  const tCommon = await getTranslations("common");
 
   const featured = projects.slice(0, 6);
 
@@ -75,7 +76,7 @@ export async function PortfolioTeaser() {
                 className="group/btn relative inline-flex h-14 items-center justify-center gap-2.5 rounded-xl bg-white border border-black/10 px-8 text-[15px] font-bold text-black transition-all duration-300 hover:scale-[1.03] hover:bg-zinc-50 shadow-sm"
               >
                 <InstagramIcon className="size-5 text-pink-600 transition-transform duration-300 group-hover/btn:scale-110" aria-hidden="true" />
-                <span>Instagram'da İncele</span>
+                <span>{tCommon("instagramBrowse")}</span>
               </a>
               
               <Link

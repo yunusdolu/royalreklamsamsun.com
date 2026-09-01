@@ -19,6 +19,7 @@ const abstractImages = [
 export async function ServicesSection() {
   const locale = (await getLocale()) as Locale;
   const t = await getTranslations("home.services");
+  const tCommon = await getTranslations("common");
 
   return (
     <section className="container-royal scroll-mt-24 py-20 lg:py-28" id="hizmetler">
@@ -39,7 +40,7 @@ export async function ServicesSection() {
 
             return (
               <RevealItem key={service.id} className="flex justify-center w-full">
-                <PinContainer title="İncele" href={href} containerClassName="w-[292px] h-[28.75rem]">
+                <PinContainer title={tCommon("learnMore")} href={href} containerClassName="w-[292px] h-[28.75rem]">
                   <div className="flex flex-col tracking-tight w-[292px] h-[28.75rem] bg-white border border-black/10 rounded-2xl overflow-hidden shadow-2xl group/card relative">
                     
                     {/* Resim Alanı */}
@@ -54,7 +55,7 @@ export async function ServicesSection() {
                       {/* Sağ Üstteki Stat (Sayı) - Resmin üzerinde olduğu için beyaz veya gölgeli kalabilir */}
                       <div className="absolute top-4 right-5 z-20 text-right drop-shadow-md">
                         <div className="text-[22px] font-bold text-white leading-none">{maxDays}+</div>
-                        <div className="text-[11px] text-white/90 mt-1">Gün Teslim</div>
+                        <div className="text-[11px] text-white/90 mt-1">{tCommon("dayDelivery")}</div>
                       </div>
                     </div>
 
@@ -71,7 +72,7 @@ export async function ServicesSection() {
                       {/* Alt Kısım (Footer) */}
                       <div className="mt-auto flex items-center justify-end border-t border-black/10 pt-4">
                         <div className="text-black text-[13px] font-semibold flex items-center gap-1.5 transition-colors group-hover/card:text-gold-500">
-                          İncele <ArrowUpRight className="size-3.5 group-hover/card:translate-x-1 group-hover/card:-translate-y-1 transition-transform" />
+                          {tCommon("learnMore")} <ArrowUpRight className="size-3.5 group-hover/card:translate-x-1 group-hover/card:-translate-y-1 transition-transform" />
                         </div>
                       </div>
                     </div>

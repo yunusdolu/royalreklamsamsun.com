@@ -13,6 +13,20 @@ import { gsap, prefersReducedMotion, ScrollTrigger } from "@/lib/gsap";
  * ticker'ına bağlıyor, `lagSmoothing(0)` ile sekme geri geldiğinde oluşan
  * sıçramayı engelliyoruz.
  */
+/**
+ * Etkin Lenis örneği. Lenis kaydırma sınırını (`scrollHeight - innerHeight`)
+ * önbelleğe alır; sayfaya sonradan içerik eklendiğinde bu sınır eski kalır,
+ * hedef konum eski sınıra kırpılır ve kullanıcı aşağı inemeyip yukarı geri
+ * çekilir. İçeriği büyüten bileşenler `refreshScroll()` çağırır.
+ */
+let activeLenis: Lenis | null = null;
+
+/** Sayfa yüksekliğini değiştiren bileşenler bunu çağırmalı. */
+export function refreshScroll() {
+  activeLenis?.resize();
+  ScrollTrigger.refresh();
+}
+
 export function SmoothScrollProvider({
   children,
 }: {
@@ -38,15 +52,26 @@ export function SmoothScrollProvider({
       syncTouch: false,
     });
 
+    activeLenis = lenis;
     lenis.on("scroll", ScrollTrigger.update);
 
     const raf = (time: number) => lenis.raf(time * 1000);
     gsap.ticker.add(raf);
     gsap.ticker.lagSmoothing(0);
 
+    /**
+     * Lenis'in kendi gözlemcisi `document.documentElement` üzerinde ve
+     * 250 ms geciktirmeli çalışır; bu aralıkta kaydırma eski sınıra takılır.
+     * Gövde yüksekliğini gecikmesiz izleyip sınırı anında tazeliyoruz.
+     */
+    const bodyObserver = new ResizeObserver(() => lenis.resize());
+    bodyObserver.observe(document.body);
+
     return () => {
+      bodyObserver.disconnect();
       gsap.ticker.remove(raf);
       lenis.destroy();
+      activeLenis = null;
     };
   }, []);
 

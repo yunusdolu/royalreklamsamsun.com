@@ -1,5 +1,6 @@
 import { getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
+import { ArrowUpRight } from "lucide-react";
 
 import {
   Accordion,
@@ -49,6 +50,23 @@ export async function FaqSection({
             </AccordionItem>
           ))}
         </Accordion>
+
+        {showCta && (
+          <div className="flex justify-center pt-4">
+            <Link
+              href="/sss"
+              className="group flex w-fit cursor-pointer items-center justify-center gap-0 rounded-full bg-transparent px-0 py-2 transition-transform duration-300 hover:scale-105"
+            >
+              <span className="rounded-full bg-black px-8 py-3.5 font-semibold text-white transition-colors duration-500 ease-in-out group-hover:bg-gray-900">
+                {t("cta")}
+              </span>
+              <div className="relative flex h-fit cursor-pointer items-center overflow-hidden rounded-full bg-gold-500 p-3.5 text-black transition-colors duration-500 ease-in-out hover:bg-gold-400">
+                <ArrowUpRight className="absolute h-5 w-5 -translate-x-1/2 transition-all duration-500 ease-in-out group-hover:translate-x-10" />
+                <ArrowUpRight className="absolute h-5 w-5 -translate-x-10 transition-all duration-500 ease-in-out group-hover:-translate-x-1/2" />
+              </div>
+            </Link>
+          </div>
+        )}
       </div>
     </section>
   );
