@@ -78,19 +78,23 @@
         "1": {
           "title": "Görünürlüğünüzü",
           "titleLine2": "Artırın.",
-          "description": "Etkili açık hava reklamlarıyla işletmenizi bir adım öne taşıyın."
+          "description": "Etkili açık hava reklamlarıyla işletmenizi bir adım öne taşıyın.",
+          "alt": "Royal Reklam'ın Samsun'da uyguladığı ışıklı cephe tabelası"
         },
         "2": {
           "title": "İlk İzlenim",
           "titleLine2": "Önemlidir.",
-          "description": "Mağazanızı veya ofisinizi yansıtan modern tabela sistemleriyle müşterilerinizi etkileyin."
+          "description": "Mağazanızı veya ofisinizi yansıtan modern tabela sistemleriyle müşterilerinizi etkileyin.",
+          "alt": "Samsun'da bir mağaza cephesine monte edilmiş kutu harf tabela"
         },
         "3": {
           "title": "Markanız Her Yerde",
           "titleLine2": "Sizinle.",
-          "description": "Profesyonel araç giydirme uygulamalarımızla şehrin her noktasında reklamınızı yapın."
+          "description": "Profesyonel araç giydirme uygulamalarımızla şehrin her noktasında reklamınızı yapın.",
+          "alt": "Royal Reklam tarafından giydirilmiş kurumsal ticari araç"
         }
-      }
+      },
+      "h1": "Samsun'da ışıklı tabela, kutu harf, totem ve cephe giydirme — Royal Reklam Samsun"
     },
     "stats": {
       "title": "Rakamlarla Royal Reklam",

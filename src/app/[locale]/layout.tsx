@@ -65,6 +65,15 @@ export async function generateMetadata({
     creator: siteConfig.siteName,
     publisher: siteConfig.siteName,
     alternates: buildAlternates("/", locale),
+    // Boş bırakılan kod için etiket üretilmez
+    verification: {
+      ...(siteConfig.verification.google
+        ? { google: siteConfig.verification.google }
+        : {}),
+      ...(siteConfig.verification.yandex
+        ? { yandex: siteConfig.verification.yandex }
+        : {}),
+    },
     openGraph: {
       type: "website",
       siteName: siteConfig.siteName,

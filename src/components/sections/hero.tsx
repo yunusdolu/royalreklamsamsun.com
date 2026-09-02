@@ -77,11 +77,13 @@ export function Hero() {
     title: t(`slides.${index + 1}.title`),
     titleLine2: t(`slides.${index + 1}.titleLine2`),
     description: t(`slides.${index + 1}.description`),
+    alt: t(`slides.${index + 1}.alt`),
   }));
   const activeSlide = slides[currentSlide];
 
   return (
     <section className="bg-background relative isolate w-full overflow-hidden bg-white">
+      <h1 className="sr-only">{t("h1")}</h1>
       <motion.div
         className="relative z-10 mx-auto flex max-w-[1400px] flex-col px-6 pt-24 lg:pt-36 pb-12 sm:pb-20 gap-10 sm:gap-14"
         variants={container}
@@ -95,7 +97,7 @@ export function Hero() {
               <motion.img
                 key={currentSlide}
                 src={activeSlide.image}
-                alt={activeSlide.title}
+                alt={activeSlide.alt}
                 className="absolute inset-0 size-full object-cover"
                 initial={{ opacity: 0, scale: 1.05 }}
                 animate={{ opacity: 1, scale: 1 }}
@@ -137,7 +139,7 @@ export function Hero() {
             */}
             {slides.map((slide, i) => (
               <div key={`ghost-${i}`} className="col-start-1 row-start-1 invisible flex flex-col gap-4 pointer-events-none" aria-hidden="true">
-                <h1 className="text-foreground font-display font-bold tracking-tight text-balance text-4xl sm:text-5xl md:text-6xl text-gray-900">
+                <div className="text-foreground font-display font-bold tracking-tight text-balance text-4xl sm:text-5xl md:text-6xl text-gray-900">
                   {slide.title}
                   {slide.titleLine2 && (
                     <>
@@ -145,7 +147,7 @@ export function Hero() {
                       {slide.titleLine2}
                     </>
                   )}
-                </h1>
+                </div>
                 <p className="text-muted-foreground max-w-xl text-base sm:text-lg text-gray-600 text-balance">
                   {slide.description}
                 </p>
@@ -161,7 +163,7 @@ export function Hero() {
                 transition={{ duration: 0.4 }}
                 className="col-start-1 row-start-1 flex flex-col gap-4"
               >
-                <h1 className="text-foreground font-display font-bold tracking-tight text-balance text-4xl sm:text-5xl md:text-6xl text-gray-900">
+                <div className="text-foreground font-display font-bold tracking-tight text-balance text-4xl sm:text-5xl md:text-6xl text-gray-900">
                   {activeSlide.title}
                   {activeSlide.titleLine2 && (
                     <>
@@ -169,7 +171,7 @@ export function Hero() {
                       {activeSlide.titleLine2}
                     </>
                   )}
-                </h1>
+                </div>
                 <p className="text-muted-foreground max-w-xl text-base sm:text-lg text-gray-600 text-balance">
                   {activeSlide.description}
                 </p>

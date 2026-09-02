@@ -68,7 +68,15 @@ export function buildLocalBusinessSchema(locale: Locale) {
     telephone: siteConfig.contact.phoneE164,
     email: siteConfig.contact.email,
     foundingDate: String(siteConfig.foundingYear),
-    image: absoluteUrl("/brand/logo-gold.png"),
+    /**
+     * Google yerel sonuçlarda `image` alanında logo değil gerçek iş
+     * fotoğrafı bekler; `logo` ayrı alan olarak zaten veriliyor.
+     */
+    image: [
+      absoluteUrl("/images/portfolio/proje-29.jpg"),
+      absoluteUrl("/images/portfolio/proje-16.jpg"),
+      absoluteUrl("/images/portfolio/proje-34.jpg"),
+    ],
     logo: absoluteUrl("/brand/logo-gold.png"),
     address: postalAddress(),
     geo: {

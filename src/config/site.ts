@@ -69,6 +69,22 @@ export const siteConfig = {
     contactPerson: "İshak Bahar",
   },
 
+  /**
+   * IndexNow anahtarı. Yandex ve Bing'e "bu sayfa değişti" bildirimi
+   * göndermek için kullanılır; anahtar `public/<anahtar>.txt` dosyasında
+   * aynı değerle yayınlanmak zorundadır. `npm run indexnow` ile gönderilir.
+   */
+  indexNowKey: "0d8b2e1949b240e413d04ec3ea9fe2c5",
+
+  /**
+   * Arama motoru doğrulama kodları. Google Search Console ve Yandex
+   * Webmaster panelinden alınıp buraya yazılır; boşken etiket basılmaz.
+   */
+  verification: {
+    google: "",
+    yandex: "",
+  },
+
   /** Türkiye geneli imalat + montaj, merkez Samsun. */
   serviceArea: {
     primary: "Samsun",
