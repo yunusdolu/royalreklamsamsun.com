@@ -9,8 +9,12 @@ import { routing } from "@/i18n/routing";
  * Sosyal paylaşım görseli.
  *
  * `[locale]` altında tanımlandığı için alt rotaların tamamı kendi
- * `opengraph-image` dosyası olmadıkça bu görseli devralır — böylece her
- * sayfa paylaşıldığında markalı, siyah/altın bir kart görünür.
+ * `opengraph-image` dosyası olmadıkça bu görseli devralır.
+ *
+ * Kart açık zeminlidir: markanın asıl logosu (`logo-full.png`) siyah harfli
+ * ve altın konturludur, koyu zeminde okunmaz. Daha önce koyu zemine uysun
+ * diye düz altın siluetli `logo-gold.png` kullanılıyordu; o gerçek logo
+ * değil, sadece koyu zemin için hazırlanmış bir varyanttı.
  */
 export const alt = `${siteConfig.name} — ${siteConfig.tagline.tr}`;
 export const size = { width: 1200, height: 630 };
@@ -28,7 +32,7 @@ export default async function OpengraphImage({
   const { locale } = await params;
 
   const logo = await readFile(
-    join(process.cwd(), "public", "brand", "logo-gold.png"),
+    join(process.cwd(), "public", "brand", "logo-full.png"),
   );
   const logoSrc = `data:image/png;base64,${logo.toString("base64")}`;
 
@@ -51,7 +55,7 @@ export default async function OpengraphImage({
           display: "flex",
           flexDirection: "column",
           justifyContent: "space-between",
-          background: "#000000",
+          background: "#ffffff",
           padding: "72px 80px",
           position: "relative",
         }}
@@ -66,7 +70,7 @@ export default async function OpengraphImage({
             height: 760,
             borderRadius: 9999,
             background:
-              "radial-gradient(circle, rgba(212,175,55,0.30) 0%, rgba(212,175,55,0) 68%)",
+              "radial-gradient(circle, rgba(212,175,55,0.22) 0%, rgba(212,175,55,0) 70%)",
             display: "flex",
           }}
         />
@@ -87,10 +91,10 @@ export default async function OpengraphImage({
               marginBottom: 22,
             }}
           >
-            <div style={{ width: 56, height: 3, background: "#d4af37", display: "flex" }} />
+            <div style={{ width: 56, height: 3, background: "#b4892c", display: "flex" }} />
             <div
               style={{
-                color: "#d4af37",
+                color: "#b4892c",
                 fontSize: 21,
                 letterSpacing: 4,
                 textTransform: "uppercase",
@@ -103,7 +107,7 @@ export default async function OpengraphImage({
 
           <div
             style={{
-              color: "#f5f4f1",
+              color: "#18181b",
               fontSize: 60,
               fontWeight: 700,
               lineHeight: 1.12,
@@ -117,14 +121,14 @@ export default async function OpengraphImage({
           <div
             style={{
               marginTop: 30,
-              color: "#a3a09a",
+              color: "#71717a",
               fontSize: 25,
               display: "flex",
               gap: 26,
             }}
           >
             <span>{siteConfig.domain}</span>
-            <span style={{ color: "#4a370f" }}>|</span>
+            <span style={{ color: "#d4af37" }}>|</span>
             <span>{siteConfig.contact.phoneDisplay}</span>
           </div>
         </div>
