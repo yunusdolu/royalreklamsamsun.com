@@ -40,8 +40,8 @@ export const homeFaqs: Record<Locale, Faq[]> = {
       a: "Evet. İmalat Samsun İlkadım'daki atölyemizde yapılır, montaj ekibimiz Türkiye'nin her iline gider. Şubeleşen markalarla çalışırken tüm şubelerde aynı standardı uyguluyoruz.",
     },
     {
-      q: "Tabelanın garantisi var mı?",
-      a: "İmalat ve LED bileşenleri için 2 yıl garanti verilir. Garanti süresince arızalı LED modülü veya trafo ücretsiz değiştirilir; tabelanın tamamının sökülmesi gerekmez.",
+      q: "Tasarımı siz mi yapıyorsunuz?",
+      a: "İkisi de mümkün. Kurumsal kimliği hazır olan markalarla kendi dosyaları üzerinden çalışırız; olmayan işletmeler için tasarımı biz hazırlar, cephedeki görünümüyle birlikte onayınıza sunarız.",
     },
   ],
   en: [
@@ -66,8 +66,8 @@ export const homeFaqs: Record<Locale, Faq[]> = {
       a: "Yes. Fabrication takes place at our workshop in İlkadım, Samsun, and our installation crews travel to every province in Türkiye. For multi-site brands we hold the same standard at every branch.",
     },
     {
-      q: "Is the sign under warranty?",
-      a: "Fabrication and LED components carry a 2-year warranty. Faulty LED modules or drivers are replaced free of charge during that period, without dismounting the whole sign.",
+      q: "Do you handle the design as well?",
+      a: "Either way works. For brands with an existing identity we work from their own files; for businesses without one we prepare the design and present it as it will look on the façade for approval.",
     },
   ],
 };
@@ -84,7 +84,7 @@ export const allFaqs: Record<Locale, CategorisedFaq[]> = {
     {
       category: "general",
       q: "Tasarımım yok, siz yapabilir misiniz?",
-      a: "Evet. Art direktör İshak Bal yönetimindeki tasarım ekibimiz logo, kurumsal kimlik ve tabela tasarımını hazırlar. Tasarımı onaylamadan önce cephenize giydirilmiş üç boyutlu görselini görürsünüz.",
+      a: "Evet. Art direktör İsak Bahar yönetimindeki tasarım ekibimiz logo, kurumsal kimlik ve tabela tasarımını hazırlar. Tasarımı onaylamadan önce cephenize giydirilmiş üç boyutlu görselini görürsünüz.",
     },
     {
       category: "general",
@@ -129,12 +129,12 @@ export const allFaqs: Record<Locale, CategorisedFaq[]> = {
     {
       category: "aftercare",
       q: "LED'ler arızalanırsa ne oluyor?",
-      a: "Modüler yapı sayesinde yalnızca arızalı LED modülü veya trafo değiştirilir; tabelanın sökülmesine gerek kalmaz. Garanti süresi içindeki bu müdahale ücretsizdir.",
+      a: "Modüler yapı sayesinde yalnızca arızalı LED modülü veya trafo değiştirilir; tabelanın sökülmesine gerek kalmaz. Müdahale çoğu işte tek ziyarette tamamlanır.",
     },
     {
       category: "aftercare",
       q: "Periyodik bakım anlaşması yapıyor musunuz?",
-      a: "Evet. Garanti süresi sonrasında talep eden işletmelerle yıllık bakım anlaşması yapıyoruz. Bakım kapsamında aydınlatma kontrolü, bağlantı elemanı sıkılığı ve yüzey temizliği yer alır.",
+      a: "Evet. Talep eden işletmelerle yıllık bakım anlaşması yapıyoruz. Bakım kapsamında aydınlatma kontrolü, bağlantı elemanı sıkılığı ve yüzey temizliği yer alır.",
     },
   ],
   en: [
@@ -147,7 +147,7 @@ export const allFaqs: Record<Locale, CategorisedFaq[]> = {
     {
       category: "general",
       q: "I have no artwork — can you design it?",
-      a: "Yes. Our design team, led by art director İshak Bal, produces logos, brand identity and sign design. You see a three-dimensional rendering on your own façade before approving anything.",
+      a: "Yes. Our design team, led by art director İsak Bahar, produces logos, brand identity and sign design. You see a three-dimensional rendering on your own façade before approving anything.",
     },
     {
       category: "general",
@@ -192,12 +192,12 @@ export const allFaqs: Record<Locale, CategorisedFaq[]> = {
     {
       category: "aftercare",
       q: "What happens if the LEDs fail?",
-      a: "The modular build means only the faulty module or driver is replaced — the sign does not need to be dismounted. Within the warranty period this service is free.",
+      a: "The modular build means only the faulty module or driver is replaced — the sign does not need to be dismounted. Most call-outs are finished in a single visit.",
     },
     {
       category: "aftercare",
       q: "Do you offer maintenance agreements?",
-      a: "Yes. After the warranty period we arrange annual maintenance agreements covering lighting checks, fixing torque inspection and surface cleaning.",
+      a: "Yes. We arrange annual maintenance agreements covering lighting checks, fixing torque inspection and surface cleaning.",
     },
   ],
 };

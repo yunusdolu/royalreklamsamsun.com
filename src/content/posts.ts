@@ -133,7 +133,7 @@ export const posts: Post[] = [
           { type: "h2", text: "İki teklifi doğru karşılaştırmanın yolu" },
           {
             type: "p",
-            text: "Fiyatları yan yana koymadan önce her iki teklifin de şu beş bilgiyi içerdiğinden emin olun: yüzey malzemesinin cinsi ve kalınlığı, kasa malzemesi ve derinliği, LED modül markası ve IP sınıfı, montaj yöntemi, garanti süresi ve kapsamı. Bu beş kalem yazılı değilse karşılaştırdığınız şey fiyat değil, sadece bir rakamdır.",
+            text: "Fiyatları yan yana koymadan önce her iki teklifin de şu beş bilgiyi içerdiğinden emin olun: yüzey malzemesinin cinsi ve kalınlığı, kasa malzemesi ve derinliği, LED modül markası ve IP sınıfı, montaj yöntemi, teslim süresi ve montaj sonrası servis koşulları. Bu beş kalem yazılı değilse karşılaştırdığınız şey fiyat değil, sadece bir rakamdır.",
           },
           {
             type: "p",
@@ -211,7 +211,7 @@ export const posts: Post[] = [
           { type: "h2", text: "Comparing two quotes properly" },
           {
             type: "p",
-            text: "Before putting prices side by side, check that both quotes state five things: face material type and thickness, cabinet material and depth, LED brand and IP rating, installation method, and warranty term and scope. Without those, you are comparing numbers, not offers.",
+            text: "Before putting prices side by side, check that both quotes state five things: face material type and thickness, cabinet material and depth, LED brand and IP rating, installation method, and the lead time with post-installation service terms. Without those, you are comparing numbers, not offers.",
           },
         ],
       },
@@ -720,7 +720,7 @@ export const posts: Post[] = [
         title: "Tabela Bakımı: LED Arızaları Neden Olur, Nasıl Önlenir?",
         metaTitle: "Tabela Bakımı ve LED Arızaları | Royal Reklam Samsun",
         metaDescription:
-          "Işıklı tabelalarda titreme, sönme ve harf kararmasının gerçek nedenleri. Yıllık bakımda kontrol edilmesi gerekenler ve garanti kapsamı.",
+          "Işıklı tabelalarda titreme, sönme ve harf kararmasının gerçek nedenleri. Yıllık bakımda kontrol edilmesi gerekenler ve arıza sonrası süreç.",
         excerpt:
           "Sönen bir tabelanın sorumlusu genellikle LED değil, kapasitesi sınırda seçilmiş bir trafo ya da yalıtılmamış bir kablo girişidir.",
         answer:
@@ -787,7 +787,7 @@ export const posts: Post[] = [
           },
           {
             type: "note",
-            text: "Garanti genellikle imalat hatalarını ve LED/trafo arızalarını kapsar; fiziksel darbe, yıldırım, sel ve üçüncü kişilerin müdahalesi kapsam dışıdır. Garanti kapsamının teklifte yazılı olması, sonradan tartışma çıkmasını önler.",
+            text: "Montaj sonrası servis koşullarının teklifte yazılı olmasını isteyin: arıza bildiriminde kaç günde gelinir, işçilik ve parça nasıl faturalanır, yüksekte çalışma gerektiren müdahaleler nasıl fiyatlanır. Bu üç madde yazılı değilse sonradan tartışma çıkar.",
           },
           { type: "h2", text: "Tabela ne zaman tamir edilmez, yenilenir?" },
           {
@@ -796,7 +796,7 @@ export const posts: Post[] = [
           },
           {
             type: "p",
-            text: "Royal Reklam olarak kendi ürettiğimiz tabelalarda garanti süresince imalat ve LED kaynaklı arızaları ücretsiz gideriyoruz; başka firmaların ürettiği tabelalarda da bakım ve onarım yapıyoruz.",
+            text: "Royal Reklam olarak kendi ürettiğimiz tabelalarda arıza bildirimini aldığımızda yerinde müdahale ediyoruz; başka firmaların ürettiği tabelalarda da bakım ve onarım yapıyoruz.",
           },
         ],
       },
@@ -804,7 +804,7 @@ export const posts: Post[] = [
         title: "Sign Maintenance: Why LED Faults Happen and How to Prevent Them",
         metaTitle: "Sign Maintenance and LED Faults | Royal Reklam Samsun",
         metaDescription:
-          "The real causes of flickering, dark sections and dead letters in illuminated signs, what an annual service should cover, and what warranty includes.",
+          "The real causes of flickering, dark sections and dead letters in illuminated signs, what an annual service should cover, and what happens after a fault.",
         excerpt:
           "When an illuminated sign goes dark, the culprit is rarely the LED itself — it is usually an undersized driver or an unsealed cable entry.",
         answer:
@@ -871,7 +871,7 @@ export const posts: Post[] = [
           },
           {
             type: "note",
-            text: "Warranty normally covers manufacturing defects and LED or driver failures; impact damage, lightning, flooding and third-party interference are excluded. Having the scope written into the quote prevents arguments later.",
+            text: "Ask for the after-installation service terms in writing: how quickly a call-out is answered, how labour and parts are invoiced, and how work at height is priced. Without those three points, disagreements follow later.",
           },
           { type: "h2", text: "When repair stops making sense" },
           {
@@ -880,7 +880,7 @@ export const posts: Post[] = [
           },
           {
             type: "p",
-            text: "For signs we manufacture, Royal Reklam covers manufacturing and LED faults free of charge during the warranty period. We also service and repair signs built by other companies.",
+            text: "For the signs we manufacture, Royal Reklam attends on site when a fault is reported. We also service and repair signage built by other companies.",
           },
         ],
       },

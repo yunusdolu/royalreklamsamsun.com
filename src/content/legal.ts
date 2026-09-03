@@ -1,9 +1,8 @@
 import { siteConfig } from "@/config/site";
-import { stats } from "@/content/stats";
 import type { Locale } from "@/i18n/routing";
 
 /**
- * KURUMSAL METİNLER (garanti, gizlilik, çerez, KVKK)
+ * KURUMSAL METİNLER (gizlilik, çerez, KVKK)
  *
  * Metinler sitenin GERÇEK davranışına göre yazılmıştır:
  *  - sunucu tarafı form yoktur, teklif oluşturucu tarayıcıda çalışır,
@@ -12,8 +11,8 @@ import type { Locale } from "@/i18n/routing";
  * Site bu davranışlardan biri değişirse (ör. analitik eklenirse) bu metinler
  * de güncellenmelidir.
  *
- * ⚠️ Garanti kapsamı ve KVKK metni ticari/hukuki taahhüt içerir; yayına
- * almadan önce Royal Reklam tarafından onaylanmalıdır.
+ * ⚠️ KVKK metni hukuki taahhüt içerir; yayına almadan önce Royal Reklam
+ * tarafından onaylanmalıdır.
  */
 
 export interface LegalSection {
@@ -41,108 +40,6 @@ export const legalUpdated = "2026-09-01";
 const kurum = `${siteConfig.legalName}`;
 
 export const legalDocs: Record<string, LegalDoc> = {
-  garanti: {
-    id: "garanti",
-    copy: {
-      tr: {
-        title: "Garanti Şartları",
-        metaTitle: "Garanti Şartları | Royal Reklam Samsun",
-        metaDescription: `Royal Reklam tarafından üretilen tabelalarda ${stats.warrantyYears} yıl imalat ve LED garantisi. Kapsam, kapsam dışı durumlar ve başvuru süreci.`,
-        lead: `Ürettiğimiz işlerde imalat ve aydınlatma bileşenleri için ${stats.warrantyYears} yıl garanti veriyoruz. Aşağıda bu garantinin neyi kapsadığını, neyi kapsamadığını ve arıza durumunda ne yapmanız gerektiğini yazdık.`,
-        sections: [
-          {
-            heading: "Garanti süresi",
-            paragraphs: [
-              `Royal Reklam tarafından imal edilen ve monte edilen işlerde garanti süresi, montajın tamamlandığı tarihten itibaren ${stats.warrantyYears} yıldır. Süre, teslim tutanağı veya faturanın tarihiyle başlar.`,
-            ],
-          },
-          {
-            heading: "Garanti kapsamındaki durumlar",
-            items: [
-              "İmalat kaynaklı kasa, kaynak ve montaj hataları.",
-              "LED modül, güç kaynağı (trafo) ve iç kablolama arızaları.",
-              "Yüzey malzemesinde imalattan kaynaklanan ayrılma, çatlama veya yapışma sorunları.",
-              "Montaj bağlantı elemanlarının imalat hatası nedeniyle gevşemesi.",
-            ],
-          },
-          {
-            heading: "Garanti kapsamı dışındaki durumlar",
-            items: [
-              "Fiziksel darbe, çarpma, vandalizm ve üçüncü kişilerin müdahalesi.",
-              "Fırtına, sel, yıldırım, deprem gibi doğal olaylardan doğan hasarlar.",
-              "Şebeke kaynaklı aşırı gerilim ve elektrik tesisatı hatalarından doğan arızalar.",
-              "Royal Reklam dışındaki kişilerce yapılan sökme, onarım veya müdahale sonrası oluşan sorunlar.",
-              "Uygunsuz temizlik (solvent, aşındırıcı, yüksek basınçlı doğrudan püskürtme) kaynaklı yüzey hasarları.",
-              "Zamanla oluşan doğal renk açılması ve normal yıpranma.",
-            ],
-          },
-          {
-            heading: "Arıza durumunda ne yapmalısınız?",
-            paragraphs: [
-              `Arızayı fark ettiğinizde ${siteConfig.contact.phoneDisplay} numarasından bize ulaşın veya WhatsApp'tan arızanın fotoğrafını gönderin. Işıklı işlerde fotoğrafı gece çekilmiş olarak göndermeniz, sorunun kaynağını uzaktan büyük ölçüde belirlememizi sağlar.`,
-              "Uzaktan değerlendirme sonucunda gerekiyorsa yerinde kontrol planlanır. Garanti kapsamındaki arızalarda işçilik ve değişen parça ücretsizdir; kapsam dışı durumlarda önce onayınızı alarak fiyat bildiririz.",
-            ],
-          },
-          {
-            heading: "Garanti sonrası bakım",
-            paragraphs: [
-              "Garanti süresi dolmuş işlerde de bakım ve onarım hizmeti veriyoruz. Ayrıca başka firmalar tarafından üretilmiş tabelaların bakımını da üstleniyoruz.",
-              "Yılda bir kez yapılacak kontrol (kasa içi nem, klemens sıkılığı, trafo sıcaklığı) arızaların büyük kısmını ortaya çıkmadan önler.",
-            ],
-          },
-        ],
-      },
-      en: {
-        title: "Warranty Terms",
-        metaTitle: "Warranty Terms | Royal Reklam Samsun",
-        metaDescription: `A ${stats.warrantyYears}-year manufacturing and LED warranty on signs produced by Royal Reklam. What is covered, what is not, and how to make a claim.`,
-        lead: `We provide a ${stats.warrantyYears}-year warranty on manufacturing and illumination components for the work we produce. Below is what that warranty covers, what it excludes, and what to do if something fails.`,
-        sections: [
-          {
-            heading: "Warranty period",
-            paragraphs: [
-              `For work manufactured and installed by Royal Reklam, the warranty period is ${stats.warrantyYears} years from the date installation is completed, starting from the handover record or invoice date.`,
-            ],
-          },
-          {
-            heading: "What the warranty covers",
-            items: [
-              "Manufacturing faults in the cabinet, welding and assembly.",
-              "LED module, driver and internal wiring failures.",
-              "Delamination, cracking or adhesion failure of the face material caused by manufacturing.",
-              "Fixings loosening due to a manufacturing defect.",
-            ],
-          },
-          {
-            heading: "What the warranty excludes",
-            items: [
-              "Impact damage, collisions, vandalism and third-party interference.",
-              "Damage from storms, flooding, lightning, earthquakes and similar natural events.",
-              "Faults caused by mains overvoltage or defects in the building's electrical installation.",
-              "Problems arising after removal, repair or modification by anyone other than Royal Reklam.",
-              "Surface damage from unsuitable cleaning (solvents, abrasives, direct high-pressure spraying).",
-              "Natural colour fading and normal wear over time.",
-            ],
-          },
-          {
-            heading: "How to make a claim",
-            paragraphs: [
-              `Call us on ${siteConfig.contact.phoneDisplay} or send a photograph of the fault on WhatsApp. For illuminated work, a photograph taken at night lets us identify the cause remotely in most cases.`,
-              "If the remote assessment calls for it, we schedule an on-site inspection. Labour and replacement parts are free of charge for faults covered by the warranty; for anything outside it, we quote and get your approval before starting.",
-            ],
-          },
-          {
-            heading: "Servicing after the warranty",
-            paragraphs: [
-              "We continue to service and repair work once its warranty has expired, and we also maintain signage produced by other companies.",
-              "An annual check — moisture inside the cabinet, terminal tightness, driver temperature — prevents most faults before they appear.",
-            ],
-          },
-        ],
-      },
-    },
-  },
-
   gizlilik: {
     id: "gizlilik",
     copy: {
@@ -379,7 +276,7 @@ export const legalDocs: Record<string, LegalDoc> = {
             items: [
               "Teklif hazırlanması ve keşif randevusunun planlanması.",
               "Sözleşmenin kurulması, imalat ve montaj sürecinin yürütülmesi.",
-              "Garanti ve satış sonrası destek taleplerinin karşılanması.",
+              "Satış sonrası servis ve bakım taleplerinin karşılanması.",
               "Faturalandırma ve yasal saklama yükümlülüklerinin yerine getirilmesi.",
             ],
           },
@@ -398,7 +295,7 @@ export const legalDocs: Record<string, LegalDoc> = {
           {
             heading: "Saklama süresi",
             paragraphs: [
-              "Veriler, iş ilişkisinin devamı ve garanti süresi boyunca; fatura ve ticari kayıtlar ise ilgili mevzuatın öngördüğü yasal saklama süresince muhafaza edilir. Sürenin sonunda silinir veya anonim hâle getirilir.",
+              "Veriler, iş ilişkisi ve satış sonrası destek sürdüğü sürece; fatura ve ticari kayıtlar ise ilgili mevzuatın öngördüğü yasal saklama süresince muhafaza edilir. Sürenin sonunda silinir veya anonim hâle getirilir.",
             ],
           },
           {
@@ -454,7 +351,7 @@ export const legalDocs: Record<string, LegalDoc> = {
             items: [
               "Preparing a quote and scheduling a site survey.",
               "Forming the contract and carrying out fabrication and installation.",
-              "Handling warranty and after-sales support requests.",
+              "Handling after-sales service and maintenance requests.",
               "Invoicing and meeting statutory record-keeping obligations.",
             ],
           },
@@ -473,7 +370,7 @@ export const legalDocs: Record<string, LegalDoc> = {
           {
             heading: "Retention",
             paragraphs: [
-              "Data is retained for the duration of the business relationship and the warranty period; invoices and commercial records are kept for the statutory retention period required by the relevant legislation. At the end of that period they are deleted or anonymised.",
+              "Data is retained for as long as the business relationship and after-sales support continue; invoices and commercial records are kept for the statutory retention period required by the relevant legislation. At the end of that period they are deleted or anonymised.",
             ],
           },
           {

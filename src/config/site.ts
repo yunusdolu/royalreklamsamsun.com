@@ -61,12 +61,12 @@ export const siteConfig = {
   },
 
   team: {
-    artDirector: "İshak Bal",
+    artDirector: "İsak Bahar",
     /**
      * Telefon ve WhatsApp hattını yanıtlayan kişi. İletişim sayfasında
      * gösterilir — arayan kimi aradığını bilsin diye.
      */
-    contactPerson: "İshak Bahar",
+    contactPerson: "İsak Bahar",
   },
 
   /**
@@ -81,7 +81,7 @@ export const siteConfig = {
    * Webmaster panelinden alınıp buraya yazılır; boşken etiket basılmaz.
    */
   verification: {
-    google: "",
+    google: "mILkywoxa56C0yfyiXLMI9WJNpa7bXxL19PXeIBTVbI",
     yandex: "",
   },
 

@@ -20,7 +20,7 @@ export const schemaIds = {
   organization: `${siteConfig.url}/#organization`,
   website: `${siteConfig.url}/#website`,
   localBusiness: `${siteConfig.url}/#localbusiness`,
-  founder: `${siteConfig.url}/#ishakbal`,
+  founder: `${siteConfig.url}/#isakbahar`,
 };
 
 const descriptions: Record<Locale, string> = {

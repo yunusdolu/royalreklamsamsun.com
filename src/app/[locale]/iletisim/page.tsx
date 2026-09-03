@@ -100,7 +100,7 @@ export default async function ContactPage({
 
   /*
    * İletişim aşamasında sorulan sorular: keşif ücreti, şehir dışı hizmet,
-   * teslim süresi ve garanti. `homeFaqs` sırası değişirse burası da
+   * teslim süresi ve tasarım. `homeFaqs` sırası değişirse burası da
    * güncellenmeli — bu yüzden sıra numaraları tek yerde tutuluyor.
    */
   const contactFaqs = [3, 4, 1, 5]

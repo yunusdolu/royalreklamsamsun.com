@@ -69,7 +69,7 @@ export function GET() {
 ## Sık sorulan temel bilgiler
 
 - Yerinde keşif Samsun içinde ücretsizdir.
-- İmalat ve LED bileşenleri 2 yıl garantilidir.
+- Samsun merkez ve ilçelerinde yerinde keşif ücretsizdir.
 - Cephe tabelaları için ilgili ilçe belediyesinden ilan ve reklam izni gerekir; teknik çizim Royal Reklam tarafından hazırlanır.
 - Tipik teslim süreleri: ışıklı tabela 5–10 iş günü, kutu harf 7–12 iş günü, totem tabela 10–20 iş günü.
 - Fiyat, yerinde keşif ve ölçü alındıktan sonra belirlenir; sabit metrekare fiyatı yayınlanmaz.
@@ -93,7 +93,7 @@ ${postLines}
 - [Hizmetler](${localizedUrl("/hizmetler", "tr")}): Tüm hizmetlerin listesi
 - [Referanslar](${localizedUrl("/referanslar", "tr")}): Tamamlanan uygulamalar
 - [Hakkımızda](${localizedUrl("/hakkimizda", "tr")}): Firma ve çalışma prensipleri
-- [Sık Sorulan Sorular](${localizedUrl("/sss", "tr")}): Fiyat, süre, izin, garanti başlıklarında cevaplar
+- [Sık Sorulan Sorular](${localizedUrl("/sss", "tr")}): Fiyat, süre, izin, bakım başlıklarında cevaplar
 - [Teklif Al](${localizedUrl("/teklif-al", "tr")}): Ücretsiz keşif ve teklif talebi
 - [İletişim](${localizedUrl("/iletisim", "tr")}): Adres, harita ve iletişim kanalları
 `;

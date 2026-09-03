@@ -12,7 +12,7 @@ export const servicesEn: Record<string, ServiceCopy> = {
       "An illuminated sign is a shopfront sign that stays legible after dark thanks to internal LED lighting. Royal Reklam manufactures illuminated signage in Samsun, Türkiye using aluminium composite cabinets, acrylic faces and IP65-rated LED modules. Survey, design, production and installation typically take 5–10 business days.",
     metaTitle: "Illuminated Signage in Samsun | LED Signs — Royal Reklam Samsun",
     metaDescription:
-      "Illuminated sign manufacturing in Samsun: LED cabinets, acrylic and composite shopfront signs. Survey, design, production and installation in-house. 2-year warranty.",
+      "Illuminated sign manufacturing in Samsun: LED cabinets, acrylic and composite shopfront signs. Survey, design, production and installation in-house. Free site survey.",
     keywords: [
       "illuminated signage samsun",
       "led signs turkey",
@@ -52,7 +52,6 @@ export const servicesEn: Record<string, ServiceCopy> = {
       { label: "Graphics", value: "UV-stable cut vinyl or digital print" },
       { label: "LED life", value: "30,000 – 50,000 hours" },
       { label: "Fixing", value: "Anchor bolts or chemical anchors per façade type" },
-      { label: "Warranty", value: "2 years on fabrication and LEDs" },
     ],
     priceFactors: [
       "Overall sign area in square metres",
@@ -84,7 +83,7 @@ export const servicesEn: Record<string, ServiceCopy> = {
       },
       {
         q: "If an LED fails, is the whole sign replaced?",
-        a: "No. Only the faulty module or driver is swapped out — the sign stays in place. Under warranty this service is free of charge.",
+        a: "No. Only the faulty module or driver is swapped out — the sign stays in place, and most call-outs are finished in a single visit.",
       },
     ],
   },
@@ -99,7 +98,7 @@ export const servicesEn: Record<string, ServiceCopy> = {
       "Channel letter signage consists of individually fabricated, three-dimensional letters mounted separately onto a façade. Royal Reklam produces channel letters in Samsun with acrylic faces, aluminium returns and LED illumination — front-lit, halo (reverse-lit) or dual. Typical delivery is 7–12 business days.",
     metaTitle: "Channel Letter Sign Manufacturing in Samsun — Royal Reklam Samsun",
     metaDescription:
-      "Channel letter signs in Samsun: acrylic faced, LED illuminated, halo-lit 3D letters for malls and high-street stores. CNC precision, 2-year warranty.",
+      "Channel letter signs in Samsun: acrylic faced, LED illuminated, halo-lit 3D letters for malls and high-street stores. CNC precision, free site survey.",
     keywords: [
       "channel letters samsun",
       "3d letter sign turkey",
@@ -138,7 +137,6 @@ export const servicesEn: Record<string, ServiceCopy> = {
       { label: "Cutting", value: "CNC router from vector artwork" },
       { label: "Mounting", value: "Standoff fixings, stainless hardware" },
       { label: "Turkish characters", value: "Full support for ş, ğ, ı, ö, ü, ç" },
-      { label: "Warranty", value: "2 years on fabrication and LEDs" },
     ],
     priceFactors: [
       "Letter height and total character count",
@@ -220,7 +218,6 @@ export const servicesEn: Record<string, ServiceCopy> = {
       { label: "Foundation", value: "Reinforced concrete, depth per ground survey" },
       { label: "Configuration", value: "Single or double sided" },
       { label: "Electrical", value: "Earthed supply with fused distribution board" },
-      { label: "Warranty", value: "5 years structure, 2 years LEDs" },
     ],
     priceFactors: [
       "Totem height and width",
@@ -298,7 +295,6 @@ export const servicesEn: Record<string, ServiceCopy> = {
       { label: "Mounting", value: "Wall fixed, suspended or free-standing" },
       { label: "Use", value: "Interior; IP54 version available for exterior" },
       { label: "Graphic change", value: "3–5 minutes, tool-free (fabric)" },
-      { label: "Warranty", value: "3 years frame, 2 years LEDs" },
     ],
     priceFactors: [
       "Panel size in square metres",
@@ -582,7 +578,7 @@ export const servicesEn: Record<string, ServiceCopy> = {
     summary:
       "Logo, colour, typography and usage rules — a system that carries from stationery to façade.",
     answer:
-      "Brand identity work defines a company's logo, colour palette, typography and usage rules as a single system. Royal Reklam delivers logo design, identity guidelines and applied materials in Samsun under art director İshak Bal, with signage, vehicle and façade applications drawing from the same system.",
+      "Brand identity work defines a company's logo, colour palette, typography and usage rules as a single system. Royal Reklam delivers logo design, identity guidelines and applied materials in Samsun under art director İsak Bahar, with signage, vehicle and façade applications drawing from the same system.",
     metaTitle: "Brand Identity & Logo Design in Samsun — Royal Reklam Samsun",
     metaDescription:
       "Brand identity in Samsun: logo design, colour and typography systems, identity guidelines, stationery and applied materials.",
@@ -612,7 +608,7 @@ export const servicesEn: Record<string, ServiceCopy> = {
       },
       {
         title: "Art direction",
-        description: "The whole process runs under İshak Bal for a single aesthetic voice.",
+        description: "The whole process runs under İsak Bahar for a single aesthetic voice.",
       },
     ],
     specs: [
@@ -739,12 +735,12 @@ export const servicesEn: Record<string, ServiceCopy> = {
     shortName: "Manufacture & Install",
     tagline: "Turnkey, nationwide",
     summary:
-      "Survey, design, in-house fabrication and on-site installation under one contract and one warranty.",
+      "Survey, design, in-house fabrication and on-site installation under one contract, with one point of contact.",
     answer:
-      "Royal Reklam handles survey, design, fabrication and installation entirely with its own team. Signage and façade work produced at our Samsun workshop is installed across Türkiye by our own crews, giving clients a single contract, a single point of contact and a single warranty.",
+      "Royal Reklam handles survey, design, fabrication and installation entirely with its own team. Signage and façade work produced at our Samsun workshop is installed across Türkiye by our own crews, giving clients a single contract and a single point of contact, with responsibility never split across subcontractors.",
     metaTitle: "Sign Manufacturing, Design & Installation — Royal Reklam Samsun",
     metaDescription:
-      "Samsun-based sign manufacturing, design and installation. In-house workshop, nationwide installation crews, single-source warranty.",
+      "Samsun-based sign manufacturing, design and installation. In-house workshop, nationwide installation crews, single-source responsibility.",
     keywords: [
       "sign manufacturing samsun",
       "sign installation turkey",
@@ -759,7 +755,7 @@ export const servicesEn: Record<string, ServiceCopy> = {
     highlights: [
       {
         title: "Single point of contact",
-        description: "Design, fabrication, installation and warranty in one contract.",
+        description: "Design, fabrication and installation in one contract.",
       },
       {
         title: "Our own workshop",
@@ -781,7 +777,6 @@ export const servicesEn: Record<string, ServiceCopy> = {
       { label: "Installation", value: "Cherry picker and scaffold, working at height" },
       { label: "Coverage", value: "Samsun and its districts, plus all of Türkiye" },
       { label: "Documentation", value: "Technical drawings and permit application files" },
-      { label: "Warranty", value: "Single source, covering all components" },
       { label: "Maintenance", value: "Periodic maintenance agreements on request" },
     ],
     priceFactors: [
@@ -814,7 +809,7 @@ export const servicesEn: Record<string, ServiceCopy> = {
       },
       {
         q: "Do you offer maintenance afterwards?",
-        a: "Yes. Fabrication and LED faults are corrected free of charge during the warranty period, and periodic maintenance agreements are available afterwards.",
+        a: "Yes. When a fault is reported on work we produced, our own crew attends on site, and periodic maintenance agreements are available.",
       },
     ],
   },

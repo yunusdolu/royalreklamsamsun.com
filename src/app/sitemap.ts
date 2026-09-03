@@ -53,7 +53,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { hrefFor: () => "/sss", priority: 0.7, changeFrequency: "monthly" },
     { hrefFor: () => "/teklif-al", priority: 0.9, changeFrequency: "monthly" },
     { hrefFor: () => "/iletisim", priority: 0.8, changeFrequency: "yearly" },
-    { hrefFor: () => "/garanti", priority: 0.4, changeFrequency: "yearly" },
     { hrefFor: () => "/gizlilik", priority: 0.2, changeFrequency: "yearly" },
     { hrefFor: () => "/cerez", priority: 0.2, changeFrequency: "yearly" },
     { hrefFor: () => "/kvkk", priority: 0.2, changeFrequency: "yearly" },

@@ -67,7 +67,7 @@ export async function Footer({
               title={t("support")}
               links={[
                 { title: tNav("faq"), href: "/sss" },
-                { title: t("warranty"), href: "/garanti" },
+                { title: tNav("blog"), href: '/blog' },
                 { title: tNav("contact"), href: "/iletisim" },
               ]}
             />

@@ -28,7 +28,6 @@ export const routing = defineRouting({
     "/sss": { tr: "/sss", en: "/faq" },
     "/teklif-al": { tr: "/teklif-al", en: "/get-a-quote" },
     "/iletisim": { tr: "/iletisim", en: "/contact" },
-    "/garanti": { tr: "/garanti", en: "/warranty" },
     "/gizlilik": { tr: "/gizlilik", en: "/privacy" },
     "/cerez": { tr: "/cerez", en: "/cookies" },
     "/kvkk": { tr: "/kvkk", en: "/data-protection" },

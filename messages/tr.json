@@ -1,7 +1,7 @@
 {
   "meta": {
     "defaultTitle": "Royal Reklam Samsun | Tabela, Kutu Harf ve Cephe Giydirme",
-    "defaultDescription": "Samsun'da ışıklı tabela, kutu harf, totem, cephe giydirme ve araç giydirme. Keşiften montaja tek elden, kendi atölyemizde imalat, 2 yıl garanti.",
+    "defaultDescription": "Samsun'da ışıklı tabela, kutu harf, totem, cephe giydirme ve araç giydirme. Keşiften montaja tek elden, kendi atölyemizde imalat, ücretsiz keşif.",
     "skipToContent": "İçeriğe geç"
   },
   "nav": {
@@ -72,7 +72,7 @@
       "secondaryCta": "Projelerimizi İnceleyin",
       "scrollHint": "Keşfedin",
       "badgeOne": "Kendi atölyemizde imalat",
-      "badgeTwo": "2 yıl garanti",
+      "badgeTwo": "Ücretsiz keşif",
       "badgeThree": "Türkiye geneli montaj",
       "slides": {
         "1": {
@@ -100,8 +100,8 @@
       "title": "Rakamlarla Royal Reklam",
       "projects": "Tamamlanan uygulama",
       "years": "Yıllık saha tecrübesi",
-      "districts": "Samsun ilçesinde hizmet",
-      "warranty": "Yıl imalat ve LED garantisi"
+      "provinces": "İl geneline montaj",
+      "services": "Hizmet kalemi"
     },
     "services": {
       "eyebrow": "Hizmetlerimiz",
@@ -112,7 +112,7 @@
     "process": {
       "eyebrow": "Nasıl Çalışırız",
       "title": "Beş adım, tek muhatap",
-      "description": "Tabela işinde en sık yaşanan sorun sorumluluğun dağılmasıdır. Bizde tasarım, imalat, montaj ve garanti tek sözleşmede toplanır.",
+      "description": "Tabela işinde en sık yaşanan sorun sorumluluğun dağılmasıdır. Bizde tasarım, imalat ve montaj tek sözleşmede toplanır.",
       "steps": {
         "discovery": {
           "title": "Keşif & Ölçü",
@@ -131,8 +131,8 @@
           "description": "Sepetli araç veya cephe iskelesiyle, sigortalı ekiple ve planlanan günde. Faal işletmelerde çalışma saatini sizinle birlikte belirliyoruz."
         },
         "delivery": {
-          "title": "Teslim & Garanti",
-          "description": "İki yıl imalat ve LED garantisi. Bir sorun olduğunda arayacağınız tek numara var; sorumluluk kimseye devredilmiyor."
+          "title": "Teslim & Sonrası",
+          "description": "Teslimde aydınlatma, bağlantı ve yüzey birlikte kontrol edilir. Sonrasında da arayacağınız tek numara var; sorumluluk kimseye devredilmiyor."
         }
       },
       "headingTop": "Neden Bizi",
@@ -147,7 +147,7 @@
           "description": "İmalat dışarıya verilmediği için teslim tarihini taahhüt edebiliyor, kaliteyi her aşamada kontrol edebiliyoruz."
         },
         "single": {
-          "title": "Tek muhatap, tek garanti",
+          "title": "Tek muhatap, tek sorumluluk",
           "description": "Tasarım, üretim, montaj ve satış sonrası aynı sözleşmede. Sorun çıktığında kimse birbirini işaret etmiyor."
         },
         "nationwide": {
@@ -228,9 +228,9 @@
   "aboutPage": {
     "title": "Hakkımızda",
     "metaTitle": "Hakkımızda | Royal Reklam Samsun",
-    "metaDescription": "Royal Reklam, Samsun merkezli bir açık hava reklamcılığı firmasıdır. Art direktör İshak Bal yönetiminde tasarımdan montaja tek elden hizmet verir.",
+    "metaDescription": "Royal Reklam, Samsun merkezli bir açık hava reklamcılığı firmasıdır. Art direktör İsak Bahar yönetiminde tasarımdan montaja tek elden hizmet verir.",
     "lead": "Tabelayı bir levha değil, markanın sokaktaki temsilcisi olarak görüyoruz.",
-    "answer": "Royal Reklam, Samsun İlkadım'da kendi atölyesinde üretim yapan bir açık hava reklamcılığı firmasıdır. Art direktör İshak Bal yönetiminde tasarım, imalat ve montaj süreçlerinin tamamını kendi ekibiyle yürütür ve Türkiye genelinde uygulama yapar.",
+    "answer": "Royal Reklam, Samsun İlkadım'da kendi atölyesinde üretim yapan bir açık hava reklamcılığı firmasıdır. Art direktör İsak Bahar yönetiminde tasarım, imalat ve montaj süreçlerinin tamamını kendi ekibiyle yürütür ve Türkiye genelinde uygulama yapar.",
     "storyTitle": "Kısaca biz",
     "story": [
       "Royal Reklam, Samsun İlkadım'da kendi atölyesinde üretim yapan bir açık hava reklamcılığı firmasıdır. İşimizin merkezinde tek bir fikir var: bir tabela, markanın sokaktaki temsilcisidir. Yanlış yapılmış bir cephe, ne kadar iyi bir işletme olursanız olun sizi olduğunuzdan daha küçük gösterir.",
@@ -253,7 +253,7 @@
       },
       "aftercare": {
         "title": "İş bitince kaybolmayız",
-        "description": "Garanti süresince imalat ve LED arızaları ücretsiz giderilir. Sonrasında da aynı numaradan bize ulaşırsınız."
+        "description": "İş biter bitmez ortadan kaybolmayız. Arıza ya da soru olduğunda aynı numaradan bize ulaşır, ekibimizle ilgileniriz."
       }
     },
     "teamTitle": "Ekip",
@@ -297,8 +297,6 @@
     "form": {
       "serviceLabel": "Hizmet seçin",
       "servicePlaceholder": "Bir hizmet seçin",
-      "regionLabel": "Uygulama nerede yapılacak?",
-      "regionPlaceholder": "İlçe veya şehir",
       "sizeLabel": "Yaklaşık ölçü (biliyorsanız)",
       "sizePlaceholder": "Örn. 4 metre x 80 cm",
       "nameLabel": "Adınız",
@@ -345,7 +343,16 @@
       "photoNote": "Cephenizin fotoğrafını WhatsApp konuşmasına ekleyebilirsiniz; ölçü tahmini çok daha isabetli olur.",
       "summaryTitle": "Özet",
       "emptySummary": "Henüz seçim yapılmadı",
-      "clear": "Seçimleri temizle"
+      "clear": "Seçimleri temizle",
+      "stepWhat": "Hizmet",
+      "stepSpec": "Detay",
+      "stepWho": "İletişim",
+      "progress": "Tamamlanan",
+      "ready": "Göndermeye hazır",
+      "missing": "Hizmet ve ad alanı gerekli",
+      "provinceLabel": "İl",
+      "provincePlaceholder": "İl seçin veya yazın",
+      "noMatch": "Eşleşen sonuç yok"
     },
     "reassure": {
       "free": "Keşif ve teklif ücretsiz",
@@ -371,14 +378,14 @@
   "faqPage": {
     "title": "Sık Sorulan Sorular",
     "metaTitle": "Sık Sorulan Sorular | Samsun Tabela — Royal Reklam",
-    "metaDescription": "Tabela fiyatları, teslim süresi, belediye izni, garanti ve montaj hakkında en çok sorulan soruların net cevapları.",
+    "metaDescription": "Tabela fiyatları, teslim süresi, belediye izni, bakım ve montaj hakkında en çok sorulan soruların net cevapları.",
     "lead": "Tabela yaptırmadan önce bilinmesi gereken her şey. Aradığınız soruyu bulamazsanız doğrudan arayın — telefonda da aynı netlikte cevaplıyoruz.",
     "categories": {
       "general": "Genel",
       "pricing": "Fiyat ve Süre",
       "permits": "İzin ve Mevzuat",
       "technical": "Teknik",
-      "aftercare": "Garanti ve Bakım"
+      "aftercare": "Bakım ve Destek"
     }
   },
   "blogPage": {
@@ -403,13 +410,13 @@
     "printing": "Dijital Baskı",
     "vehicleWrap": "Araç Giydirme",
     "facade": "Cephe Sistemleri",
-    "warranty": "Garanti Şartları",
     "privacy": "Gizlilik",
     "cookies": "Çerez",
     "kvkk": "KVKK",
     "directions": "Yol Tarifi",
     "rights": "Tüm hakları saklıdır.",
-    "whatsappPrefill": "Merhaba Royal Reklam, web siteniz üzerinden ulaşıyorum. Hizmetleriniz hakkında bilgi almak istiyorum."
+    "whatsappPrefill": "Merhaba Royal Reklam, web siteniz üzerinden ulaşıyorum. Hizmetleriniz hakkında bilgi almak istiyorum.",
+    "guides": "Rehber"
   },
   "notFound": {
     "title": "Sayfa bulunamadı",

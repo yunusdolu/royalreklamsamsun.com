@@ -21,7 +21,7 @@ export const servicesTr: Record<string, ServiceCopy> = {
       "Işıklı tabela, LED aydınlatma sayesinde karanlıkta da net okunabilen cephe tanıtım levhasıdır. Royal Reklam, Samsun'da alüminyum kompozit kasa ve pleksiglas yüzey ile IP65 korumalı LED modüllü ışıklı tabela imalatı yapar. Keşif, tasarım, üretim ve montaj dâhil ortalama teslim süresi 5–10 iş günüdür.",
     metaTitle: "Samsun Işıklı Tabela İmalatı | LED Tabela — Royal Reklam Samsun",
     metaDescription:
-      "Samsun'da ışıklı tabela imalatı: LED kutu, pleksi ve kompozit kasa tabela. Keşif, tasarım, imalat ve montaj tek elden, 2 yıl garantili. 0544 230 71 77",
+      "Samsun'da ışıklı tabela imalatı: LED kutu, pleksi ve kompozit kasa tabela. Keşif, tasarım, imalat ve montaj tek elden, ücretsiz keşif. 0544 230 71 77",
     keywords: [
       "samsun ışıklı tabela",
       "ışıklı tabela imalatı samsun",
@@ -65,7 +65,6 @@ export const servicesTr: Record<string, ServiceCopy> = {
       { label: "Baskı", value: "UV dayanımlı folyo kesim veya dijital baskı" },
       { label: "LED ömrü", value: "30.000 – 50.000 saat" },
       { label: "Montaj", value: "Dübel + kimyasal ankraj, cephe tipine göre" },
-      { label: "Garanti", value: "İmalat ve LED için 2 yıl" },
     ],
     priceFactors: [
       "Tabela ölçüsü (m² olarak toplam yüzey)",
@@ -97,7 +96,7 @@ export const servicesTr: Record<string, ServiceCopy> = {
       },
       {
         q: "LED'ler arızalanırsa tabelanın tamamı değişir mi?",
-        a: "Hayır. Modüler yapı sayesinde yalnızca arızalı LED modül veya trafo değiştirilir. Tabelayı sökmeye gerek kalmaz; garantili işlerde bu servis ücretsizdir.",
+        a: "Hayır. Modüler yapı sayesinde yalnızca arızalı LED modül veya trafo değiştirilir. Tabelayı sökmeye gerek kalmaz; müdahale çoğu işte tek ziyarette biter.",
       },
     ],
   },
@@ -156,7 +155,6 @@ export const servicesTr: Record<string, ServiceCopy> = {
       { label: "Kesim", value: "CNC router, vektörel dosyadan" },
       { label: "Montaj", value: "Distans aparatlı, paslanmaz bağlantı elemanı" },
       { label: "Türkçe karakter", value: "ş, ğ, ı, ö, ü, ç tam destek" },
-      { label: "Garanti", value: "İmalat ve LED için 2 yıl" },
     ],
     priceFactors: [
       "Harf yüksekliği ve toplam karakter sayısı",
@@ -245,7 +243,6 @@ export const servicesTr: Record<string, ServiceCopy> = {
       { label: "Temel", value: "Betonarme, zemin etüdüne göre derinlik" },
       { label: "Kullanım", value: "Tek yüz veya çift yüz" },
       { label: "Elektrik", value: "Topraklamalı hat, sigortalı pano" },
-      { label: "Garanti", value: "Konstrüksiyon 5 yıl, LED 2 yıl" },
     ],
     priceFactors: [
       "Totem yüksekliği ve genişliği",
@@ -329,7 +326,6 @@ export const servicesTr: Record<string, ServiceCopy> = {
       { label: "Montaj", value: "Duvara sabit, tavandan askılı veya ayaklı" },
       { label: "Kullanım", value: "İç mekân; dış mekân için IP54 versiyon" },
       { label: "Görsel değişimi", value: "Kumaş sistemde araçsız, 3–5 dakika" },
-      { label: "Garanti", value: "Kasa 3 yıl, LED 2 yıl" },
     ],
     priceFactors: [
       "Pano ölçüsü (m²)",
@@ -468,7 +464,7 @@ export const servicesTr: Record<string, ServiceCopy> = {
     intro: [
       "Bir ticari araç, günde ortalama binlerce kişi tarafından görülür. Araç giydirme, tek seferlik bir yatırımla yıllarca çalışan, aylık kirası olmayan bir açık hava reklam alanı yaratır — üstelik hedef kitlenizin bulunduğu güzergâhlarda.",
       "Malzeme seçimi bu işin özüdür. Ucuz kalender folyo, kavisli yüzeylerde geri çeker, kısa sürede solar ve sökümde boya kaldırır. Biz döküm (cast) folyo kullanır ve üzerine UV koruyucu laminasyon uygularız; bu kombinasyon dış mekânda 5–7 yıl renk dayanımı sağlar ve söküm sırasında orijinal boya zarar görmez.",
-      "Kısmi kaplamadan tam kaplamaya kadar her ölçekte çalışıyoruz. Filo işlerinde tüm araçlarda birebir aynı yerleşimi garanti etmek için araç bazlı kalıp şablonu hazırlıyoruz — böylece on aracın onunda logo aynı noktada durur.",
+      "Kısmi kaplamadan tam kaplamaya kadar her ölçekte çalışıyoruz. Filo işlerinde tüm araçlarda birebir aynı yerleşimi sağlamak için araç bazlı kalıp şablonu hazırlıyoruz — böylece on aracın onunda logo aynı noktada durur.",
     ],
     highlights: [
       {
@@ -631,7 +627,7 @@ export const servicesTr: Record<string, ServiceCopy> = {
     summary:
       "Logo, renk, tipografi ve uygulama kurallarını içeren; tabeladan araca tüm yüzeyleri kapsayan kimlik sistemi.",
     answer:
-      "Kurumsal kimlik çalışması, bir markanın logo, renk paleti, tipografi ve uygulama kurallarını tanımlayan sistemin oluşturulmasıdır. Royal Reklam, Samsun'da art direktör İshak Bal yönetiminde logo tasarımı, kimlik kılavuzu ve tüm basılı/uygulamalı materyalleri üretir. Tabela, araç ve cephe uygulamaları aynı sistemden beslenir.",
+      "Kurumsal kimlik çalışması, bir markanın logo, renk paleti, tipografi ve uygulama kurallarını tanımlayan sistemin oluşturulmasıdır. Royal Reklam, Samsun'da art direktör İsak Bahar yönetiminde logo tasarımı, kimlik kılavuzu ve tüm basılı/uygulamalı materyalleri üretir. Tabela, araç ve cephe uygulamaları aynı sistemden beslenir.",
     metaTitle: "Samsun Kurumsal Kimlik ve Logo Tasarımı — Royal Reklam Samsun",
     metaDescription:
       "Samsun kurumsal kimlik: logo tasarımı, renk ve tipografi sistemi, kimlik kılavuzu, kartvizit ve tüm uygulama materyalleri. 0544 230 71 77",
@@ -666,7 +662,7 @@ export const servicesTr: Record<string, ServiceCopy> = {
       {
         title: "Art direktör kontrolü",
         description:
-          "Tüm süreç İshak Bal'ın direktörlüğünde yürür; tek elden estetik tutarlılık sağlanır.",
+          "Tüm süreç İsak Bahar'ın direktörlüğünde yürür; tek elden estetik tutarlılık sağlanır.",
       },
     ],
     specs: [
@@ -802,10 +798,10 @@ export const servicesTr: Record<string, ServiceCopy> = {
     summary:
       "Keşiften tasarıma, kendi atölyemizdeki imalattan sahadaki montaja kadar tek elden ve tek sorumlulukla.",
     answer:
-      "Royal Reklam; keşif, tasarım, imalat ve montaj aşamalarının tamamını kendi ekibiyle yürüten bir açık hava reklam firmasıdır. Samsun merkezli atölyemizde üretilen tabela ve cephe uygulamaları, Türkiye'nin her iline montaj ekibimizle sevk edilir. Tek sözleşme, tek muhatap ve tek garanti kapsamı sunulur.",
+      "Royal Reklam; keşif, tasarım, imalat ve montaj aşamalarının tamamını kendi ekibiyle yürüten bir açık hava reklam firmasıdır. Samsun merkezli atölyemizde üretilen tabela ve cephe uygulamaları, Türkiye'nin her iline montaj ekibimizle sevk edilir. Tek sözleşme ve tek muhatap sunulur; sorumluluk taşerona dağılmaz.",
     metaTitle: "Tabela İmalatı, Tasarım ve Montaj — Royal Reklam Samsun",
     metaDescription:
-      "Samsun merkezli tabela imalatı, tasarım ve montaj hizmeti. Kendi atölyemizde üretim, Türkiye geneli montaj ekibi, tek elden garanti. 0544 230 71 77",
+      "Samsun merkezli tabela imalatı, tasarım ve montaj hizmeti. Kendi atölyemizde üretim, Türkiye geneli montaj ekibi, tek elden sorumluluk. 0544 230 71 77",
     keywords: [
       "tabela imalatı samsun",
       "tabela montajı samsun",
@@ -822,7 +818,7 @@ export const servicesTr: Record<string, ServiceCopy> = {
       {
         title: "Tek muhatap",
         description:
-          "Tasarım, imalat, montaj ve garanti tek sözleşmede — sorumluluk dağılmaz.",
+          "Tasarım, imalat ve montaj tek sözleşmede — sorumluluk dağılmaz.",
       },
       {
         title: "Kendi atölyemiz",
@@ -847,7 +843,6 @@ export const servicesTr: Record<string, ServiceCopy> = {
       { label: "Montaj", value: "Sepetli araç ve iskele ile yüksekte çalışma" },
       { label: "Kapsama", value: "Samsun merkez + tüm ilçeler + Türkiye geneli" },
       { label: "Belgelendirme", value: "Teknik çizim ve izin başvuru dosyası" },
-      { label: "Garanti", value: "Tek elden, tüm bileşenler için" },
       { label: "Bakım", value: "Talep üzerine periyodik bakım anlaşması" },
     ],
     priceFactors: [
@@ -880,7 +875,7 @@ export const servicesTr: Record<string, ServiceCopy> = {
       },
       {
         q: "İş bittikten sonra bakım veriyor musunuz?",
-        a: "Evet. Garanti süresi boyunca imalat ve LED kaynaklı arızalar ücretsiz giderilir. Sonrasında talep eden işletmelerle periyodik bakım anlaşması yapıyoruz.",
+        a: "Evet. Kendi ürettiğimiz işlerde arıza bildirimini aldığımızda yerinde müdahale ediyor, talep eden işletmelerle periyodik bakım anlaşması yapıyoruz.",
       },
     ],
   },

@@ -1,5 +1,5 @@
 import { getTranslations } from "next-intl/server";
-import { Award, Briefcase, MapPin, ShieldCheck } from "lucide-react";
+import { Award, Briefcase, Layers, MapPin } from "lucide-react";
 
 import { Counter } from "@/components/motion/counter";
 import { RevealGroup, RevealItem } from "@/components/motion/reveal";
@@ -24,18 +24,18 @@ export async function StatsBar() {
       icon: <Award className="size-11 text-gold-500 drop-shadow-[0_0_8px_rgba(212,175,55,0.4)]" />
     },
     { 
-      value: stats.districts, 
+      value: stats.services, 
       suffix: "", 
-      label: t("districts"),
+      label: t("services"),
       description: "Hizmet Noktası",
-      icon: <MapPin className="size-11 text-gold-500 drop-shadow-[0_0_8px_rgba(212,175,55,0.4)]" />
+      icon: <Layers className="size-11 text-gold-500 drop-shadow-[0_0_8px_rgba(212,175,55,0.4)]" />
     },
     { 
-      value: stats.warrantyYears, 
+      value: stats.provinces, 
       suffix: "", 
-      label: t("warranty"),
+      label: t("provinces"),
       description: "Kalite Güvencesi",
-      icon: <ShieldCheck className="size-11 text-gold-500 drop-shadow-[0_0_8px_rgba(212,175,55,0.4)]" />
+      icon: <MapPin className="size-11 text-gold-500 drop-shadow-[0_0_8px_rgba(212,175,55,0.4)]" />
     },
   ];
 

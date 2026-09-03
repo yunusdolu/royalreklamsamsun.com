@@ -1,15 +1,16 @@
 "use client";
 
-import { MessageCircle, Phone } from "lucide-react";
+import { Check, MessageCircle, Phone } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
 import { useMemo, useState } from "react";
 
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Combobox } from "@/components/ui/combobox";
 import { Textarea } from "@/components/ui/textarea";
 import { siteConfig, telLink, whatsappLink } from "@/config/site";
-import { additionalDistricts, regions } from "@/content/regions";
 import { services } from "@/content/services";
+import { homeProvince, provinces } from "@/content/turkey";
 import type { Locale } from "@/i18n/routing";
 import { cn } from "@/lib/utils";
 
@@ -50,23 +51,18 @@ export function QuoteBuilder() {
   const [lighting, setLighting] = useState<Lighting | "">("");
   const [placement, setPlacement] = useState<Placement | "">("");
   const [timing, setTiming] = useState<Timing | "">("");
-  const [region, setRegion] = useState("");
+  const [province, setProvince] = useState<string>(homeProvince);
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [business, setBusiness] = useState("");
   const [details, setDetails] = useState("");
   const [touched, setTouched] = useState(false);
 
-  const districtOptions = useMemo(
-    () => [...regions.map((r) => r.name[locale]), ...additionalDistricts],
-    [locale],
-  );
-
-  const toggleService = (name: string) =>
+  const toggleService = (label: string) =>
     setSelectedServices((prev) =>
-      prev.includes(name)
-        ? prev.filter((item) => item !== name)
-        : [...prev, name],
+      prev.includes(label)
+        ? prev.filter((item) => item !== label)
+        : [...prev, label],
     );
 
   /** Girilen cm ölçülerinden m² — yalnızca ikisi de doluysa hesaplanır */
@@ -102,7 +98,8 @@ export function QuoteBuilder() {
       );
     if (timing)
       lines.push(`• ${tMessage("timing")}: ${t(`timingOptions.${timing}`)}`);
-    if (region) lines.push(`• ${tMessage("location")}: ${region}`);
+    if (province.trim())
+      lines.push(`• ${tMessage("location")}: ${province.trim()}`);
     if (business) lines.push(`• ${tMessage("business")}: ${business}`);
     if (name) lines.push(`• ${tMessage("name")}: ${name}`);
     if (phone) lines.push(`• ${tMessage("phone")}: ${phone}`);
@@ -118,7 +115,7 @@ export function QuoteBuilder() {
     lighting,
     placement,
     timing,
-    region,
+    province,
     business,
     name,
     phone,
@@ -129,7 +126,20 @@ export function QuoteBuilder() {
 
   const isValid = selectedServices.length > 0 && name.trim().length > 0;
 
-  /** Sağ paneldeki tek satırlık özet */
+  /** Üç bölümün doluluk durumu — sağ paneldeki ilerleme göstergesi */
+  const steps = useMemo(
+    () => [
+      { label: t("stepWhat"), done: selectedServices.length > 0 },
+      {
+        label: t("stepSpec"),
+        done: Boolean((width && height) || lighting || placement || timing),
+      },
+      { label: t("stepWho"), done: name.trim().length > 0 },
+    ],
+    [selectedServices, width, height, lighting, placement, timing, name, t],
+  );
+
+  /** Panelin üstündeki tek satırlık özet çipleri */
   const summary = useMemo(() => {
     const parts: string[] = [];
     if (selectedServices.length > 0) {
@@ -155,7 +165,7 @@ export function QuoteBuilder() {
     setLighting("");
     setPlacement("");
     setTiming("");
-    setRegion("");
+    setProvince(homeProvince);
     setName("");
     setPhone("");
     setBusiness("");
@@ -164,35 +174,27 @@ export function QuoteBuilder() {
   };
 
   const fieldClass =
-    "h-11 border-black/10 bg-white text-royal-fg placeholder:text-royal-faint focus-visible:border-black/30 focus-visible:ring-black/10";
+    "h-12 rounded-xl border-black/10 bg-white text-[0.9375rem] text-royal-fg placeholder:text-royal-faint/70 focus-visible:border-black/40 focus-visible:ring-black/10";
 
-  const chipClass = (active: boolean) =>
+  const labelClass = "text-[0.8125rem] font-medium text-royal-fg";
+
+  const chip = (active: boolean) =>
     cn(
-      "rounded-full px-3.5 py-2 text-[0.8125rem] font-medium transition-all duration-300",
+      "inline-flex items-center gap-2 rounded-full px-4 py-2.5 text-[0.875rem] font-medium transition-all duration-300",
       active
-        ? "bg-black text-white shadow-[0_10px_24px_-14px_rgba(0,0,0,0.9)]"
-        : "border border-black/[0.09] text-royal-muted hover:border-black/25 hover:text-royal-fg",
+        ? "bg-black text-white shadow-[0_12px_28px_-16px_rgba(0,0,0,0.9)]"
+        : "border border-black/[0.09] bg-white text-royal-muted hover:border-black/30 hover:text-royal-fg",
     );
 
   return (
-    <div className="grid gap-10 lg:grid-cols-12 lg:gap-14">
-      {/* Alanlar */}
-      <div className="space-y-5 lg:col-span-7">
-        {/* 1 — Hizmet seçimi */}
-        <section className="rounded-2xl border border-black/[0.07] bg-white p-6 shadow-[0_1px_2px_rgba(0,0,0,0.04)] sm:p-7">
-          <div className="flex items-baseline justify-between gap-4">
-            <h2 className="text-[0.6875rem] font-semibold uppercase tracking-[0.16em] text-royal-faint">
-              <span className="mr-2 text-gold-600">01</span>
-              {t("sectionWhat")}
-            </h2>
-            <span className="text-[0.75rem] text-royal-faint">
-              {t("serviceHint")}
-            </span>
-          </div>
-
-          <fieldset className="mt-5">
+    <div className="grid gap-8 lg:grid-cols-12 lg:gap-12">
+      {/* ---------------- Sol: form ---------------- */}
+      <div className="space-y-6 lg:col-span-7">
+        {/* 01 — Hizmet seçimi */}
+        <Section index="01" title={t("sectionWhat")} hint={t("serviceHint")}>
+          <fieldset>
             <legend className="sr-only">{t("serviceLabel")}</legend>
-            <div className="flex flex-wrap gap-2">
+            <div className="flex flex-wrap gap-2.5">
               {services.map((item) => {
                 const label = item.copy[locale].name;
                 const active = selectedServices.includes(label);
@@ -202,8 +204,11 @@ export function QuoteBuilder() {
                     type="button"
                     onClick={() => toggleService(label)}
                     aria-pressed={active}
-                    className={chipClass(active)}
+                    className={chip(active)}
                   >
+                    {active && (
+                      <Check className="size-3.5 shrink-0" aria-hidden="true" />
+                    )}
                     {label}
                   </button>
                 );
@@ -212,20 +217,17 @@ export function QuoteBuilder() {
           </fieldset>
 
           {touched && selectedServices.length === 0 && (
-            <p className="mt-3 text-xs text-destructive">{t("required")}</p>
+            <p className="mt-4 text-[0.8125rem] text-destructive">
+              {t("required")}
+            </p>
           )}
-        </section>
+        </Section>
 
-        {/* 2 — İşin detayları */}
-        <section className="rounded-2xl border border-black/[0.07] bg-white p-6 shadow-[0_1px_2px_rgba(0,0,0,0.04)] sm:p-7">
-          <h2 className="text-[0.6875rem] font-semibold uppercase tracking-[0.16em] text-royal-faint">
-            <span className="mr-2 text-gold-600">02</span>
-            {t("sectionSpec")}
-          </h2>
-
-          <div className="mt-5 grid gap-5 sm:grid-cols-3">
+        {/* 02 — Ölçü ve koşullar */}
+        <Section index="02" title={t("sectionSpec")}>
+          <div className="grid gap-5 sm:grid-cols-3">
             <div>
-              <Label htmlFor="q-width" className="text-royal-muted">
+              <Label htmlFor="q-width" className={labelClass}>
                 {t("widthLabel")}
               </Label>
               <Input
@@ -238,7 +240,7 @@ export function QuoteBuilder() {
               />
             </div>
             <div>
-              <Label htmlFor="q-height" className="text-royal-muted">
+              <Label htmlFor="q-height" className={labelClass}>
                 {t("heightLabel")}
               </Label>
               <Input
@@ -251,7 +253,7 @@ export function QuoteBuilder() {
               />
             </div>
             <div>
-              <Label htmlFor="q-quantity" className="text-royal-muted">
+              <Label htmlFor="q-quantity" className={labelClass}>
                 {t("quantityLabel")}
               </Label>
               <Input
@@ -265,90 +267,51 @@ export function QuoteBuilder() {
           </div>
 
           {area && (
-            <p className="mt-3 text-[0.8125rem] text-royal-muted">
-              {t("areaLabel")}:{" "}
-              <span className="font-semibold tabular-nums text-royal-fg">
-                {area} m²
-              </span>
+            <p className="mt-4 inline-flex items-center gap-2 rounded-full bg-gold-500/10 px-3.5 py-1.5 text-[0.8125rem] text-royal-fg">
+              {t("areaLabel")}
+              <span className="font-bold tabular-nums">{area} m²</span>
             </p>
           )}
 
-          <div className="mt-7 space-y-6 border-t border-black/[0.06] pt-6">
-            <fieldset>
-              <legend className="text-[0.8125rem] font-medium text-royal-muted">
-                {t("lightingLabel")}
-              </legend>
-              <div className="mt-3 flex flex-wrap gap-2">
-                {LIGHTING.map((option) => (
-                  <button
-                    key={option}
-                    type="button"
-                    onClick={() =>
-                      setLighting((prev) => (prev === option ? "" : option))
-                    }
-                    aria-pressed={lighting === option}
-                    className={chipClass(lighting === option)}
-                  >
-                    {t(`lightingOptions.${option}`)}
-                  </button>
-                ))}
-              </div>
-            </fieldset>
-
-            <fieldset>
-              <legend className="text-[0.8125rem] font-medium text-royal-muted">
-                {t("placementLabel")}
-              </legend>
-              <div className="mt-3 flex flex-wrap gap-2">
-                {PLACEMENT.map((option) => (
-                  <button
-                    key={option}
-                    type="button"
-                    onClick={() =>
-                      setPlacement((prev) => (prev === option ? "" : option))
-                    }
-                    aria-pressed={placement === option}
-                    className={chipClass(placement === option)}
-                  >
-                    {t(`placementOptions.${option}`)}
-                  </button>
-                ))}
-              </div>
-            </fieldset>
-
-            <fieldset>
-              <legend className="text-[0.8125rem] font-medium text-royal-muted">
-                {t("timingLabel")}
-              </legend>
-              <div className="mt-3 flex flex-wrap gap-2">
-                {TIMING.map((option) => (
-                  <button
-                    key={option}
-                    type="button"
-                    onClick={() =>
-                      setTiming((prev) => (prev === option ? "" : option))
-                    }
-                    aria-pressed={timing === option}
-                    className={chipClass(timing === option)}
-                  >
-                    {t(`timingOptions.${option}`)}
-                  </button>
-                ))}
-              </div>
-            </fieldset>
+          <div className="mt-8 space-y-7 border-t border-black/[0.06] pt-7">
+            <ChipGroup
+              legend={t("lightingLabel")}
+              options={LIGHTING.map((o) => ({
+                value: o,
+                label: t(`lightingOptions.${o}`),
+              }))}
+              selected={lighting}
+              onSelect={(v) => setLighting(v as Lighting | "")}
+              chip={chip}
+            />
+            <ChipGroup
+              legend={t("placementLabel")}
+              options={PLACEMENT.map((o) => ({
+                value: o,
+                label: t(`placementOptions.${o}`),
+              }))}
+              selected={placement}
+              onSelect={(v) => setPlacement(v as Placement | "")}
+              chip={chip}
+            />
+            <ChipGroup
+              legend={t("timingLabel")}
+              options={TIMING.map((o) => ({
+                value: o,
+                label: t(`timingOptions.${o}`),
+              }))}
+              selected={timing}
+              onSelect={(v) => setTiming(v as Timing | "")}
+              chip={chip}
+            />
           </div>
-        </section>
+        </Section>
 
-        {/* 3 — İletişim */}
-        <section className="rounded-2xl border border-black/[0.07] bg-white p-6 shadow-[0_1px_2px_rgba(0,0,0,0.04)] sm:p-7">
-          <h2 className="text-[0.6875rem] font-semibold uppercase tracking-[0.16em] text-royal-faint">
-            <span className="mr-2 text-gold-600">03</span>
-            {t("sectionWho")}
-          </h2>
-
-          <div className="mt-5 grid gap-5 sm:grid-cols-2">
+        {/* 03 — İletişim */}
+        <Section index="03" title={t("sectionWho")}>
+          <div className="grid gap-5 sm:grid-cols-2">
             <div>
-              <Label htmlFor="q-name" className="text-royal-muted">
+              <Label htmlFor="q-name" className={labelClass}>
                 {t("nameLabel")} <span className="text-gold-600">*</span>
               </Label>
               <Input
@@ -371,7 +334,7 @@ export function QuoteBuilder() {
             </div>
 
             <div>
-              <Label htmlFor="q-phone" className="text-royal-muted">
+              <Label htmlFor="q-phone" className={labelClass}>
                 {t("phoneLabel")}
               </Label>
               <Input
@@ -386,7 +349,7 @@ export function QuoteBuilder() {
             </div>
 
             <div>
-              <Label htmlFor="q-business" className="text-royal-muted">
+              <Label htmlFor="q-business" className={labelClass}>
                 {t("businessLabel")}
               </Label>
               <Input
@@ -400,26 +363,22 @@ export function QuoteBuilder() {
             </div>
 
             <div>
-              <Label htmlFor="q-region" className="text-royal-muted">
-                {t("regionLabel")}
+              <Label htmlFor="q-province" className={labelClass}>
+                {t("provinceLabel")}
               </Label>
-              <Input
-                id="q-region"
-                list="q-region-options"
-                value={region}
-                onChange={(event) => setRegion(event.target.value)}
-                placeholder={t("regionPlaceholder")}
-                className={cn("mt-2", fieldClass)}
+              <Combobox
+                id="q-province"
+                value={province}
+                onChange={setProvince}
+                options={provinces}
+                placeholder={t("provincePlaceholder")}
+                emptyText={t("noMatch")}
+                className="mt-2"
               />
-              <datalist id="q-region-options">
-                {districtOptions.map((district) => (
-                  <option key={district} value={district} />
-                ))}
-              </datalist>
             </div>
 
             <div className="sm:col-span-2">
-              <Label htmlFor="q-details" className="text-royal-muted">
+              <Label htmlFor="q-details" className={labelClass}>
                 {t("detailsLabel")}
               </Label>
               <Textarea
@@ -428,106 +387,217 @@ export function QuoteBuilder() {
                 onChange={(event) => setDetails(event.target.value)}
                 placeholder={t("detailsPlaceholder")}
                 rows={4}
-                className="mt-2 border-black/10 bg-white text-royal-fg placeholder:text-royal-faint focus-visible:border-black/30 focus-visible:ring-black/10"
+                className="mt-2 rounded-xl border-black/10 bg-white text-[0.9375rem] text-royal-fg placeholder:text-royal-faint/70 focus-visible:border-black/40 focus-visible:ring-black/10"
               />
             </div>
           </div>
 
-          <p className="mt-5 border-t border-black/[0.06] pt-5 text-[0.8125rem] leading-relaxed text-royal-muted">
+          <p className="mt-6 border-t border-black/[0.06] pt-6 text-[0.875rem] leading-relaxed text-royal-muted">
             {t("photoNote")}
           </p>
-        </section>
-
-        <ul className="space-y-2 px-1">
-          {[tReassure("free"), tReassure("noSpam"), tReassure("fast")].map(
-            (line) => (
-              <li
-                key={line}
-                className="flex items-baseline gap-3 text-[0.8125rem] text-royal-faint"
-              >
-                <span
-                  className="h-px w-3 shrink-0 translate-y-[-0.2rem] bg-gold-600"
-                  aria-hidden="true"
-                />
-                {line}
-              </li>
-            ),
-          )}
-        </ul>
+        </Section>
       </div>
 
-      {/* Canlı önizleme + gönderim */}
+      {/* ---------------- Sağ: özet ve gönderim ---------------- */}
       <div className="lg:col-span-5">
-        <div className="lg:sticky lg:top-28">
-          <div className="overflow-hidden rounded-2xl bg-[linear-gradient(150deg,#141416_0%,#252017_58%,#141416_100%)] p-6 sm:p-7">
+        <div className="overflow-hidden rounded-3xl bg-[linear-gradient(150deg,#141416_0%,#252017_58%,#141416_100%)] p-7 sm:p-8 lg:sticky lg:top-28">
+          {/* İlerleme — hangi bölüm dolduruldu */}
+          <div className="flex items-center justify-between gap-4">
             <span className="text-[0.6875rem] font-semibold uppercase tracking-[0.16em] text-gold-400">
               {t("summaryTitle")}
             </span>
+            <span className="text-[0.6875rem] font-medium tabular-nums text-white/40">
+              {t("progress")} {steps.filter((s) => s.done).length}/3
+            </span>
+          </div>
 
-            <div className="mt-4 flex flex-wrap gap-1.5">
-              {summary.length > 0 ? (
-                summary.map((part) => (
+          <div className="mt-4 grid grid-cols-3 gap-2">
+            {steps.map((step) => (
+              <div key={step.label}>
+                <span
+                  className={cn(
+                    "block h-1 rounded-full transition-colors duration-500",
+                    step.done ? "bg-gold-500" : "bg-white/12",
+                  )}
+                />
+                <span
+                  className={cn(
+                    "mt-2 block text-[0.6875rem] transition-colors duration-500",
+                    step.done ? "text-white/80" : "text-white/35",
+                  )}
+                >
+                  {step.label}
+                </span>
+              </div>
+            ))}
+          </div>
+
+          {/* Seçim özeti */}
+          <div className="mt-7 border-t border-white/10 pt-6">
+            {summary.length > 0 ? (
+              <div className="flex flex-wrap gap-1.5">
+                {summary.map((part) => (
                   <span
                     key={part}
-                    className="rounded-full bg-white/[0.08] px-3 py-1 text-[0.75rem] font-medium text-white/80"
+                    className="rounded-full bg-white/[0.08] px-3 py-1.5 text-[0.8125rem] font-medium text-white/85"
                   >
                     {part}
                   </span>
-                ))
-              ) : (
-                <span className="text-[0.8125rem] text-white/40">
-                  {t("emptySummary")}
-                </span>
-              )}
-            </div>
-
-            <div className="mt-6 border-t border-white/10 pt-6">
-              <span className="text-[0.6875rem] font-semibold uppercase tracking-[0.16em] text-white/45">
-                {t("previewTitle")}
-              </span>
-              <pre className="mt-3 max-h-64 overflow-y-auto whitespace-pre-wrap break-words rounded-xl bg-black/40 p-4 font-sans text-[0.8125rem] leading-relaxed text-white/70">
-                {message}
-              </pre>
-            </div>
-
-            <a
-              href={isValid ? whatsappLink(message) : undefined}
-              target="_blank"
-              rel="noopener noreferrer"
-              onClick={(event) => {
-                setTouched(true);
-                if (!isValid) event.preventDefault();
-              }}
-              aria-disabled={!isValid}
-              className={cn(
-                "mt-6 flex h-12 items-center justify-center gap-2.5 rounded-full text-sm font-bold transition-colors",
-                isValid
-                  ? "bg-[#25d366] text-black hover:bg-[#2ee674]"
-                  : "cursor-not-allowed bg-white/10 text-white/35",
-              )}
-            >
-              <MessageCircle className="size-5" aria-hidden="true" />
-              {t("submit")}
-            </a>
-
-            <a
-              href={telLink}
-              className="mt-3 flex h-11 items-center justify-center gap-2 rounded-full border border-white/15 text-sm font-semibold text-white/80 transition-colors hover:border-white/35 hover:text-white"
-            >
-              <Phone className="size-4" aria-hidden="true" />
-              {t("call")} · {siteConfig.contact.phoneDisplay}
-            </a>
-
-            <button
-              type="button"
-              onClick={reset}
-              className="mt-4 w-full text-center text-[0.75rem] text-white/35 transition-colors hover:text-white/70"
-            >
-              {t("clear")}
-            </button>
+                ))}
+              </div>
+            ) : (
+              <p className="text-[0.875rem] text-white/40">
+                {t("emptySummary")}
+              </p>
+            )}
           </div>
+
+          {/* Gidecek mesaj */}
+          <div className="mt-6">
+            <span className="text-[0.6875rem] font-semibold uppercase tracking-[0.16em] text-white/40">
+              {t("previewTitle")}
+            </span>
+            <pre
+              data-lenis-prevent
+              className="mt-3 max-h-56 overflow-y-auto overscroll-contain whitespace-pre-wrap break-words rounded-2xl bg-black/40 p-4 font-sans text-[0.8125rem] leading-relaxed text-white/70"
+            >
+              {message}
+            </pre>
+          </div>
+
+          {/* Gönderim */}
+          <a
+            href={isValid ? whatsappLink(message) : undefined}
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={(event) => {
+              setTouched(true);
+              if (!isValid) event.preventDefault();
+            }}
+            aria-disabled={!isValid}
+            className={cn(
+              "mt-6 flex h-14 items-center justify-center gap-2.5 rounded-full text-[0.9375rem] font-bold transition-colors",
+              isValid
+                ? "bg-[#25d366] text-black hover:bg-[#2ee674]"
+                : "cursor-not-allowed bg-white/10 text-white/35",
+            )}
+          >
+            <MessageCircle className="size-5" aria-hidden="true" />
+            {t("submit")}
+          </a>
+
+          <p className="mt-2.5 text-center text-[0.75rem] text-white/40">
+            {isValid ? t("ready") : t("missing")}
+          </p>
+
+          <a
+            href={telLink}
+            className="mt-4 flex h-12 items-center justify-center gap-2 rounded-full border border-white/15 text-[0.875rem] font-semibold text-white/80 transition-colors hover:border-white/35 hover:text-white"
+          >
+            <Phone className="size-4" aria-hidden="true" />
+            {t("call")} · {siteConfig.contact.phoneDisplay}
+          </a>
+
+          {/* Güvenceler — eskiden formun altında öksüz duruyordu */}
+          <ul className="mt-7 space-y-2.5 border-t border-white/10 pt-6">
+            {[tReassure("free"), tReassure("noSpam"), tReassure("fast")].map(
+              (line) => (
+                <li
+                  key={line}
+                  className="flex items-baseline gap-3 text-[0.8125rem] leading-relaxed text-white/55"
+                >
+                  <span
+                    className="h-px w-3 shrink-0 translate-y-[-0.25rem] bg-gold-500"
+                    aria-hidden="true"
+                  />
+                  {line}
+                </li>
+              ),
+            )}
+          </ul>
+
+          <button
+            type="button"
+            onClick={reset}
+            className="mt-6 w-full text-center text-[0.75rem] text-white/30 transition-colors hover:text-white/70"
+          >
+            {t("clear")}
+          </button>
         </div>
       </div>
     </div>
+  );
+}
+
+/** Numaralı form bölümü — başlık ağırlığı kartın kendisini taşıyor */
+function Section({
+  index,
+  title,
+  hint,
+  children,
+}: {
+  index: string;
+  title: string;
+  hint?: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <section className="rounded-3xl border border-black/[0.07] bg-white p-6 shadow-[0_1px_2px_rgba(0,0,0,0.04)] sm:p-8">
+      <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1 border-b border-black/[0.06] pb-5">
+        <h2 className="flex items-baseline gap-3 font-display text-[1.125rem] font-bold text-royal-fg">
+          <span className="font-display text-[0.75rem] font-bold tabular-nums text-gold-600">
+            {index}
+          </span>
+          {title}
+        </h2>
+        {hint && (
+          <span className="text-[0.8125rem] text-royal-faint">{hint}</span>
+        )}
+      </div>
+
+      <div className="mt-6">{children}</div>
+    </section>
+  );
+}
+
+/** Tek seçimli çip grubu; aynı çipe basmak seçimi kaldırır */
+function ChipGroup({
+  legend,
+  options,
+  selected,
+  onSelect,
+  chip,
+}: {
+  legend: string;
+  options: { value: string; label: string }[];
+  selected: string;
+  onSelect: (value: string) => void;
+  chip: (active: boolean) => string;
+}) {
+  return (
+    <fieldset>
+      <legend className="text-[0.8125rem] font-medium text-royal-fg">
+        {legend}
+      </legend>
+      <div className="mt-3 flex flex-wrap gap-2.5">
+        {options.map((option) => {
+          const active = selected === option.value;
+          return (
+            <button
+              key={option.value}
+              type="button"
+              onClick={() => onSelect(active ? "" : option.value)}
+              aria-pressed={active}
+              className={chip(active)}
+            >
+              {active && (
+                <Check className="size-3.5 shrink-0" aria-hidden="true" />
+              )}
+              {option.label}
+            </button>
+          );
+        })}
+      </div>
+    </fieldset>
   );
 }
