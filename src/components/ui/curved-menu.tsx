@@ -2,22 +2,44 @@
 import React, {useState, useRef} from "react";
 
 import {motion, useMotionValue, AnimatePresence} from "framer-motion";
-import Link from "next/link";
-import { Mail } from "lucide-react";
+import {Link} from "@/i18n/navigation";
+import { Languages, Mail } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { InstagramIcon, WhatsAppIcon } from "@/components/ui/brand-icons";
-import { SocialTooltip, SocialItem } from "@/components/ui/social-media";
-import { LanguageSwitcher } from "@/components/layout/language-switcher";
+import { useLanguageSwitch } from "@/components/layout/language-switcher";
+import { siteConfig, mailLink, whatsappLink } from "@/config/site";
+
+/**
+ * Dahili yol. Tipi `Link`ten turetiliyor ki `routing.ts` icindeki
+ * yollar degistiginde burasi da derlemede uyarsin.
+ */
+type LocalizedHref = React.ComponentProps<typeof Link>["href"];
 
 interface iNavItem {
 	heading: string;
-	href: string;
+	href?: LocalizedHref;
 	subheading?: string;
 	imgSrc?: string;
 }
 
 interface iNavLinkProps extends iNavItem {
 	setIsActive: (isActive: boolean) => void;
-	index: number;
+	/** Verilmezse satir numarasiz cizilir (sosyal baglantilar, dil) */
+	index?: number;
+	/** Satirin sagindaki simge */
+	icon?: React.ReactNode;
+	/**
+	 * Dis baglanti veya mailto. Dile gore cevrilmedigi ve istemci
+	 * yonlendirmesine girmedigi icin dahili `href`ten ayri tutuluyor.
+	 */
+	externalHref?: string;
+	/** Baglanti yerine eylem calistiran satirlar icin (dil degistirme) */
+	onClick?: () => void;
+	/**
+	 * Basligin dili. CSS `uppercase` buyuk harfe cevirirken ogenin dilini
+	 * kullanir; sayfa `lang="tr"` oldugu icin "English" -> "ENGLİSH" oluyordu.
+	 */
+	lang?: string;
 }
 
 interface iCurvedNavbarProps {
@@ -68,44 +90,15 @@ const defaultNavItems: iNavItem[] = [
 	},
 ];
 
-const socialLinks: SocialItem[] = [
-	{
-		href: "https://instagram.com",
-		ariaLabel: "Instagram",
-		tooltip: "Instagram",
-		color: "#E1306C",
-		icon: <InstagramIcon className="size-5" />,
-	},
-	{
-		href: "https://whatsapp.com",
-		ariaLabel: "WhatsApp",
-		tooltip: "WhatsApp",
-		color: "#25D366",
-		icon: <WhatsAppIcon className="size-5" />,
-	},
-	{
-		href: "mailto:info@royalreklamsamsun.com",
-		ariaLabel: "E-posta",
-		tooltip: "E-posta",
-		color: "#D4AF37", // Gold
-		icon: <Mail className="size-5" />,
-	},
-];
-
-const CustomFooter: React.FC = () => {
-	return (
-		<div className="flex flex-col gap-6 md:flex-row w-full justify-between text-black px-10 md:px-24 py-5 mb-4">
-			<LanguageSwitcher variant="dark" className="w-fit" />
-			<SocialTooltip items={socialLinks} />
-		</div>
-	);
-};
-
 const NavLink: React.FC<iNavLinkProps> = ({
 	heading,
 	href,
 	setIsActive,
 	index,
+	icon,
+	externalHref,
+	onClick,
+	lang,
 }) => {
 	const ref = useRef<HTMLAnchorElement | null>(null);
 	const x = useMotionValue(0);
@@ -114,7 +107,8 @@ const NavLink: React.FC<iNavLinkProps> = ({
 	const handleMouseMove = (
 		e: React.MouseEvent<HTMLAnchorElement, MouseEvent>,
 	) => {
-		const rect = ref.current!.getBoundingClientRect();
+		if (!ref.current) return;
+		const rect = ref.current.getBoundingClientRect();
 		const mouseX = e.clientX - rect.left;
 		const mouseY = e.clientY - rect.top;
 		x.set(mouseX / rect.width - 0.5);
@@ -125,56 +119,96 @@ const NavLink: React.FC<iNavLinkProps> = ({
 		return setIsActive(false);
 	};
 
-	const isExternalLink = href.startsWith("http");
-	const linkProps = isExternalLink
-		? {target: "_blank", rel: "noopener noreferrer"}
-		: {};
+
+	const inner = (
+		<div className="relative flex items-start">
+			{/* Numarasiz satirlarda da basliklar ayni sutunda hizalansin diye
+			    numara alani gorunmez birakilir, kaldirilmaz. */}
+			<span
+				aria-hidden={index === undefined}
+				className="text-black transition-colors duration-500 text-3xl tracking-tight md:text-4xl md:tracking-normal font-thin mr-2"
+			>
+				{index === undefined ? (
+					<span className="invisible">0.</span>
+				) : (
+					`${index}.`
+				)}
+			</span>
+			<div className="flex flex-row gap-2">
+				<motion.span
+					variants={{
+						initial: {x: 0},
+						whileHover: {x: -16},
+					}}
+					transition={{
+						type: "spring",
+						staggerChildren: 0.075,
+						delayChildren: 0.25,
+					}}
+					className="relative z-10 block text-3xl tracking-tight md:text-4xl md:tracking-normal font-extralight text-black transition-colors duration-500"
+				>
+					{heading.split("").map((letter, i) => {
+						return (
+							// inline-block bir boslugu sifir genislige dusurur;
+							// "Hizmet Bölgeleri" bitişik yazılıyordu — whitespace-pre
+							// boşluğun genişliğini korur
+							<motion.span
+								key={i}
+								variants={{
+									initial: {x: 0},
+									whileHover: {x: 16},
+								}}
+								transition={{type: "spring"}}
+								className="inline-block whitespace-pre"
+							>
+								{letter}
+							</motion.span>
+						);
+					})}
+				</motion.span>
+			</div>
+		</div>
+	);
 
 	return (
 		<motion.div
 			onClick={handleClick}
 			initial="initial"
 			whileHover="whileHover"
-			className="group relative flex items-center justify-between border-b border-black/30 py-4 transition-colors duration-500 md:py-8 uppercase"
-			{...linkProps}
+			lang={lang}
+			className="group relative flex items-center justify-between gap-4 border-b border-black/30 py-4 transition-colors duration-500 md:py-5 uppercase"
 		>
-			<Link ref={ref} onMouseMove={handleMouseMove} href={href}>
-				<div className="relative flex items-start">
-					<span className="text-black transition-colors duration-500 text-3xl tracking-tight md:text-4xl md:tracking-normal font-thin mr-2">
-						{index}.
-					</span>
-					<div className="flex flex-row gap-2">
-						<motion.span
-							variants={{
-								initial: {x: 0},
-								whileHover: {x: -16},
-							}}
-							transition={{
-								type: "spring",
-								staggerChildren: 0.075,
-								delayChildren: 0.25,
-							}}
-							className="relative z-10 block text-3xl tracking-tight md:text-4xl md:tracking-normal font-extralight text-black transition-colors duration-500"
-						>
-							{heading.split("").map((letter, i) => {
-								return (
-									<motion.span
-										key={i}
-										variants={{
-											initial: {x: 0},
-											whileHover: {x: 16},
-										}}
-										transition={{type: "spring"}}
-										className="inline-block"
-									>
-										{letter}
-									</motion.span>
-								);
-							})}
-						</motion.span>
-					</div>
-				</div>
-			</Link>
+			{externalHref ? (
+				<a
+					ref={ref}
+					onMouseMove={handleMouseMove}
+					href={externalHref}
+					{...(externalHref.startsWith("http")
+						? {target: "_blank", rel: "noopener noreferrer"}
+						: {})}
+				>
+					{inner}
+				</a>
+			) : href ? (
+				<Link ref={ref} onMouseMove={handleMouseMove} href={href}>
+					{inner}
+				</Link>
+			) : (
+				<button
+					type="button"
+					onClick={onClick}
+					/* button, ustundeki text-transform mirasini almiyor */
+					className="text-left uppercase"
+				>
+					{inner}
+				</button>
+			)}
+
+			{icon && (
+				<span className="shrink-0 text-black/70" aria-hidden="true">
+					{icon}
+				</span>
+			)}
 		</motion.div>
 	);
 };
@@ -213,6 +247,45 @@ const Curve: React.FC = () => {
 const CurvedNavbar: React.FC<
 	iCurvedNavbarProps & {footer?: React.ReactNode}
 > = ({setIsActive, navItems, footer, menuLabel}) => {
+	const tCommon = useTranslations("common");
+	const tNav = useTranslations("nav");
+	const {targetLocale, toggle} = useLanguageSwitch();
+
+	/**
+	 * Numarasiz satirlar: sayfa degil, eylem olduklari icin sirali listenin
+	 * disinda tutuluyorlar. Baglantilar `siteConfig`ten geliyor — burada
+	 * daha once instagram.com / whatsapp.com gibi yer tutucular vardi ve
+	 * kullaniciyi firmanin hesabina degil, servislerin ana sayfasina
+	 * gonderiyordu.
+	 */
+	const actionItems = [
+		{
+			heading: tCommon("instagram"),
+			externalHref: siteConfig.contact.instagram,
+			icon: <InstagramIcon className="size-6" />,
+		},
+		{
+			heading: tCommon("whatsapp"),
+			externalHref: whatsappLink(),
+			icon: <WhatsAppIcon className="size-6" />,
+		},
+		{
+			heading: tCommon("email"),
+			externalHref: mailLink,
+			icon: <Mail className="size-6" />,
+		},
+		{
+			// Etiket gidilecek dili soyler: TR'deyken "English"
+			heading:
+				targetLocale === "en"
+					? tNav("switchToEnglish")
+					: tNav("switchToTurkish"),
+			lang: targetLocale,
+			onClick: toggle,
+			icon: <Languages className="size-6" />,
+		},
+	];
+
 	return (
 		<motion.div
 			variants={MENU_SLIDE_ANIMATION}
@@ -222,22 +295,33 @@ const CurvedNavbar: React.FC<
 			className="h-[100dvh] w-full max-w-screen-sm fixed right-0 top-0 z-[100] bg-gold-500 pointer-events-auto shadow-2xl"
 		>
 			<div className="h-full pt-11 flex flex-col justify-between">
-				<div className="flex flex-col text-5xl gap-3 mt-0 px-10 md:px-24">
+				{/* Liste 10 satira cikti; kisa ekranlarda tasmasin diye kendi
+				    icinde kayabiliyor. Lenis yumusak kaydirma tekerlegi sayfaya
+				    aldigi icin `data-lenis-prevent` sart. */}
+				<div
+					data-lenis-prevent
+					className="flex flex-col text-5xl gap-3 mt-0 px-10 md:px-24 overflow-y-auto overscroll-contain pb-8"
+				>
 					<div className="text-black border-b border-black/30 uppercase text-sm mb-0">
 						<p>{menuLabel ?? "Menü"}</p>
 					</div>
 					<section className="bg-transparent mt-0">
 						<div className="mx-auto max-w-7xl">
-							{navItems.map((item, index) => {
-								return (
-									<NavLink
-										key={item.href}
-										{...item}
-										setIsActive={setIsActive}
-										index={index + 1}
-									/>
-								);
-							})}
+							{navItems.map((item, index) => (
+								<NavLink
+									key={item.heading}
+									{...item}
+									setIsActive={setIsActive}
+									index={index + 1}
+								/>
+							))}
+							{actionItems.map((item) => (
+								<NavLink
+									key={item.heading}
+									{...item}
+									setIsActive={setIsActive}
+								/>
+							))}
 						</div>
 					</section>
 				</div>
@@ -251,7 +335,7 @@ const CurvedNavbar: React.FC<
 const CurvedMenu: React.FC<iHeaderProps> = ({
 	navItems = defaultNavItems,
 	menuLabel,
-	footer = <CustomFooter />,
+	footer,
 }) => {
 	const [isActive, setIsActive] = useState(false);
 	const openAudioRef = useRef<HTMLAudioElement | null>(null);

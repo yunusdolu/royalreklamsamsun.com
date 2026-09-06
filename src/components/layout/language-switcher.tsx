@@ -21,14 +21,12 @@ import { cn } from "@/lib/utils";
  * Böylece slug çevirisi için içerik dosyalarını istemci paketine taşımaya
  * gerek kalmaz. Bağlantı yoksa next-intl'in kendi çevirisine düşülür.
  */
-export function LanguageSwitcher({
-  className,
-  variant = "light",
-}: {
-  className?: string;
-  variant?: "light" | "dark";
-}) {
-  const t = useTranslations("nav");
+/**
+ * Dil değiştirme mantığı. Hem başlıktaki hap butonu hem de mobil menüdeki
+ * satır aynı `hreflang` çözümünü kullansın diye kancaya ayrıldı —
+ * kopyalanırsa biri düzeltilip diğeri unutulur.
+ */
+export function useLanguageSwitch() {
   const locale = useLocale() as Locale;
   const pathname = usePathname();
   const params = useParams();
@@ -62,7 +60,21 @@ export function LanguageSwitcher({
     });
   };
 
-  const targetLocale = locale === "tr" ? "en" : "tr";
+  const targetLocale: Locale = locale === "tr" ? "en" : "tr";
+
+  return { locale, targetLocale, isPending, toggle: () => switchTo(targetLocale) };
+}
+
+export function LanguageSwitcher({
+  className,
+  variant = "light",
+}: {
+  className?: string;
+  variant?: "light" | "dark";
+}) {
+  const t = useTranslations("nav");
+  const { locale, isPending, toggle } = useLanguageSwitch();
+
   const flagUrl =
     locale === "tr"
       ? "https://flagcdn.com/tr.svg"
@@ -72,7 +84,7 @@ export function LanguageSwitcher({
   return (
     <button
       type="button"
-      onClick={() => switchTo(targetLocale)}
+      onClick={toggle}
       disabled={isPending}
       className={cn(
         "flex h-9 items-center gap-2 rounded-full border px-3 transition-colors",
