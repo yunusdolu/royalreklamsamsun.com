@@ -89,15 +89,34 @@ export async function Footer({
         <p className="text-zinc-500 text-xs font-medium">
           © {year} {siteConfig.legalName}. {t("rights")}
         </p>
-        <p className="text-zinc-500 text-xs font-medium">
-          Designed by{" "}
+        <p className="text-zinc-500 text-xs font-medium flex items-center gap-1.5">
+          Designed by
           <a
             href="https://instagram.com/creasivcom"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-black hover:text-gold-500 transition-colors font-bold"
+            aria-label="creasiv"
+            className="inline-flex text-black hover:text-gold-500 transition-colors"
           >
-            creasiv
+            {/* Logo tek renk ve saydamlikla cizilmis; CSS maskesi olarak
+                kullanilinca rengini `currentColor`dan alir. Boylece beyaz
+                altbilgide gorunur kalir ve yazidayken oldugu gibi hover'da
+                altina doner — dosyanin kendi acik gri tonu beyaz zeminde
+                okunmuyordu. */}
+            <span
+              aria-hidden="true"
+              className="block h-3.5 w-[3.35rem] bg-current"
+              style={{
+                maskImage: "url(/brand/creasiv.png)",
+                WebkitMaskImage: "url(/brand/creasiv.png)",
+                maskSize: "contain",
+                WebkitMaskSize: "contain",
+                maskRepeat: "no-repeat",
+                WebkitMaskRepeat: "no-repeat",
+                maskPosition: "center",
+                WebkitMaskPosition: "center",
+              }}
+            />
           </a>
         </p>
       </div>
