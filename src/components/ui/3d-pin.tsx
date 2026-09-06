@@ -178,9 +178,17 @@ export const PinPerspective = ({
           </>
         </div>
 
+        {/*
+          İğne çizgisi. Alt ucu kartın dikey ortasına sabitli
+          (`bottom-1/2` + 14px), yüksekliği yukarı doğru uzuyor. Eski 10rem
+          değerinde çizginin tepesi başlığın 60px altında kalıyor, gradyan da
+          orada tamamen saydam olduğu için altın renk "İncele" yazısına hiç
+          ulaşmıyordu. 13.25rem tepeyi başlığın hemen altına taşıyor; gradyan
+          da baştan görünür bir altınla başlıyor ki bağ kopuk görünmesin.
+        */}
         <>
-          <motion.div className={cn("absolute right-1/2 bottom-1/2 bg-gradient-to-b from-transparent to-gold-500 translate-y-[14px] w-px blur-[2px] transition-all duration-500", isActive ? "h-40" : "h-20 group-hover/pin:h-40")} />
-          <motion.div className={cn("absolute right-1/2 bottom-1/2 bg-gradient-to-b from-transparent to-gold-500 translate-y-[14px] w-px transition-all duration-500", isActive ? "h-40" : "h-20 group-hover/pin:h-40")} />
+          <motion.div className={cn("absolute right-1/2 bottom-1/2 bg-gradient-to-b from-gold-500/35 via-gold-500/60 to-gold-500/70 translate-y-[14px] w-px blur-[2px] transition-all duration-500", isActive ? "h-[13.25rem]" : "h-[6.625rem] group-hover/pin:h-[13.25rem]")} />
+          <motion.div className={cn("absolute right-1/2 bottom-1/2 bg-gradient-to-b from-gold-500/35 via-gold-500/60 to-gold-500/70 translate-y-[14px] w-px transition-all duration-500", isActive ? "h-[13.25rem]" : "h-[6.625rem] group-hover/pin:h-[13.25rem]")} />
           <motion.div className="absolute right-1/2 translate-x-[1.5px] bottom-1/2 bg-gold-600 translate-y-[14px] w-[4px] h-[4px] rounded-full z-40 blur-[3px]" />
           <motion.div className="absolute right-1/2 translate-x-[0.5px] bottom-1/2 bg-gold-300 translate-y-[14px] w-[2px] h-[2px] rounded-full z-40 " />
         </>
