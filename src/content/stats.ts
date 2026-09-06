@@ -4,16 +4,19 @@ import { services } from "@/content/services";
 /**
  * ⚠️  MÜŞTERİ ONAYI GEREKTİREN VERİLER
  *
- * `projects` ve `foundingYear` değerleri temsilîdir ve Royal Reklam
- * tarafından doğrulanmalıdır. Doğrulanmadan yayına alınırsa sitede gerçek
- * olmayan bir iddia yer almış olur.
+ * `projects` değeri temsilîdir ve Royal Reklam tarafından doğrulanmalıdır.
+ * Doğrulanmadan yayına alınırsa sitede gerçek olmayan bir iddia yer almış
+ * olur. Kuruluş yılı (1991) müşteri tarafından doğrulanmıştır.
  *
  * `services` hizmet listesinden türetilir, elle güncellenmesi gerekmez.
  */
 export const stats = {
   /** TODO: gerçek proje sayısı ile değiştirilecek */
   projects: 900,
-  /** siteConfig.foundingYear üzerinden hesaplanır — TODO: kuruluş yılını doğrula */
+  /**
+   * Sahada geçen yıl — kuruluş yılından hesaplanır, böylece her yıl
+   * kendiliğinden güncellenir ve künyedeki kuruluş yılıyla çelişmez.
+   */
   years: new Date().getFullYear() - siteConfig.foundingYear,
   /** Sunulan hizmet kalemi sayısı — içerik dosyasından türetilir */
   services: services.length,

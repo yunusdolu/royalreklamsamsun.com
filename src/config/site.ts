@@ -19,7 +19,7 @@ export const siteConfig = {
   },
   url: "https://royalreklamsamsun.com",
   domain: "royalreklamsamsun.com",
-  foundingYear: 2013,
+  foundingYear: 1991,
 
   contact: {
     /** Görüntülenen biçim */
