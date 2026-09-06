@@ -39,3 +39,8 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Ham gorsel kaynaklari — islenmis surumleri public/images/ altinda
+# duruyor; 39 MB'lik orijinaller depoya girmesin
+hizmetkart gorseller/
+hizmetkart görseller/

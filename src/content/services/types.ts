@@ -52,11 +52,11 @@ export interface Service {
   /** lucide-react ikon adı */
   icon: string;
   /**
-   * Hizmet kartındaki gerçek iş fotoğrafı (`public/` altındaki yol).
-   * Henüz o hizmete ait fotoğraf yoksa boş bırakılır; kart ikonlu
-   * varyanta düşer — yanlış fotoğraf göstermek yerine tercih edilir.
+   * Hizmet kartındaki fotoğraf (`public/images/services/` altındaki yol).
+   * Hem anasayfadaki hem hizmetler sayfasındaki kart bu görseli kullanır,
+   * bu yüzden zorunludur — yeni bir hizmet eklenirken fotoğrafı da eklenir.
    */
-  image?: string;
+  image: string;
   /** Anasayfada öne çıkarılsın mı */
   featured: boolean;
   /** Ortalama teslim süresi (schema.org ve kart rozeti için) */

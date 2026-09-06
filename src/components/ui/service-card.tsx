@@ -10,8 +10,8 @@ import { cn } from "@/lib/utils";
  * Fotoğraf öncelikli hizmet kartı. Hem hizmet listesinde hem de detay
  * sayfasının "ilgili hizmetler" bölümünde kullanılır.
  *
- * Fotoğrafı olmayan hizmetlerde yanlış görsel göstermek yerine koyu panele
- * düşülür — `service.image` bilinçli olarak opsiyonel.
+ * Her hizmetin `public/images/services/` altında kendi fotoğrafı vardır;
+ * `service.image` bu yüzden zorunlu alandır.
  */
 export function ServiceCard({
   service,
@@ -42,20 +42,15 @@ export function ServiceCard({
       )}
     >
       <span className="relative block aspect-[16/10] overflow-hidden bg-royal-graphite">
-        {service.image ? (
-          <>
-            <Image
-              src={service.image}
-              alt={copy.name}
-              fill
-              sizes="(min-width:1024px) 33vw, (min-width:640px) 50vw, 100vw"
-              className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.06]"
-            />
-            <span className="absolute inset-0 bg-gradient-to-t from-black/55 via-black/10 to-black/5" />
-          </>
-        ) : (
-          <span className="absolute inset-0 bg-[linear-gradient(140deg,#1c1c1f_0%,#2a2620_55%,#1c1c1f_100%)]" />
-        )}
+        <Image
+          src={service.image}
+          alt={copy.name}
+          fill
+          sizes="(min-width:1024px) 33vw, (min-width:640px) 50vw, 100vw"
+          quality={85}
+          className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.06]"
+        />
+        <span className="absolute inset-0 bg-gradient-to-t from-black/55 via-black/10 to-black/5" />
 
         <span className="absolute right-3 top-3 rounded-full bg-white/90 px-2.5 py-1 text-[0.6875rem] font-semibold text-royal-fg shadow-sm backdrop-blur-sm">
           {service.leadTimeDays[0]}–{service.leadTimeDays[1]} {daysLabel}
