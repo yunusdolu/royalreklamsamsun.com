@@ -83,6 +83,12 @@ async function fetchOverrides(): Promise<ServiceOverrideRow[]> {
 
 const cachedOverrides = unstable_cache(fetchOverrides, ["service-overrides"], {
   tags: [SERVICES_TAG],
+  /*
+    Etiket yalnızca panelden kaydedildiğinde temizleniyor. Satır Supabase'in
+    kendi tablo düzenleyicisinden değiştirilirse site bunu hiç görmezdi;
+    saatlik tazeleme o ihtimale karşı güvenlik ağı.
+  */
+  revalidate: 3600,
 });
 
 /** Tüm hizmetler, panel düzenlemeleri uygulanmış halde. */

@@ -6,7 +6,7 @@ import { RevealGroup, RevealItem } from "@/components/motion/reveal";
 import { CtaSection } from "@/components/sections/cta-section";
 import { JsonLd } from "@/components/seo/json-ld";
 import { ServiceCard } from "@/components/ui/service-card";
-import { services } from "@/content/services";
+import { getServices } from "@/lib/content/services";
 import { type Locale, routing } from "@/i18n/routing";
 import { buildBreadcrumbSchema, buildSpeakableSchema } from "@/lib/schema";
 import { buildAlternates, buildOpenGraph } from "@/lib/seo";
@@ -46,6 +46,7 @@ export default async function ServicesPage({
 
   const t = await getTranslations("servicesPage");
   const tCommon = await getTranslations("common");
+  const services = await getServices();
 
   const crumbs = [
     { name: tCommon("breadcrumbHome"), href: "/" as const },

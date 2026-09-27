@@ -4,7 +4,7 @@ import { getLocale, getTranslations } from "next-intl/server";
 
 import { RevealGroup, RevealItem } from "@/components/motion/reveal";
 import { SectionHeading } from "@/components/sections/section-heading";
-import { services } from "@/content/services";
+import { getServices } from "@/lib/content/services";
 import type { Locale } from "@/i18n/routing";
 import { PinContainer } from "@/components/ui/3d-pin";
 
@@ -12,6 +12,7 @@ export async function ServicesSection() {
   const locale = (await getLocale()) as Locale;
   const t = await getTranslations("home.services");
   const tCommon = await getTranslations("common");
+  const services = await getServices();
 
   return (
     <section

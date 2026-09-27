@@ -17,7 +17,6 @@ import { LanguageSwitcher } from "@/components/layout/language-switcher";
 import { Logo } from "@/components/layout/logo";
 import { ServiceIcon } from "@/components/ui/service-icon";
 import { siteConfig, telLink } from "@/config/site";
-import { services } from "@/content/services";
 import { Link, usePathname } from "@/i18n/navigation";
 import type { Locale } from "@/i18n/routing";
 import { cn } from "@/lib/utils";

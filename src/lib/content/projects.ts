@@ -92,6 +92,12 @@ async function fetchProjects(): Promise<ProjectRow[]> {
 
 const cachedProjects = unstable_cache(fetchProjects, ["projects"], {
   tags: [PROJECTS_TAG],
+  /*
+    Etiket yalnızca panelden kaydedildiğinde temizleniyor. Satır Supabase'in
+    kendi tablo düzenleyicisinden değiştirilirse site bunu hiç görmezdi;
+    saatlik tazeleme o ihtimale karşı güvenlik ağı.
+  */
+  revalidate: 3600,
 });
 
 export async function getProjects(): Promise<Project[]> {

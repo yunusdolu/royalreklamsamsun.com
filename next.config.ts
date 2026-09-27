@@ -3,8 +3,28 @@ import type { NextConfig } from "next";
 
 const withNextIntl = createNextIntlPlugin("./src/i18n/request.ts");
 
+/**
+ * Panelden yüklenen görseller Supabase Storage'ta duruyor. `next/image` uzak
+ * kaynakları ancak burada izin verilirse işler. Adres .env içindeki proje
+ * adresinden türetiliyor; böylece Supabase projesi değişirse burası da
+ * kendiliğinden doğru kalır.
+ */
+const supabaseHost = process.env.SUPABASE_URL
+  ? new URL(process.env.SUPABASE_URL).hostname
+  : undefined;
+
 const nextConfig: NextConfig = {
   images: {
+    remotePatterns: supabaseHost
+      ? [
+          {
+            protocol: "https",
+            hostname: supabaseHost,
+            pathname: "/storage/v1/object/public/**",
+          },
+        ]
+      : [],
+
     // Modern formatlar — LCP ve toplam ağırlık için kritik
     formats: ["image/avif", "image/webp"],
     qualities: [70, 75, 78, 85],

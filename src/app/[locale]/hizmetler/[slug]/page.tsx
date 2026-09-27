@@ -11,7 +11,8 @@ import { JsonLd } from "@/components/seo/json-ld";
 import { PillAnchor, PillLink } from "@/components/ui/pill-button";
 import { ServiceCard } from "@/components/ui/service-card";
 import { siteConfig, telLink, whatsappLink } from "@/config/site";
-import { getServiceBySlug, services } from "@/content/services";
+import { services } from "@/content/services";
+import { getServiceBySlugAsync, getServices } from "@/lib/content/services";
 import { type Locale, routing } from "@/i18n/routing";
 import { withExistingImages } from "@/lib/variant-images";
 import {
@@ -45,7 +46,7 @@ export async function generateMetadata({
   params: Promise<Params>;
 }): Promise<Metadata> {
   const { locale, slug } = await params;
-  const service = getServiceBySlug(slug, locale);
+  const service = await getServiceBySlugAsync(slug, locale);
   if (!service) return {};
 
   const copy = service.copy[locale];
@@ -83,14 +84,16 @@ export default async function ServiceDetailPage({
   const { locale, slug } = await params;
   setRequestLocale(locale);
 
-  const service = getServiceBySlug(slug, locale);
+  const service = await getServiceBySlugAsync(slug, locale);
   if (!service) notFound();
 
   const copy = service.copy[locale];
   const t = await getTranslations("common");
   const tServices = await getTranslations("servicesPage");
 
-  const related = services.filter((item) => item.id !== service.id).slice(0, 3);
+  const related = (await getServices())
+    .filter((item) => item.id !== service.id)
+    .slice(0, 3);
 
   const crumbs = [
     { name: t("breadcrumbHome"), href: "/" as const },
