@@ -124,14 +124,14 @@ export default async function LocaleLayout({
   return (
     <html
       lang={locale}
-      className={`${montserrat.variable} ${inter.variable} h-full overflow-x-hidden`}
+      className={`${montserrat.variable} ${inter.variable} h-full`}
       suppressHydrationWarning
     >
       <head>
         {/* Google Fonts bağlantısını erkenden aç — LCP kazancı */}
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
       </head>
-      <body className="flex min-h-full flex-col bg-royal-black text-royal-fg antialiased overflow-x-hidden">
+      <body className="flex min-h-full flex-col bg-royal-black text-royal-fg antialiased">
         <NextIntlClientProvider>
           <SmoothScrollProvider>
             <ScrollProgress />

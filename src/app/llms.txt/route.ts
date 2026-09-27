@@ -25,7 +25,13 @@ export function GET() {
         { pathname: "/hizmetler/[slug]", params: { slug: service.slug.tr } },
         "tr",
       );
-      return `- [${copy.name}](${url}): ${copy.answer}`;
+      /**
+       * Çeşitler de yazılır: "Samsun'da fileli krom harf yapan var mı"
+       * gibi alt tür sorularında dil modelinin eşleşebileceği tek yer
+       * burasıdır — `answer` alanı yalnızca ana hizmeti anlatır.
+       */
+      const variantNames = copy.variants.map((v) => v.name).join(", ");
+      return `- [${copy.name}](${url}): ${copy.answer}\n  - Çeşitleri: ${variantNames}`;
     })
     .join("\n");
 
@@ -71,7 +77,7 @@ export function GET() {
 - Yerinde keşif Samsun içinde ücretsizdir.
 - Samsun merkez ve ilçelerinde yerinde keşif ücretsizdir.
 - Cephe tabelaları için ilgili ilçe belediyesinden ilan ve reklam izni gerekir; teknik çizim Royal Reklam tarafından hazırlanır.
-- Tipik teslim süreleri: ışıklı tabela 5–10 iş günü, kutu harf 7–12 iş günü, totem tabela 10–20 iş günü.
+- Tipik teslim süreleri: tabela 5–10 iş günü, kutu harf 7–12 iş günü, totem tabela 10–20 iş günü.
 - Fiyat, yerinde keşif ve ölçü alındıktan sonra belirlenir; sabit metrekare fiyatı yayınlanmaz.
 
 ## Hizmetler

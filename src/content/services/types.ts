@@ -15,6 +15,20 @@ export interface ServiceHighlight {
   description: string;
 }
 
+/**
+ * Hizmetin alt türü — "kutu harf" içindeki "fileli krom harf" gibi.
+ *
+ * Açıklama zorunludur: yalnızca ad listelemek müşteriye de arama motoruna da
+ * bir şey anlatmaz; asıl değer hangi çeşidin ne zaman doğru olduğunu söyleyen
+ * cümlede.
+ */
+export interface ServiceVariant {
+  name: string;
+  description: string;
+  /** Çeşidin 16:10 editoryal fotoğrafı (`public/images/services/variants/...`) */
+  image?: string;
+}
+
 /** Bir hizmetin tek dildeki tüm metinleri. */
 export interface ServiceCopy {
   name: string;
@@ -42,6 +56,8 @@ export interface ServiceCopy {
   priceFactors: string[];
   /** Kimler için uygun */
   useCases: string[];
+  /** Bu hizmet başlığı altında üretilen alt türler */
+  variants: ServiceVariant[];
   faqs: ServiceFaq[];
 }
 
@@ -57,6 +73,16 @@ export interface Service {
    * bu yüzden zorunludur — yeni bir hizmet eklenirken fotoğrafı da eklenir.
    */
   image: string;
+  heroImage?: string;
+  /**
+   * Hero görselinin yatay odak noktası (`object-position`).
+   *
+   * Masaüstünde çerçeve de görsel de 3:1 olduğu için etkisi yoktur. Telefon
+   * ve tablette çerçeve daha kare olduğundan görselin yanları kırpılır;
+   * tabela kadranın ortasında değilse burada yüzde vererek odakta tutulur.
+   * Boş bırakılırsa ortalanır.
+   */
+  heroFocus?: string;
   /** Anasayfada öne çıkarılsın mı */
   featured: boolean;
   /** Ortalama teslim süresi (schema.org ve kart rozeti için) */

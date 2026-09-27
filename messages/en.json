@@ -50,6 +50,7 @@
     "leadTime": "Typical delivery",
     "days": "business days",
     "specsTitle": "Technical Specification",
+    "variantsTitle": "Types of {service}",
     "priceTitle": "What Determines the Price?",
     "useCasesTitle": "Who Is It For?",
     "faqTitle": "Frequently Asked Questions",
@@ -61,7 +62,9 @@
     "slide": "Slide {number}",
     "instagramMore": "More on Instagram",
     "instagramBrowse": "Browse on Instagram",
-    "dayDelivery": "Day Delivery"
+    "variantsImageLoading": "Image coming soon",
+    "dayDelivery": "Day Delivery",
+    "variantCount": "+{count} types of {service}"
   },
   "home": {
     "hero": {

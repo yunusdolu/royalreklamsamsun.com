@@ -1,7 +1,14 @@
 "use client";
 
 import { AnimatePresence, motion } from "framer-motion";
-import { ArrowUpRight, ChevronDown, MapPin, Menu, Phone, X } from "lucide-react";
+import {
+  ArrowUpRight,
+  ChevronDown,
+  MapPin,
+  Menu,
+  Phone,
+  X,
+} from "lucide-react";
 import { InstagramIcon } from "@/components/ui/brand-icons";
 import { useLocale, useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
@@ -17,9 +24,19 @@ import { cn } from "@/lib/utils";
 import CurvedMenu from "@/components/ui/curved-menu";
 import GradualBlur from "@/components/ui/gradual-blur";
 
-type NavKey = "services" | "portfolio" | "regions" | "about" | "blog" | "contact";
+type NavKey =
+  "services" | "portfolio" | "regions" | "about" | "blog" | "contact";
 
-const navItems: { key: NavKey; href: "/hizmetler" | "/referanslar" | "/bolgeler" | "/hakkimizda" | "/blog" | "/iletisim" }[] = [
+const navItems: {
+  key: NavKey;
+  href:
+    | "/hizmetler"
+    | "/referanslar"
+    | "/bolgeler"
+    | "/hakkimizda"
+    | "/blog"
+    | "/iletisim";
+}[] = [
   { key: "services", href: "/hizmetler" },
   { key: "portfolio", href: "/referanslar" },
   { key: "regions", href: "/bolgeler" },
@@ -45,10 +62,12 @@ export function Header() {
   }, []);
 
   return (
-    <header 
+    <header
       className={cn(
         "fixed inset-x-0 top-0 z-[100] transition-all duration-500",
-        scrolled ? "bg-transparent lg:bg-black/95 lg:backdrop-blur-md lg:shadow-sm pointer-events-none lg:pointer-events-auto" : "bg-transparent pointer-events-none"
+        scrolled
+          ? "bg-transparent lg:bg-black/95 lg:backdrop-blur-md lg:shadow-sm pointer-events-none lg:pointer-events-auto"
+          : "bg-transparent pointer-events-none",
       )}
     >
       {/* Kademeli Blur (Gradual Blur) Arka Planı - Sadece mobilde ve sürekli görünür */}
@@ -66,28 +85,31 @@ export function Header() {
         />
       </div>
 
-
-
       {/* Ana çubuk */}
       <div className="relative z-10 pointer-events-auto">
-        <div className={cn(
-          "container-royal flex items-center justify-between gap-4 lg:gap-6 relative transition-all duration-700 h-16",
-          scrolled ? "lg:h-20" : "lg:h-36"
-        )}>
-          
+        <div
+          className={cn(
+            "container-royal flex items-center justify-between gap-4 lg:gap-6 relative transition-all duration-700 h-16",
+            scrolled ? "lg:h-20" : "lg:h-36",
+          )}
+        >
           {/* Mobil için boş alan. Masaüstü için scrolled durumunda logonun yerini tutan spacer */}
-          <div className={cn(
-            "transition-all duration-700 ease-in-out",
-            "flex-1 lg:flex-none",
-            scrolled ? "lg:w-[240px]" : "lg:w-0"
-          )}></div>
+          <div
+            className={cn(
+              "transition-all duration-700 ease-in-out",
+              "flex-1 lg:flex-none",
+              "lg:w-[240px] xl:w-[500px]",
+            )}
+          ></div>
 
           <Link
             href="/"
             className={cn(
               "absolute left-1/2 -translate-x-1/2 translate-y-[10px] z-20 flex items-center justify-center h-full w-full max-w-[310px] sm:max-w-[340px] transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)]",
               "lg:max-w-none lg:w-auto lg:top-1/2 lg:-translate-y-1/2",
-              scrolled ? "lg:left-4 xl:left-8 lg:translate-x-0" : "lg:left-1/2 lg:-translate-x-1/2"
+              scrolled
+                ? "lg:left-4 xl:left-8 lg:translate-x-0"
+                : "lg:left-1/2 lg:-translate-x-1/2",
             )}
             aria-label={siteConfig.name}
           >
@@ -95,7 +117,7 @@ export function Header() {
               priority
               className={cn(
                 "transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] w-[310px] md:w-[330px] brightness-110",
-                scrolled ? "lg:w-[220px]" : "lg:w-[480px] lg:scale-110"
+                scrolled ? "lg:w-[220px]" : "lg:w-[480px] lg:scale-110",
               )}
             />
           </Link>
@@ -103,8 +125,10 @@ export function Header() {
           {/* Masaüstü gezinme */}
           <nav
             className={cn(
-              "hidden items-center gap-4 xl:gap-6 lg:flex transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)]",
-              scrolled ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-4 pointer-events-none"
+              "hidden items-center gap-2.5 xl:gap-3 lg:flex transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)]",
+              scrolled
+                ? "opacity-100 translate-y-0"
+                : "opacity-0 translate-y-3 pointer-events-none",
             )}
             aria-label={t("openMenu")}
           >
@@ -116,27 +140,29 @@ export function Header() {
                   href={item.href}
                   className={cn(
                     "relative px-1 py-2 text-[0.9375rem] font-medium tracking-wide transition-colors",
-                    isActive 
-                      ? (scrolled ? "text-white" : "text-black") 
-                      : (scrolled ? "text-white/70 hover:text-white" : "text-black/70 hover:text-black")
+                    isActive
+                      ? scrolled
+                        ? "text-white drop-shadow-[0_0_12px_rgba(212,175,55,0.7)]"
+                        : "text-black"
+                      : scrolled
+                        ? "text-white/70 hover:text-white"
+                        : "text-black/70 hover:text-black",
                   )}
                 >
                   {t(item.key)}
-                  {isActive && (
-                    <span className={cn(
-                      "absolute bottom-0 left-0 h-0.5 w-full rounded-full",
-                      scrolled ? "bg-white" : "bg-black"
-                    )} />
-                  )}
                 </Link>
               );
             })}
           </nav>
 
-          <div className={cn(
-            "flex flex-1 items-center justify-end gap-3 lg:flex-none transition-all duration-700",
-            scrolled ? "lg:opacity-100 lg:pointer-events-auto" : "lg:opacity-0 lg:pointer-events-none"
-          )}>
+          <div
+            className={cn(
+              "flex flex-1 items-center justify-end gap-3 lg:flex-none transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)]",
+              scrolled
+                ? "lg:translate-y-0 lg:opacity-100 lg:pointer-events-auto"
+                : "lg:translate-y-3 lg:opacity-0 lg:pointer-events-none",
+            )}
+          >
             <div className="hidden lg:block">
               <LanguageSwitcher variant={scrolled ? "light" : "dark"} />
             </div>
@@ -149,7 +175,6 @@ export function Header() {
             />
           </div>
         </div>
-
       </div>
 
       {/* Removed old mobile drawer */}

@@ -1,0 +1,1035 @@
+import fs from "fs";
+
+export const allPrompts = [
+  // 1. TABELA
+  {
+    id: 1,
+    serviceId: "isikli-tabela",
+    type: "card",
+    name: "Tabela — kart görseli",
+    imagePath: "/images/services/isikli-tabela.jpg",
+    prompt: "A boutique storefront on a Turkish city street at blue hour. Above the window an illuminated box sign, aluminium composite case with a white opal acrylic face lit evenly from within, reading \"MERA\" in clean sans-serif capitals. Warm light spills onto damp pavement, two blurred pedestrians pass. photorealistic editorial photograph, full-frame DSLR, 35mm lens, f/5.6, natural light, tack-sharp focus on the subject, fine material texture visible, true-to-life colours, no HDR glow, no illustration, no text distortion, 16:10 aspect ratio"
+  },
+  {
+    id: 2,
+    serviceId: "isikli-tabela",
+    type: "variant",
+    variantIndex: 0,
+    name: "Kompozit Kasa + Pleksi Yüzey",
+    imagePath: "/images/services/variants/isikli-tabela/kompozit-kasa-pleksi-yuzey.jpg",
+    prompt: "A shopfront box sign with an aluminium composite case and a flat white opal acrylic face, lit evenly from inside with no hotspots, reading \"MERA\". Dusk, the shop window glowing below, straight-on view of the sign. photorealistic editorial photograph, full-frame DSLR, 35mm lens, f/5.6, natural light, tack-sharp focus on the subject, fine material texture visible, true-to-life colours, no HDR glow, no illustration, no text distortion, 16:10 aspect ratio"
+  },
+  {
+    id: 3,
+    serviceId: "isikli-tabela",
+    type: "variant",
+    variantIndex: 1,
+    name: "Işıklı Vinil Tabela",
+    imagePath: "/images/services/variants/isikli-tabela/isikli-vinil-tabela.jpg",
+    prompt: "A wide shopfront sign with a translucent vinyl face stretched over an aluminium frame, backlit so the printed green and white artwork glows evenly, reading \"ARDA\". Evening street, a delivery scooter blurred at the kerb. photorealistic editorial photograph, full-frame DSLR, 35mm lens, f/5.6, natural light, tack-sharp focus on the subject, fine material texture visible, true-to-life colours, no HDR glow, no illustration, no text distortion, 16:10 aspect ratio"
+  },
+  {
+    id: 4,
+    serviceId: "isikli-tabela",
+    type: "variant",
+    variantIndex: 2,
+    name: "Vakum Pleksi Tabela",
+    imagePath: "/images/services/variants/isikli-tabela/vakum-pleksi-tabela.jpg",
+    prompt: "Close crop of a vacuum-formed acrylic sign face, the lettering embossed and raised several centimetres from the surface, each raised edge catching a highlight. Reading \"NAR\", lit from within, warm dusk light. photorealistic editorial photograph, full-frame DSLR, 35mm lens, f/5.6, natural light, tack-sharp focus on the subject, fine material texture visible, true-to-life colours, no HDR glow, no illustration, no text distortion, 16:10 aspect ratio"
+  },
+  {
+    id: 5,
+    serviceId: "isikli-tabela",
+    type: "variant",
+    variantIndex: 3,
+    name: "Kör Kasa Tabela (Işıksız)",
+    imagePath: "/images/services/variants/isikli-tabela/kor-kasa-tabela.jpg",
+    prompt: "A closed aluminium box sign with no lighting on a sun-lit shop frontage under an arcade, matte dark grey face carrying crisp cut-vinyl white lettering reading \"SELVA\". Midday, hard shadows, no glow at all. photorealistic editorial photograph, full-frame DSLR, 35mm lens, f/5.6, natural light, tack-sharp focus on the subject, fine material texture visible, true-to-life colours, no HDR glow, no illustration, no text distortion, 16:10 aspect ratio"
+  },
+  {
+    id: 6,
+    serviceId: "isikli-tabela",
+    type: "variant",
+    variantIndex: 4,
+    name: "Fener Tabela",
+    imagePath: "/images/services/variants/isikli-tabela/fener-tabela.jpg",
+    prompt: "A double-sided projecting lantern sign mounted perpendicular to a façade over a narrow pedestrian street, glowing warm at dusk, reading \"TUNA\" on both faces. Shot along the street so the face and the wall bracket are both visible. photorealistic editorial photograph, full-frame DSLR, 35mm lens, f/5.6, natural light, tack-sharp focus on the subject, fine material texture visible, true-to-life colours, no HDR glow, no illustration, no text distortion, 16:10 aspect ratio"
+  },
+  {
+    id: 7,
+    serviceId: "isikli-tabela",
+    type: "variant",
+    variantIndex: 5,
+    name: "Krom / Paslanmaz Kasalı Tabela",
+    imagePath: "/images/services/variants/isikli-tabela/krom-kasali-tabela.jpg",
+    prompt: "A brushed stainless steel cased sign on the stone façade of a hotel entrance, metal catching soft directional light, white acrylic face reading \"ORA\". Canopy and warm lobby light blurred behind. photorealistic editorial photograph, full-frame DSLR, 35mm lens, f/5.6, natural light, tack-sharp focus on the subject, fine material texture visible, true-to-life colours, no HDR glow, no illustration, no text distortion, 16:10 aspect ratio"
+  },
+  {
+    id: 8,
+    serviceId: "isikli-tabela",
+    type: "variant",
+    variantIndex: 6,
+    name: "Neon Efektli (Neon Flex) Tabela",
+    imagePath: "/images/services/variants/isikli-tabela/neon-flex-tabela.jpg",
+    prompt: "A warm amber LED neon-flex sign on exposed brick inside a bar, continuous unbroken tubing forming cursive script reading \"EGE\". Evening, bottles and glassware softly out of focus behind. photorealistic editorial photograph, full-frame DSLR, 35mm lens, f/5.6, natural light, tack-sharp focus on the subject, fine material texture visible, true-to-life colours, no HDR glow, no illustration, no text distortion, 16:10 aspect ratio"
+  },
+  {
+    id: 9,
+    serviceId: "isikli-tabela",
+    type: "variant",
+    variantIndex: 7,
+    name: "Ahşap Görünümlü Işıklı Tabela",
+    imagePath: "/images/services/variants/isikli-tabela/ahsap-gorunumlu-isikli-tabela.jpg",
+    prompt: "A café sign with a warm oak-veneer face and routed letters backlit from behind, reading \"KIR\", mounted above a timber shopfront with hanging plants. Golden evening light, grain texture visible. photorealistic editorial photograph, full-frame DSLR, 35mm lens, f/5.6, natural light, tack-sharp focus on the subject, fine material texture visible, true-to-life colours, no HDR glow, no illustration, no text distortion, 16:10 aspect ratio"
+  },
+  {
+    id: 10,
+    serviceId: "isikli-tabela",
+    type: "variant",
+    variantIndex: 8,
+    name: "Vitrin İçi Işıklı Pano",
+    imagePath: "/images/services/variants/isikli-tabela/vitrin-ici-isikli-pano.jpg",
+    prompt: "A slim illuminated panel standing inside a shop window, glowing evenly, showing a simple promotional graphic. Photographed from the pavement through the glass with faint street reflections, darkened shop interior behind. photorealistic editorial photograph, full-frame DSLR, 35mm lens, f/5.6, natural light, tack-sharp focus on the subject, fine material texture visible, true-to-life colours, no HDR glow, no illustration, no text distortion, 16:10 aspect ratio"
+  },
+
+  // 2. KUTU HARF TABELA
+  {
+    id: 11,
+    serviceId: "kutu-harf-tabela",
+    type: "card",
+    name: "Kutu Harf Tabela — kart görseli",
+    imagePath: "/images/services/kutu-harf-tabela.jpg",
+    prompt: "Close-up three-quarter view of dimensional channel letters on a dark stone wall reading \"ARDA\". Brushed stainless returns, white acrylic faces lit from within, a soft halo on the wall behind each letter. Early evening, depth falling off along the word. photorealistic editorial photograph, full-frame DSLR, 35mm lens, f/5.6, natural light, tack-sharp focus on the subject, fine material texture visible, true-to-life colours, no HDR glow, no illustration, no text distortion, 16:10 aspect ratio"
+  },
+  {
+    id: 12,
+    serviceId: "kutu-harf-tabela",
+    type: "variant",
+    variantIndex: 0,
+    name: "Standart Kutu Harf",
+    imagePath: "/images/services/variants/kutu-harf-tabela/standart-kutu-harf.jpg",
+    prompt: "Front-lit channel letters on a dark stone wall reading \"ARDA\": white acrylic faces glowing evenly, slim aluminium returns, crisp trim edge. Early evening, three-quarter view, shallow depth along the word. photorealistic editorial photograph, full-frame DSLR, 35mm lens, f/5.6, natural light, tack-sharp focus on the subject, fine material texture visible, true-to-life colours, no HDR glow, no illustration, no text distortion, 16:10 aspect ratio"
+  },
+  {
+    id: 13,
+    serviceId: "kutu-harf-tabela",
+    type: "variant",
+    variantIndex: 1,
+    name: "Krom Harf",
+    imagePath: "/images/services/variants/kutu-harf-tabela/krom-harf.jpg",
+    prompt: "Dimensional letters fabricated entirely from brushed stainless steel, unlit, mounted on a pale concrete wall reading \"ORA\". Raking afternoon light picking out the grain of the metal and casting sharp letter shadows. photorealistic editorial photograph, full-frame DSLR, 35mm lens, f/5.6, natural light, tack-sharp focus on the subject, fine material texture visible, true-to-life colours, no HDR glow, no illustration, no text distortion, 16:10 aspect ratio"
+  },
+  {
+    id: 14,
+    serviceId: "kutu-harf-tabela",
+    type: "variant",
+    variantIndex: 2,
+    name: "Fileli Krom Harf",
+    imagePath: "/images/services/variants/kutu-harf-tabela/fileli-krom-harf.jpg",
+    prompt: "Close-up of a single channel letter B whose front face carries a 2 cm polished chrome border with a glowing white acrylic centre, so the letter reads as light framed in metal. Letter fills most of the frame, dusk. photorealistic editorial photograph, full-frame DSLR, 35mm lens, f/5.6, natural light, tack-sharp focus on the subject, fine material texture visible, true-to-life colours, no HDR glow, no illustration, no text distortion, 16:10 aspect ratio"
+  },
+  {
+    id: 15,
+    serviceId: "kutu-harf-tabela",
+    type: "variant",
+    variantIndex: 3,
+    name: "Alttan Aydınlatmalı Krom Harf",
+    imagePath: "/images/services/variants/kutu-harf-tabela/alttan-aydinlatmali-krom-harf.jpg",
+    prompt: "Brushed chrome dimensional letters on a reception wall, lit only from beneath so the metal faces stay dark and a soft pool of light washes down the wall under each letter. Dim interior, marble floor faintly reflecting. photorealistic editorial photograph, full-frame DSLR, 35mm lens, f/5.6, natural light, tack-sharp focus on the subject, fine material texture visible, true-to-life colours, no HDR glow, no illustration, no text distortion, 16:10 aspect ratio"
+  },
+  {
+    id: 16,
+    serviceId: "kutu-harf-tabela",
+    type: "variant",
+    variantIndex: 4,
+    name: "Dekota Harf (PVC Köpük)",
+    imagePath: "/images/services/variants/kutu-harf-tabela/dekota-harf.jpg",
+    prompt: "Matte white PVC foam letters CNC-cut and mounted flush on a soft grey office wall reading \"TUNA\", unlit, clean square edges and a shallow drop shadow. Even daylight from a window to the left. photorealistic editorial photograph, full-frame DSLR, 35mm lens, f/5.6, natural light, tack-sharp focus on the subject, fine material texture visible, true-to-life colours, no HDR glow, no illustration, no text distortion, 16:10 aspect ratio"
+  },
+  {
+    id: 17,
+    serviceId: "kutu-harf-tabela",
+    type: "variant",
+    variantIndex: 5,
+    name: "Halo (Arkadan Işıklı) Kutu Harf",
+    imagePath: "/images/services/variants/kutu-harf-tabela/halo-kutu-harf.jpg",
+    prompt: "Channel letters on a dark wall lit only from behind, each letter a solid dark silhouette in front of a soft even halo of warm light. Reading \"MERA\", night, straight-on view. photorealistic editorial photograph, full-frame DSLR, 35mm lens, f/5.6, natural light, tack-sharp focus on the subject, fine material texture visible, true-to-life colours, no HDR glow, no illustration, no text distortion, 16:10 aspect ratio"
+  },
+  {
+    id: 18,
+    serviceId: "kutu-harf-tabela",
+    type: "variant",
+    variantIndex: 6,
+    name: "Çift Yönlü Işıklı Kutu Harf",
+    imagePath: "/images/services/variants/kutu-harf-tabela/cift-yonlu-isikli-kutu-harf.jpg",
+    prompt: "Channel letters glowing both through their white acrylic faces and behind onto the wall, producing a lit letter sitting inside a halo. Reading \"NAR\", dark textured façade, night. photorealistic editorial photograph, full-frame DSLR, 35mm lens, f/5.6, natural light, tack-sharp focus on the subject, fine material texture visible, true-to-life colours, no HDR glow, no illustration, no text distortion, 16:10 aspect ratio"
+  },
+  {
+    id: 19,
+    serviceId: "kutu-harf-tabela",
+    type: "variant",
+    variantIndex: 7,
+    name: "Trimless (Çerçevesiz) Kutu Harf",
+    imagePath: "/images/services/variants/kutu-harf-tabela/trimless-kutu-harf.jpg",
+    prompt: "Macro detail of a trimless channel letter corner: the acrylic face meets the return with no visible trim cap, one crisp seamless edge. Letter glowing softly, dark background, very shallow depth. photorealistic editorial photograph, full-frame DSLR, 35mm lens, f/5.6, natural light, tack-sharp focus on the subject, fine material texture visible, true-to-life colours, no HDR glow, no illustration, no text distortion, 16:10 aspect ratio"
+  },
+  {
+    id: 20,
+    serviceId: "kutu-harf-tabela",
+    type: "variant",
+    variantIndex: 8,
+    name: "Işıksız Dekoratif Kutu Harf",
+    imagePath: "/images/services/variants/kutu-harf-tabela/isiksiz-dekoratif-kutu-harf.jpg",
+    prompt: "Unlit dimensional letters in matte black mounted on a pale oak reception wall behind a desk, reading \"ORA\". Daylight from a side window casting soft letter shadows, plant blurred in the foreground. photorealistic editorial photograph, full-frame DSLR, 35mm lens, f/5.6, natural light, tack-sharp focus on the subject, fine material texture visible, true-to-life colours, no HDR glow, no illustration, no text distortion, 16:10 aspect ratio"
+  },
+
+  // 3. TOTEM TABELA
+  {
+    id: 21,
+    serviceId: "totem-tabela",
+    type: "card",
+    name: "Totem Tabela — kart görseli",
+    imagePath: "/images/services/totem-tabela.jpg",
+    prompt: "A tall double-sided illuminated pylon totem at a car dealership forecourt at dusk with dramatic cloud. Dark cabinet, bright white panel reading \"SELVA\", slim lower strip, galvanised base on a concrete plinth. Low angle emphasising height. photorealistic editorial photograph, full-frame DSLR, 35mm lens, f/5.6, natural light, tack-sharp focus on the subject, fine material texture visible, true-to-life colours, no HDR glow, no illustration, no text distortion, 16:10 aspect ratio"
+  },
+  {
+    id: 22,
+    serviceId: "totem-tabela",
+    type: "variant",
+    variantIndex: 0,
+    name: "Tek Yüz / Çift Yüz Işıklı Totem",
+    imagePath: "/images/services/variants/totem-tabela/tek-cift-yuz-isikli-totem.jpg",
+    prompt: "A 5-metre illuminated pylon totem at a business entrance at dusk, dark cabinet with a bright evenly lit white panel reading \"SELVA\", galvanised base on a concrete plinth. Low camera angle, dramatic sky. photorealistic editorial photograph, full-frame DSLR, 35mm lens, f/5.6, natural light, tack-sharp focus on the subject, fine material texture visible, true-to-life colours, no HDR glow, no illustration, no text distortion, 16:10 aspect ratio"
+  },
+  {
+    id: 23,
+    serviceId: "totem-tabela",
+    type: "variant",
+    variantIndex: 1,
+    name: "Modüler Kaset Totem",
+    imagePath: "/images/services/variants/totem-tabela/moduler-kaset-totem.jpg",
+    prompt: "A tall totem carrying eight separate illuminated tenant cassettes stacked vertically, each with a different short name, at the entrance of a business park. Evening, every cassette evenly lit, straight-on view. photorealistic editorial photograph, full-frame DSLR, 35mm lens, f/5.6, natural light, tack-sharp focus on the subject, fine material texture visible, true-to-life colours, no HDR glow, no illustration, no text distortion, 16:10 aspect ratio"
+  },
+  {
+    id: 24,
+    serviceId: "totem-tabela",
+    type: "variant",
+    variantIndex: 2,
+    name: "Monolit (Tek Blok) Totem",
+    imagePath: "/images/services/variants/totem-tabela/monolit-totem.jpg",
+    prompt: "A solid monolithic totem rising straight from a landscaped bed with no visible posts, clad in dark grey composite with routed backlit lettering reading \"ORA\". Dusk, modern glass building softly blurred behind. photorealistic editorial photograph, full-frame DSLR, 35mm lens, f/5.6, natural light, tack-sharp focus on the subject, fine material texture visible, true-to-life colours, no HDR glow, no illustration, no text distortion, 16:10 aspect ratio"
+  },
+  {
+    id: 25,
+    serviceId: "totem-tabela",
+    type: "variant",
+    variantIndex: 3,
+    name: "Akaryakıt Fiyat Totemi",
+    imagePath: "/images/services/variants/totem-tabela/akaryakit-fiyat-totemi.jpg",
+    prompt: "A fuel station price totem at dusk: brand panel on top, three rows of bright LED price digits below. Forecourt canopy lights and a refuelling car blurred behind. Digits tack-sharp and fully legible. photorealistic editorial photograph, full-frame DSLR, 35mm lens, f/5.6, natural light, tack-sharp focus on the subject, fine material texture visible, true-to-life colours, no HDR glow, no illustration, no text distortion, 16:10 aspect ratio"
+  },
+  {
+    id: 26,
+    serviceId: "totem-tabela",
+    type: "variant",
+    variantIndex: 4,
+    name: "Site ve Konut Girişi Totemi",
+    imagePath: "/images/services/variants/totem-tabela/site-konut-girisi-totemi.jpg",
+    prompt: "A residential development entrance totem in a stone-clad surround carrying the project name \"TUNA PARK\" and, beneath it, an etched site plan with numbered blocks. Morning light, landscaped planting at the base. photorealistic editorial photograph, full-frame DSLR, 35mm lens, f/5.6, natural light, tack-sharp focus on the subject, fine material texture visible, true-to-life colours, no HDR glow, no illustration, no text distortion, 16:10 aspect ratio"
+  },
+  {
+    id: 27,
+    serviceId: "totem-tabela",
+    type: "variant",
+    variantIndex: 5,
+    name: "Wayfinding (Yön Bulma) Totemi",
+    imagePath: "/images/services/variants/totem-tabela/wayfinding-totemi.jpg",
+    prompt: "A hospital campus wayfinding totem: slim dark grey column with white department names and directional arrows, standing on a paved path. Overcast daylight, buildings and a walking visitor blurred behind. photorealistic editorial photograph, full-frame DSLR, 35mm lens, f/5.6, natural light, tack-sharp focus on the subject, fine material texture visible, true-to-life colours, no HDR glow, no illustration, no text distortion, 16:10 aspect ratio"
+  },
+  {
+    id: 28,
+    serviceId: "totem-tabela",
+    type: "variant",
+    variantIndex: 6,
+    name: "İnce Profil Totem",
+    imagePath: "/images/services/variants/totem-tabela/ince-profil-totem.jpg",
+    prompt: "A very slim illuminated totem, roughly 30 cm wide and 4 m tall, on a narrow pavement in front of a shop, glowing warm along its full height at dusk. Street receding behind, strong vertical emphasis. photorealistic editorial photograph, full-frame DSLR, 35mm lens, f/5.6, natural light, tack-sharp focus on the subject, fine material texture visible, true-to-life colours, no HDR glow, no illustration, no text distortion, 16:10 aspect ratio"
+  },
+
+  // 4. LİGHTBOX TABELA
+  {
+    id: 29,
+    serviceId: "lightbox-tabela",
+    type: "card",
+    name: "Lightbox Tabela — kart görseli",
+    imagePath: "/images/services/lightbox-tabela.jpg",
+    prompt: "A slim fabric-faced light box on the brick wall of a café, glowing warm and perfectly even edge to edge, reading \"NAR\" in a soft rounded typeface. Aluminium frame only 5 cm deep, hanging plants beside it, evening golden light. photorealistic editorial photograph, full-frame DSLR, 35mm lens, f/5.6, natural light, tack-sharp focus on the subject, fine material texture visible, true-to-life colours, no HDR glow, no illustration, no text distortion, 16:10 aspect ratio"
+  },
+  {
+    id: 30,
+    serviceId: "lightbox-tabela",
+    type: "variant",
+    variantIndex: 0,
+    name: "Gergi Kumaş (Textile) Lightbox",
+    imagePath: "/images/services/variants/lightbox-tabela/gergi-kumas-lightbox.jpg",
+    prompt: "A large fabric-faced light box on an interior wall with perfectly even edge-to-edge illumination and no hotspots, the silicone-edge fabric taut in its slim frame. A hand at one corner lifting the fabric edge. photorealistic editorial photograph, full-frame DSLR, 35mm lens, f/5.6, natural light, tack-sharp focus on the subject, fine material texture visible, true-to-life colours, no HDR glow, no illustration, no text distortion, 16:10 aspect ratio"
+  },
+  {
+    id: 31,
+    serviceId: "lightbox-tabela",
+    type: "variant",
+    variantIndex: 1,
+    name: "Pleksi Yüzeyli İnce Kasa Lightbox",
+    imagePath: "/images/services/variants/lightbox-tabela/pleksi-yuzeyli-ince-kasa-lightbox.jpg",
+    prompt: "A slim acrylic-faced light box, 5 cm deep, on a pale clinic corridor wall, glowing evenly and showing a simple graphic. Clean daylight interior, crisp frame edges, straight-on view. photorealistic editorial photograph, full-frame DSLR, 35mm lens, f/5.6, natural light, tack-sharp focus on the subject, fine material texture visible, true-to-life colours, no HDR glow, no illustration, no text distortion, 16:10 aspect ratio"
+  },
+  {
+    id: 32,
+    serviceId: "lightbox-tabela",
+    type: "variant",
+    variantIndex: 2,
+    name: "Çift Yüz Askılı Lightbox",
+    imagePath: "/images/services/variants/lightbox-tabela/cift-yuz-askili-lightbox.jpg",
+    prompt: "A double-sided light box suspended on slim cables from the ceiling of a shopping mall corridor, glowing on both faces. Shot from below and to one side so the face and the frame depth are both visible. photorealistic editorial photograph, full-frame DSLR, 35mm lens, f/5.6, natural light, tack-sharp focus on the subject, fine material texture visible, true-to-life colours, no HDR glow, no illustration, no text distortion, 16:10 aspect ratio"
+  },
+  {
+    id: 33,
+    serviceId: "lightbox-tabela",
+    type: "variant",
+    variantIndex: 3,
+    name: "Menü Panosu Lightbox",
+    imagePath: "/images/services/variants/lightbox-tabela/menu-panosu-lightbox.jpg",
+    prompt: "An illuminated modular menu board above a café counter, three lit panels showing menu sections, warm interior, a barista blurred at the espresso machine below. Menu panels evenly lit and legible. photorealistic editorial photograph, full-frame DSLR, 35mm lens, f/5.6, natural light, tack-sharp focus on the subject, fine material texture visible, true-to-life colours, no HDR glow, no illustration, no text distortion, 16:10 aspect ratio"
+  },
+  {
+    id: 34,
+    serviceId: "lightbox-tabela",
+    type: "variant",
+    variantIndex: 4,
+    name: "Standart Ölçü Vitrin Lightboxı",
+    imagePath: "/images/services/variants/lightbox-tabela/standart-olcu-vitrin-lightboxi.jpg",
+    prompt: "An A1 poster light box mounted inside a shop window, glowing evenly, the poster crisp behind the acrylic. Photographed from the pavement at dusk with a faint street reflection on the glass. photorealistic editorial photograph, full-frame DSLR, 35mm lens, f/5.6, natural light, tack-sharp focus on the subject, fine material texture visible, true-to-life colours, no HDR glow, no illustration, no text distortion, 16:10 aspect ratio"
+  },
+  {
+    id: 35,
+    serviceId: "lightbox-tabela",
+    type: "variant",
+    variantIndex: 5,
+    name: "Ayaklı Zemin Lightboxı",
+    imagePath: "/images/services/variants/lightbox-tabela/ayakli-zemin-lightboxi.jpg",
+    prompt: "A free-standing floor light box on a slim base beside the entrance of an exhibition stand, glowing evenly across the face. Carpeted hall, visitors blurred in the background. photorealistic editorial photograph, full-frame DSLR, 35mm lens, f/5.6, natural light, tack-sharp focus on the subject, fine material texture visible, true-to-life colours, no HDR glow, no illustration, no text distortion, 16:10 aspect ratio"
+  },
+  {
+    id: 36,
+    serviceId: "lightbox-tabela",
+    type: "variant",
+    variantIndex: 6,
+    name: "Dış Mekân IP54 Lightbox",
+    imagePath: "/images/services/variants/lightbox-tabela/dis-mekan-ip54-lightbox.jpg",
+    prompt: "A weather-sealed outdoor light box beside the entrance doors of an apartment block, glowing on a rainy evening with water beading on its face. Sealed gasket edge visible, wet paving reflecting the light. photorealistic editorial photograph, full-frame DSLR, 35mm lens, f/5.6, natural light, tack-sharp focus on the subject, fine material texture visible, true-to-life colours, no HDR glow, no illustration, no text distortion, 16:10 aspect ratio"
+  },
+
+  // 5. CEPHE GİYDİRME
+  {
+    id: 37,
+    serviceId: "cephe-giydirme",
+    type: "card",
+    name: "Cephe Giydirme — kart görseli",
+    imagePath: "/images/services/cephe-giydirme.jpg",
+    prompt: "A mid-rise commercial building being clad in dark grey aluminium composite panels, seen from across the street. Half the façade finished with crisp matte panels and clean shadow-gap joints, the other half still on scaffolding with workers on a suspended platform. Overcast daylight. photorealistic editorial photograph, full-frame DSLR, 35mm lens, f/5.6, natural light, tack-sharp focus on the subject, fine material texture visible, true-to-life colours, no HDR glow, no illustration, no text distortion, 16:10 aspect ratio"
+  },
+  {
+    id: 38,
+    serviceId: "cephe-giydirme",
+    type: "variant",
+    variantIndex: 0,
+    name: "Alüminyum Kompozit (ACP) Cephe Kaplama",
+    imagePath: "/images/services/variants/cephe-giydirme/aluminyum-kompozit-cephe-kaplama.jpg",
+    prompt: "A commercial building façade clad in dark grey aluminium composite panels with precise shadow-gap joints and perfectly flat surfaces. Overcast daylight, straight elevation view, sharp vertical lines. photorealistic editorial photograph, full-frame DSLR, 35mm lens, f/5.6, natural light, tack-sharp focus on the subject, fine material texture visible, true-to-life colours, no HDR glow, no illustration, no text distortion, 16:10 aspect ratio"
+  },
+  {
+    id: 39,
+    serviceId: "cephe-giydirme",
+    type: "variant",
+    variantIndex: 1,
+    name: "Mesh Vinil Cephe Brandası",
+    imagePath: "/images/services/variants/cephe-giydirme/mesh-vinil-cephe-brandasi.jpg",
+    prompt: "A building under construction wrapped in a large perforated mesh banner carrying a printed architectural visual, wind passing through the fabric. Shot from across a wide street, scaffolding at the edges. photorealistic editorial photograph, full-frame DSLR, 35mm lens, f/5.6, natural light, tack-sharp focus on the subject, fine material texture visible, true-to-life colours, no HDR glow, no illustration, no text distortion, 16:10 aspect ratio"
+  },
+  {
+    id: 40,
+    serviceId: "cephe-giydirme",
+    type: "variant",
+    variantIndex: 2,
+    name: "Işıklı Cephe",
+    imagePath: "/images/services/variants/cephe-giydirme/isikli-cephe.jpg",
+    prompt: "A shop façade clad in dark composite panels with LED strip recessed into the horizontal shadow gaps, glowing warm along every joint at night. Straight-on view, light lines crisp and perfectly even. photorealistic editorial photograph, full-frame DSLR, 35mm lens, f/5.6, natural light, tack-sharp focus on the subject, fine material texture visible, true-to-life colours, no HDR glow, no illustration, no text distortion, 16:10 aspect ratio"
+  },
+  {
+    id: 41,
+    serviceId: "cephe-giydirme",
+    type: "variant",
+    variantIndex: 3,
+    name: "Perfore (Delikli) Metal Cephe",
+    imagePath: "/images/services/variants/cephe-giydirme/perfore-metal-cephe.jpg",
+    prompt: "A building façade clad in perforated metal panels with a graduated hole pattern, daylight passing through and casting a dappled pattern on the walkway beneath. Sharp focus on the perforation texture. photorealistic editorial photograph, full-frame DSLR, 35mm lens, f/5.6, natural light, tack-sharp focus on the subject, fine material texture visible, true-to-life colours, no HDR glow, no illustration, no text distortion, 16:10 aspect ratio"
+  },
+  {
+    id: 42,
+    serviceId: "cephe-giydirme",
+    type: "variant",
+    variantIndex: 4,
+    name: "Ahşap Görünümlü Kompozit Cephe",
+    imagePath: "/images/services/variants/cephe-giydirme/ahsap-gorunumlu-kompozit-cephe.jpg",
+    prompt: "A restaurant frontage clad in wood-patterned composite panels, warm and natural-looking but perfectly flat and even. Golden hour light raking across the surface, showing the printed grain. photorealistic editorial photograph, full-frame DSLR, 35mm lens, f/5.6, natural light, tack-sharp focus on the subject, fine material texture visible, true-to-life colours, no HDR glow, no illustration, no text distortion, 16:10 aspect ratio"
+  },
+  {
+    id: 43,
+    serviceId: "cephe-giydirme",
+    type: "variant",
+    variantIndex: 5,
+    name: "HPL / Kompakt Lamine Cephe",
+    imagePath: "/images/services/variants/cephe-giydirme/hpl-kompakt-lamine-cephe.jpg",
+    prompt: "The entrance wall of a school clad in compact laminate panels in two tones, hard-wearing matte surface with exposed fixings in a regular grid. Overcast daylight, children blurred passing the doors. photorealistic editorial photograph, full-frame DSLR, 35mm lens, f/5.6, natural light, tack-sharp focus on the subject, fine material texture visible, true-to-life colours, no HDR glow, no illustration, no text distortion, 16:10 aspect ratio"
+  },
+  {
+    id: 44,
+    serviceId: "cephe-giydirme",
+    type: "variant",
+    variantIndex: 6,
+    name: "Vitrin ve Cam Folyo Giydirme",
+    imagePath: "/images/services/variants/cephe-giydirme/vitrin-cam-folyo-giydirme.jpg",
+    prompt: "A shop's full-height glazing covered in one-way vision film carrying a printed graphic, photographed from outside so the graphic reads clearly while the interior shows faintly through the perforations. photorealistic editorial photograph, full-frame DSLR, 35mm lens, f/5.6, natural light, tack-sharp focus on the subject, fine material texture visible, true-to-life colours, no HDR glow, no illustration, no text distortion, 16:10 aspect ratio"
+  },
+
+  // 6. ARAÇ GİYDİRME
+  {
+    id: 45,
+    serviceId: "arac-giydirme",
+    type: "card",
+    name: "Araç Giydirme — kart görseli",
+    imagePath: "/images/services/arac-giydirme.jpg",
+    prompt: "A white commercial panel van parked on a Turkish high street, fully wrapped on its side in a deep green and white livery reading \"EGE\" with a phone strip along the bottom. Matte laminate finish, graphics following the body contours, side-on three-quarter view, overcast light. photorealistic editorial photograph, full-frame DSLR, 35mm lens, f/5.6, natural light, tack-sharp focus on the subject, fine material texture visible, true-to-life colours, no HDR glow, no illustration, no text distortion, 16:10 aspect ratio"
+  },
+  {
+    id: 46,
+    serviceId: "arac-giydirme",
+    type: "variant",
+    variantIndex: 0,
+    name: "Tam Kaplama (Full Wrap)",
+    imagePath: "/images/services/variants/arac-giydirme/tam-kaplama.jpg",
+    prompt: "A commercial panel van completely wrapped in a deep green and white livery reading \"EGE\", graphics following every contour around the wheel arches and door handles. City street, matte laminate, three-quarter view. photorealistic editorial photograph, full-frame DSLR, 35mm lens, f/5.6, natural light, tack-sharp focus on the subject, fine material texture visible, true-to-life colours, no HDR glow, no illustration, no text distortion, 16:10 aspect ratio"
+  },
+  {
+    id: 47,
+    serviceId: "arac-giydirme",
+    type: "variant",
+    variantIndex: 1,
+    name: "Yarım Kaplama (Half Wrap)",
+    imagePath: "/images/services/variants/arac-giydirme/yarim-kaplama.jpg",
+    prompt: "A white panel van with its lower half and rear section wrapped in a dark blue graphic and the upper half left as original white paint, the transition following a clean diagonal. Street parked, overcast light. photorealistic editorial photograph, full-frame DSLR, 35mm lens, f/5.6, natural light, tack-sharp focus on the subject, fine material texture visible, true-to-life colours, no HDR glow, no illustration, no text distortion, 16:10 aspect ratio"
+  },
+  {
+    id: 48,
+    serviceId: "arac-giydirme",
+    type: "variant",
+    variantIndex: 2,
+    name: "Kesim Folyo Uygulama",
+    imagePath: "/images/services/variants/arac-giydirme/kesim-folyo-uygulama.jpg",
+    prompt: "Close-up of cut vinyl lettering applied straight onto the white door of a commercial vehicle: small logo, phone number and web address in clean type with no background panel. Soft daylight, sharp edges. photorealistic editorial photograph, full-frame DSLR, 35mm lens, f/5.6, natural light, tack-sharp focus on the subject, fine material texture visible, true-to-life colours, no HDR glow, no illustration, no text distortion, 16:10 aspect ratio"
+  },
+  {
+    id: 49,
+    serviceId: "arac-giydirme",
+    type: "variant",
+    variantIndex: 3,
+    name: "One-Way Vision Cam Uygulaması",
+    imagePath: "/images/services/variants/arac-giydirme/one-way-vision-cam-uygulamasi.jpg",
+    prompt: "The rear window of a commercial van covered in perforated one-way vision film carrying a printed graphic, photographed from outside in daylight, close enough to see the perforation pattern clearly. photorealistic editorial photograph, full-frame DSLR, 35mm lens, f/5.6, natural light, tack-sharp focus on the subject, fine material texture visible, true-to-life colours, no HDR glow, no illustration, no text distortion, 16:10 aspect ratio"
+  },
+  {
+    id: 50,
+    serviceId: "arac-giydirme",
+    type: "variant",
+    variantIndex: 4,
+    name: "Renk Değişimi Kaplama",
+    imagePath: "/images/services/variants/arac-giydirme/renk-degisimi-kaplama.jpg",
+    prompt: "A saloon car wrapped in satin dark green colour-change film with no advertising graphics at all, in an empty underground car park, a single overhead light raking along the flank to show the satin texture. photorealistic editorial photograph, full-frame DSLR, 35mm lens, f/5.6, natural light, tack-sharp focus on the subject, fine material texture visible, true-to-life colours, no HDR glow, no illustration, no text distortion, 16:10 aspect ratio"
+  },
+  {
+    id: 51,
+    serviceId: "arac-giydirme",
+    type: "variant",
+    variantIndex: 5,
+    name: "Filo Standart Giydirme",
+    imagePath: "/images/services/variants/arac-giydirme/filo-standart-giydirme.jpg",
+    prompt: "Four identical wrapped commercial vans parked in a neat row in a depot yard, all carrying exactly the same livery and layout. Early morning light, low three-quarter angle down the line. photorealistic editorial photograph, full-frame DSLR, 35mm lens, f/5.6, natural light, tack-sharp focus on the subject, fine material texture visible, true-to-life colours, no HDR glow, no illustration, no text distortion, 16:10 aspect ratio"
+  },
+  {
+    id: 52,
+    serviceId: "arac-giydirme",
+    type: "variant",
+    variantIndex: 6,
+    name: "Şerit ve Bant Uygulaması",
+    imagePath: "/images/services/variants/arac-giydirme/serit-bant-uygulamasi.jpg",
+    prompt: "A white commercial vehicle with a single corporate-colour stripe running the length of its flank and a small logo, understated and clean. Parked kerbside, soft overcast daylight, side-on view. photorealistic editorial photograph, full-frame DSLR, 35mm lens, f/5.6, natural light, tack-sharp focus on the subject, fine material texture visible, true-to-life colours, no HDR glow, no illustration, no text distortion, 16:10 aspect ratio"
+  },
+  {
+    id: 53,
+    serviceId: "arac-giydirme",
+    type: "variant",
+    variantIndex: 7,
+    name: "Manyetik Araç Panosu",
+    imagePath: "/images/services/variants/arac-giydirme/manyetik-arac-panosu.jpg",
+    prompt: "A hand lifting a rectangular magnetic advertising panel away from the door of a saloon car, the paint beneath revealed clean and unmarked. Daylight, sharp focus on the panel edge and the hand. photorealistic editorial photograph, full-frame DSLR, 35mm lens, f/5.6, natural light, tack-sharp focus on the subject, fine material texture visible, true-to-life colours, no HDR glow, no illustration, no text distortion, 16:10 aspect ratio"
+  },
+
+  // 7. DİJİTAL BASKI
+  {
+    id: 54,
+    serviceId: "dijital-baski",
+    type: "card",
+    name: "Dijital Baskı — kart görseli",
+    imagePath: "/images/services/dijital-baski.jpg",
+    prompt: "Wide-format roll-to-roll printer in a clean signage workshop printing a vivid colour test chart onto white vinyl. UV lamp glowing violet over the print head, ink bottles and media rolls on shelves behind. Sharp focus on the head and the emerging print. photorealistic editorial photograph, full-frame DSLR, 35mm lens, f/5.6, natural light, tack-sharp focus on the subject, fine material texture visible, true-to-life colours, no HDR glow, no illustration, no text distortion, 16:10 aspect ratio"
+  },
+  {
+    id: 55,
+    serviceId: "dijital-baski",
+    type: "variant",
+    variantIndex: 0,
+    name: "Cephe Brandası",
+    imagePath: "/images/services/variants/dijital-baski/cephe-brandasi.jpg",
+    prompt: "A large printed PVC banner stretched across a building frontage with eyelets and tensioning ropes at the corners announcing an opening. Street-level view, fabric taut, print sharp and colour-rich. photorealistic editorial photograph, full-frame DSLR, 35mm lens, f/5.6, natural light, tack-sharp focus on the subject, fine material texture visible, true-to-life colours, no HDR glow, no illustration, no text distortion, 16:10 aspect ratio"
+  },
+  {
+    id: 56,
+    serviceId: "dijital-baski",
+    type: "variant",
+    variantIndex: 1,
+    name: "Mesh (Delikli) Branda",
+    imagePath: "/images/services/variants/dijital-baski/mesh-delikli-branda.jpg",
+    prompt: "A perforated mesh banner covering scaffolding on a tall building with wind passing through it. Shot from below at an angle so both the print and the open weave read against the sky. photorealistic editorial photograph, full-frame DSLR, 35mm lens, f/5.6, natural light, tack-sharp focus on the subject, fine material texture visible, true-to-life colours, no HDR glow, no illustration, no text distortion, 16:10 aspect ratio"
+  },
+  {
+    id: 57,
+    serviceId: "dijital-baski",
+    type: "variant",
+    variantIndex: 2,
+    name: "One-Way Vision Cam Folyosu",
+    imagePath: "/images/services/variants/dijital-baski/one-way-vision-cam-folyosu.jpg",
+    prompt: "A shop window covered in perforated one-way vision film with a printed graphic, photographed from outside in daylight with the perforation pattern crisp and the interior faintly visible. photorealistic editorial photograph, full-frame DSLR, 35mm lens, f/5.6, natural light, tack-sharp focus on the subject, fine material texture visible, true-to-life colours, no HDR glow, no illustration, no text distortion, 16:10 aspect ratio"
+  },
+  {
+    id: 58,
+    serviceId: "dijital-baski",
+    type: "variant",
+    variantIndex: 3,
+    name: "Backlit Film Baskı",
+    imagePath: "/images/services/variants/dijital-baski/backlit-film-baski.jpg",
+    prompt: "A backlit film print installed in a light box and photographed with the box switched on, colours deep and luminous. Close crop on the film surface, perfectly even illumination, no hotspots. photorealistic editorial photograph, full-frame DSLR, 35mm lens, f/5.6, natural light, tack-sharp focus on the subject, fine material texture visible, true-to-life colours, no HDR glow, no illustration, no text distortion, 16:10 aspect ratio"
+  },
+  {
+    id: 59,
+    serviceId: "dijital-baski",
+    type: "variant",
+    variantIndex: 4,
+    name: "Duvar Kaplama ve Duvar Kâğıdı Baskısı",
+    imagePath: "/images/services/variants/dijital-baski/duvar-kaplama-ve-duvar-kagidi-baskisi.jpg",
+    prompt: "A full-wall printed wall covering in an office breakout area, a large-scale graphic running seamlessly across the wall with no visible joins. Side daylight, sofa and plant in the foreground. photorealistic editorial photograph, full-frame DSLR, 35mm lens, f/5.6, natural light, tack-sharp focus on the subject, fine material texture visible, true-to-life colours, no HDR glow, no illustration, no text distortion, 16:10 aspect ratio"
+  },
+  {
+    id: 60,
+    serviceId: "dijital-baski",
+    type: "variant",
+    variantIndex: 5,
+    name: "Zemin Folyosu",
+    imagePath: "/images/services/variants/dijital-baski/zemin-folyosu.jpg",
+    prompt: "A printed floor graphic with matte anti-slip lamination on a polished shop floor showing a directional arrow. Low camera angle, footsteps blurred passing over it, sticker edge sharp. photorealistic editorial photograph, full-frame DSLR, 35mm lens, f/5.6, natural light, tack-sharp focus on the subject, fine material texture visible, true-to-life colours, no HDR glow, no illustration, no text distortion, 16:10 aspect ratio"
+  },
+  {
+    id: 61,
+    serviceId: "dijital-baski",
+    type: "variant",
+    variantIndex: 6,
+    name: "Forex / Dekota Üzeri UV Baskı",
+    imagePath: "/images/services/variants/dijital-baski/forex-dekota-uzeri-uv-baski.jpg",
+    prompt: "A rigid PVC foam board printed directly by UV, propped against a workshop wall, the print crisp with a slight matte texture and the board's clean white cut edge visible. Workshop light. photorealistic editorial photograph, full-frame DSLR, 35mm lens, f/5.6, natural light, tack-sharp focus on the subject, fine material texture visible, true-to-life colours, no HDR glow, no illustration, no text distortion, 16:10 aspect ratio"
+  },
+  {
+    id: 62,
+    serviceId: "dijital-baski",
+    type: "variant",
+    variantIndex: 7,
+    name: "Kanvas ve Tablo Baskı",
+    imagePath: "/images/services/variants/dijital-baski/kanvas-ve-tablo-baski.jpg",
+    prompt: "A printed canvas stretched over a timber frame hanging on a hotel corridor wall, weave texture visible in raking light, corners folded neatly. Warm interior lighting. photorealistic editorial photograph, full-frame DSLR, 35mm lens, f/5.6, natural light, tack-sharp focus on the subject, fine material texture visible, true-to-life colours, no HDR glow, no illustration, no text distortion, 16:10 aspect ratio"
+  },
+  {
+    id: 63,
+    serviceId: "dijital-baski",
+    type: "variant",
+    variantIndex: 8,
+    name: "Roll-up, X-Banner ve Afiş Baskı",
+    imagePath: "/images/services/variants/dijital-baski/roll-up-x-banner-afis-baski.jpg",
+    prompt: "Three roll-up banner stands lined up at an exhibition stand entrance, each fully extended and taut with sharp printed graphics. Carpeted hall, visitors blurred behind, even lighting. photorealistic editorial photograph, full-frame DSLR, 35mm lens, f/5.6, natural light, tack-sharp focus on the subject, fine material texture visible, true-to-life colours, no HDR glow, no illustration, no text distortion, 16:10 aspect ratio"
+  },
+
+  // 8. KURUMSAL KİMLİK ÇALIŞMALARI
+  {
+    id: 64,
+    serviceId: "kurumsal-kimlik",
+    type: "card",
+    name: "Kurumsal Kimlik — kart görseli",
+    imagePath: "/images/services/kurumsal-kimlik.jpg",
+    prompt: "Overhead flat lay of a corporate identity set on a light oak desk: A4 letterhead with a small navy and gold mark reading \"ORA\", two stacked business cards on textured stock, a clear acrylic block with the debossed logo and a branded pen. Soft directional daylight from the left. photorealistic editorial photograph, full-frame DSLR, 35mm lens, f/5.6, natural light, tack-sharp focus on the subject, fine material texture visible, true-to-life colours, no HDR glow, no illustration, no text distortion, 16:10 aspect ratio"
+  },
+  {
+    id: 65,
+    serviceId: "kurumsal-kimlik",
+    type: "variant",
+    variantIndex: 0,
+    name: "Logo Tasarımı ve Yenileme",
+    imagePath: "/images/services/variants/kurumsal-kimlik/logo-tasarimi-ve-yenileme.jpg",
+    prompt: "A designer's desk with a single logo mark printed large on a sheet of paper, pencil sketches of earlier versions beside it and a laptop showing the vector file. Soft daylight from the left, shallow depth. photorealistic editorial photograph, full-frame DSLR, 35mm lens, f/5.6, natural light, tack-sharp focus on the subject, fine material texture visible, true-to-life colours, no HDR glow, no illustration, no text distortion, 16:10 aspect ratio"
+  },
+  {
+    id: 66,
+    serviceId: "kurumsal-kimlik",
+    type: "variant",
+    variantIndex: 1,
+    name: "Kurumsal Kimlik Kılavuzu",
+    imagePath: "/images/services/variants/kurumsal-kimlik/kurumsal-kimlik-kilavuzu.jpg",
+    prompt: "A printed brand guidelines booklet lying open on a desk at a spread showing colour swatches with their reference codes and clear-space rules around the logo. Overhead, soft daylight, crisp page detail. photorealistic editorial photograph, full-frame DSLR, 35mm lens, f/5.6, natural light, tack-sharp focus on the subject, fine material texture visible, true-to-life colours, no HDR glow, no illustration, no text distortion, 16:10 aspect ratio"
+  },
+  {
+    id: 67,
+    serviceId: "kurumsal-kimlik",
+    type: "variant",
+    variantIndex: 2,
+    name: "Basılı Evrak Seti",
+    imagePath: "/images/services/variants/kurumsal-kimlik/basili-evrak-seti.jpg",
+    prompt: "Overhead flat lay of a stationery set on light oak: A4 letterhead, two stacked business cards on textured stock, an envelope and a folder, all carrying the same restrained mark. Gentle shadows. photorealistic editorial photograph, full-frame DSLR, 35mm lens, f/5.6, natural light, tack-sharp focus on the subject, fine material texture visible, true-to-life colours, no HDR glow, no illustration, no text distortion, 16:10 aspect ratio"
+  },
+  {
+    id: 68,
+    serviceId: "kurumsal-kimlik",
+    type: "variant",
+    variantIndex: 3,
+    name: "Tabela Uygulama Standardı",
+    imagePath: "/images/services/variants/kurumsal-kimlik/tabela-uygulama-standardi.jpg",
+    prompt: "A technical drawing sheet on a desk showing a shopfront elevation with the sign dimensioned, clearance measurements and colour references marked. Scale rule and pencil beside it. Overhead, even light. photorealistic editorial photograph, full-frame DSLR, 35mm lens, f/5.6, natural light, tack-sharp focus on the subject, fine material texture visible, true-to-life colours, no HDR glow, no illustration, no text distortion, 16:10 aspect ratio"
+  },
+  {
+    id: 69,
+    serviceId: "kurumsal-kimlik",
+    type: "variant",
+    variantIndex: 4,
+    name: "Araç Giydirme Kimlik Şablonu",
+    imagePath: "/images/services/variants/kurumsal-kimlik/arac-giydirme-kimlik-sablonu.jpg",
+    prompt: "A printed vehicle wrap template showing side, rear and front elevations of a van with the livery artwork laid over them and dimension lines marked. Flat on a desk, overhead, crisp linework. photorealistic editorial photograph, full-frame DSLR, 35mm lens, f/5.6, natural light, tack-sharp focus on the subject, fine material texture visible, true-to-life colours, no HDR glow, no illustration, no text distortion, 16:10 aspect ratio"
+  },
+  {
+    id: 70,
+    serviceId: "kurumsal-kimlik",
+    type: "variant",
+    variantIndex: 5,
+    name: "Personel Kıyafeti ve Yaka Kartı Tasarımı",
+    imagePath: "/images/services/variants/kurumsal-kimlik/personel-kiyafeti-yaka-karti-tasarimi.jpg",
+    prompt: "A folded navy work polo with a small embroidered chest logo, beside it a printed ID badge on a lanyard, arranged on a pale surface. Overhead, soft daylight, stitching and fabric texture visible. photorealistic editorial photograph, full-frame DSLR, 35mm lens, f/5.6, natural light, tack-sharp focus on the subject, fine material texture visible, true-to-life colours, no HDR glow, no illustration, no text distortion, 16:10 aspect ratio"
+  },
+  {
+    id: 71,
+    serviceId: "kurumsal-kimlik",
+    type: "variant",
+    variantIndex: 6,
+    name: "Sosyal Medya Şablon Seti",
+    imagePath: "/images/services/variants/kurumsal-kimlik/sosyal-medya-sablon-seti.jpg",
+    prompt: "A tablet and a phone on a desk, both showing branded social media post layouts in the same visual style, with a printed grid of the template set beside them. Overhead, soft daylight. photorealistic editorial photograph, full-frame DSLR, 35mm lens, f/5.6, natural light, tack-sharp focus on the subject, fine material texture visible, true-to-life colours, no HDR glow, no illustration, no text distortion, 16:10 aspect ratio"
+  },
+  {
+    id: 72,
+    serviceId: "kurumsal-kimlik",
+    type: "variant",
+    variantIndex: 7,
+    name: "Menü, Katalog ve Broşür Tasarımı",
+    imagePath: "/images/services/variants/kurumsal-kimlik/menu-katalog-brosur-tasarimi.jpg",
+    prompt: "A printed menu standing open on a café table beside a folded brochure, both using the same typography and colour. Warm interior light, coffee cup blurred behind. photorealistic editorial photograph, full-frame DSLR, 35mm lens, f/5.6, natural light, tack-sharp focus on the subject, fine material texture visible, true-to-life colours, no HDR glow, no illustration, no text distortion, 16:10 aspect ratio"
+  },
+  {
+    id: 73,
+    serviceId: "kurumsal-kimlik",
+    type: "variant",
+    variantIndex: 8,
+    name: "Franchise Uygulama Standartları",
+    imagePath: "/images/services/variants/kurumsal-kimlik/franchise-uygulama-standartlari.jpg",
+    prompt: "A boardroom table laid out with a complete brand rollout kit: guidelines booklet, sign elevation drawings, stationery, uniform swatch and a vehicle template, arranged in an orderly grid. Overhead, even daylight. photorealistic editorial photograph, full-frame DSLR, 35mm lens, f/5.6, natural light, tack-sharp focus on the subject, fine material texture visible, true-to-life colours, no HDR glow, no illustration, no text distortion, 16:10 aspect ratio"
+  },
+
+  // 9. ETİKET & STİCKER
+  {
+    id: 74,
+    serviceId: "etiket-sticker",
+    type: "card",
+    name: "Etiket & Sticker — kart görseli",
+    imagePath: "/images/services/etiket-sticker.jpg",
+    prompt: "Three amber glass cosmetic bottles on a white marble surface, each wearing a matte cream contour-cut label reading \"TUNA\" with small product text beneath. Front bottle tack-sharp and fully legible, the two behind softly out of focus. Window light from the left. photorealistic editorial photograph, full-frame DSLR, 35mm lens, f/5.6, natural light, tack-sharp focus on the subject, fine material texture visible, true-to-life colours, no HDR glow, no illustration, no text distortion, 16:10 aspect ratio"
+  },
+  {
+    id: 75,
+    serviceId: "etiket-sticker",
+    type: "variant",
+    variantIndex: 0,
+    name: "Ürün ve Ambalaj Etiketi",
+    imagePath: "/images/services/variants/etiket-sticker/urun-ve-ambalaj-etiketi.jpg",
+    prompt: "A row of amber glass bottles on white marble, each wearing a matte cream contour-cut label with small product text. Front bottle tack-sharp and legible, the rest falling out of focus. Soft window light. photorealistic editorial photograph, full-frame DSLR, 35mm lens, f/5.6, natural light, tack-sharp focus on the subject, fine material texture visible, true-to-life colours, no HDR glow, no illustration, no text distortion, 16:10 aspect ratio"
+  },
+  {
+    id: 76,
+    serviceId: "etiket-sticker",
+    type: "variant",
+    variantIndex: 1,
+    name: "Şeffaf Cam Stickerı",
+    imagePath: "/images/services/variants/etiket-sticker/seffaf-cam-stickeri.jpg",
+    prompt: "Clear vinyl lettering applied to a glass shop door, the text appearing to float on the glass with no visible backing. Photographed from outside with the darker interior behind so the letters read cleanly. photorealistic editorial photograph, full-frame DSLR, 35mm lens, f/5.6, natural light, tack-sharp focus on the subject, fine material texture visible, true-to-life colours, no HDR glow, no illustration, no text distortion, 16:10 aspect ratio"
+  },
+  {
+    id: 77,
+    serviceId: "etiket-sticker",
+    type: "variant",
+    variantIndex: 2,
+    name: "Kesim Folyo Yazı ve Logo",
+    imagePath: "/images/services/variants/etiket-sticker/kesim-folyo-yazi-ve-logo.jpg",
+    prompt: "A hand using a squeegee to apply cut vinyl lettering to a glass office partition, application tape being peeled back to reveal crisp letters. Bright interior daylight, sharp focus on the squeegee edge. photorealistic editorial photograph, full-frame DSLR, 35mm lens, f/5.6, natural light, tack-sharp focus on the subject, fine material texture visible, true-to-life colours, no HDR glow, no illustration, no text distortion, 16:10 aspect ratio"
+  },
+  {
+    id: 78,
+    serviceId: "etiket-sticker",
+    type: "variant",
+    variantIndex: 3,
+    name: "Buzlu Cam (Kumlama Görünümlü) Folyo",
+    imagePath: "/images/services/variants/etiket-sticker/buzlu-cam-folyo.jpg",
+    prompt: "A glass office partition covered in frosted etched-effect film with a clear horizontal band at eye level, light passing through but the meeting room beyond obscured. Clean daylight, even surface texture. photorealistic editorial photograph, full-frame DSLR, 35mm lens, f/5.6, natural light, tack-sharp focus on the subject, fine material texture visible, true-to-life colours, no HDR glow, no illustration, no text distortion, 16:10 aspect ratio"
+  },
+  {
+    id: 79,
+    serviceId: "etiket-sticker",
+    type: "variant",
+    variantIndex: 4,
+    name: "Zemin Etiketi",
+    imagePath: "/images/services/variants/etiket-sticker/zemin-etiketi.jpg",
+    prompt: "A circular floor sticker with matte anti-slip lamination on a supermarket floor showing a directional arrow, shoes blurred walking over it. Low camera angle, sticker edge tack-sharp. photorealistic editorial photograph, full-frame DSLR, 35mm lens, f/5.6, natural light, tack-sharp focus on the subject, fine material texture visible, true-to-life colours, no HDR glow, no illustration, no text distortion, 16:10 aspect ratio"
+  },
+  {
+    id: 80,
+    serviceId: "etiket-sticker",
+    type: "variant",
+    variantIndex: 5,
+    name: "Doming (Kabartma Reçineli) Etiket",
+    imagePath: "/images/services/variants/etiket-sticker/doming-kabartma-recineli-etiket.jpg",
+    prompt: "Macro shot of a domed resin label on a machine panel, the clear resin forming a glossy cushion over the printed graphic and catching a curved highlight. Very shallow depth, dark background. photorealistic editorial photograph, full-frame DSLR, 35mm lens, f/5.6, natural light, tack-sharp focus on the subject, fine material texture visible, true-to-life colours, no HDR glow, no illustration, no text distortion, 16:10 aspect ratio"
+  },
+  {
+    id: 81,
+    serviceId: "etiket-sticker",
+    type: "variant",
+    variantIndex: 6,
+    name: "Güvenlik / Void Etiket",
+    imagePath: "/images/services/variants/etiket-sticker/guvenlik-void-etiket.jpg",
+    prompt: "A security void label being peeled from a device casing, leaving a visible VOID pattern behind on the surface. Fingers holding the lifted corner, macro detail, hard directional light. photorealistic editorial photograph, full-frame DSLR, 35mm lens, f/5.6, natural light, tack-sharp focus on the subject, fine material texture visible, true-to-life colours, no HDR glow, no illustration, no text distortion, 16:10 aspect ratio"
+  },
+  {
+    id: 82,
+    serviceId: "etiket-sticker",
+    type: "variant",
+    variantIndex: 7,
+    name: "Demirbaş ve Barkod Etiketi",
+    imagePath: "/images/services/variants/etiket-sticker/demirbas-ve-barkod-etiketi.jpg",
+    prompt: "A durable numbered asset label with a barcode applied to the side of an office monitor, slightly worn but fully legible. Close crop, office daylight, barcode lines sharp. photorealistic editorial photograph, full-frame DSLR, 35mm lens, f/5.6, natural light, tack-sharp focus on the subject, fine material texture visible, true-to-life colours, no HDR glow, no illustration, no text distortion, 16:10 aspect ratio"
+  },
+  {
+    id: 83,
+    serviceId: "etiket-sticker",
+    type: "variant",
+    variantIndex: 8,
+    name: "Promosyon ve Etkinlik Stickerı",
+    imagePath: "/images/services/variants/etiket-sticker/promosyon-ve-etkinlik-stickeri.jpg",
+    prompt: "A loose pile of contour-cut promotional stickers in assorted shapes spread on a pale desk, the top ones tack-sharp with clean die-cut edges. Overhead, soft daylight. photorealistic editorial photograph, full-frame DSLR, 35mm lens, f/5.6, natural light, tack-sharp focus on the subject, fine material texture visible, true-to-life colours, no HDR glow, no illustration, no text distortion, 16:10 aspect ratio"
+  },
+
+  // 10. İMALAT, TASARIM VE MONTAJ
+  {
+    id: 84,
+    serviceId: "imalat-tasarim-montaj",
+    type: "card",
+    name: "İmalat & Montaj — kart görseli",
+    imagePath: "/images/services/imalat-tasarim-montaj.jpg",
+    prompt: "A signage craftsman in a navy work jacket and safety glasses assembling an aluminium channel letter on a workbench, fitting an LED module inside the letter with a screwdriver. LED reels, pliers, heat gun and metal offcuts around him, finished white letters against the wall behind. Workshop light. photorealistic editorial photograph, full-frame DSLR, 35mm lens, f/5.6, natural light, tack-sharp focus on the subject, fine material texture visible, true-to-life colours, no HDR glow, no illustration, no text distortion, 16:10 aspect ratio"
+  },
+  {
+    id: 85,
+    serviceId: "imalat-tasarim-montaj",
+    type: "variant",
+    variantIndex: 0,
+    name: "Yerinde Keşif ve Ölçü",
+    imagePath: "/images/services/variants/imalat-tasarim-montaj/yerinde-kesif-ve-olcu.jpg",
+    prompt: "A signage surveyor holding a laser measure up to a shop frontage taking a reading, a clipboard with a sketch under his arm. Street level, daylight, both the frontage and his hands in sharp focus. photorealistic editorial photograph, full-frame DSLR, 35mm lens, f/5.6, natural light, tack-sharp focus on the subject, fine material texture visible, true-to-life colours, no HDR glow, no illustration, no text distortion, 16:10 aspect ratio"
+  },
+  {
+    id: 86,
+    serviceId: "imalat-tasarim-montaj",
+    type: "variant",
+    variantIndex: 1,
+    name: "3D Tasarım ve Cephe Simülasyonu",
+    imagePath: "/images/services/variants/imalat-tasarim-montaj/3d-tasarim-ve-cephe-simulasyonu.jpg",
+    prompt: "A designer at a large monitor showing a photorealistic 3D render of a sign placed onto a photograph of a real shopfront, the original photo of the frontage pinned beside the screen. Studio daylight. photorealistic editorial photograph, full-frame DSLR, 35mm lens, f/5.6, natural light, tack-sharp focus on the subject, fine material texture visible, true-to-life colours, no HDR glow, no illustration, no text distortion, 16:10 aspect ratio"
+  },
+  {
+    id: 87,
+    serviceId: "imalat-tasarim-montaj",
+    type: "variant",
+    variantIndex: 2,
+    name: "Belediye / AVM İzin Dosyası",
+    imagePath: "/images/services/variants/imalat-tasarim-montaj/belediye-avm-izin-dosyasi.jpg",
+    prompt: "A permit file open on a desk: a dimensioned elevation drawing of a shopfront sign, a site photograph and a stamped application form. Overhead, even daylight, crisp linework and legible dimensions. photorealistic editorial photograph, full-frame DSLR, 35mm lens, f/5.6, natural light, tack-sharp focus on the subject, fine material texture visible, true-to-life colours, no HDR glow, no illustration, no text distortion, 16:10 aspect ratio"
+  },
+  {
+    id: 88,
+    serviceId: "imalat-tasarim-montaj",
+    type: "variant",
+    variantIndex: 3,
+    name: "Anahtar Teslim İmalat + Montaj",
+    imagePath: "/images/services/variants/imalat-tasarim-montaj/anahtar-teslim-imalat-montaj.jpg",
+    prompt: "A workshop scene with a finished channel letter on a workbench in the foreground and, through an open roller door behind, an installation van loaded and ready to leave. Workshop light, real depth between the two. photorealistic editorial photograph, full-frame DSLR, 35mm lens, f/5.6, natural light, tack-sharp focus on the subject, fine material texture visible, true-to-life colours, no HDR glow, no illustration, no text distortion, 16:10 aspect ratio"
+  },
+  {
+    id: 89,
+    serviceId: "imalat-tasarim-montaj",
+    type: "variant",
+    variantIndex: 4,
+    name: "Yüksekte Montaj",
+    imagePath: "/images/services/variants/imalat-tasarim-montaj/yuksekte-montaj.jpg",
+    prompt: "Two installers in harnesses on a cherry picker basket fixing a large sign to a building façade several storeys up, one holding the letter in place while the other drills. Clear daylight, shot from the ground looking up. photorealistic editorial photograph, full-frame DSLR, 35mm lens, f/5.6, natural light, tack-sharp focus on the subject, fine material texture visible, true-to-life colours, no HDR glow, no illustration, no text distortion, 16:10 aspect ratio"
+  },
+  {
+    id: 90,
+    serviceId: "imalat-tasarim-montaj",
+    type: "variant",
+    variantIndex: 5,
+    name: "Şehir Dışı ve Türkiye Geneli Montaj",
+    imagePath: "/images/services/variants/imalat-tasarim-montaj/sehir-disi-turkiye-geneli-montaj.jpg",
+    prompt: "A loaded signage installation van on an open intercity road at sunrise, strapped sign crates visible through the open rear doors. Wide landscape, long shadows, clean morning light. photorealistic editorial photograph, full-frame DSLR, 35mm lens, f/5.6, natural light, tack-sharp focus on the subject, fine material texture visible, true-to-life colours, no HDR glow, no illustration, no text distortion, 16:10 aspect ratio"
+  },
+  {
+    id: 91,
+    serviceId: "imalat-tasarim-montaj",
+    type: "variant",
+    variantIndex: 6,
+    name: "Tabela Söküm ve Yenileme",
+    imagePath: "/images/services/variants/imalat-tasarim-montaj/tabela-sokum-ve-yenileme.jpg",
+    prompt: "An old faded sign being unbolted from a shopfront by two workers, half already removed revealing bare fixing points and the ghost outline on the wall beneath. Daylight, fine dust in the air. photorealistic editorial photograph, full-frame DSLR, 35mm lens, f/5.6, natural light, tack-sharp focus on the subject, fine material texture visible, true-to-life colours, no HDR glow, no illustration, no text distortion, 16:10 aspect ratio"
+  },
+  {
+    id: 92,
+    serviceId: "imalat-tasarim-montaj",
+    type: "variant",
+    variantIndex: 7,
+    name: "Periyodik Bakım ve Arıza Servisi",
+    imagePath: "/images/services/variants/imalat-tasarim-montaj/periyodik-bakim-ve-ariza-servisi.jpg",
+    prompt: "A technician on a step ladder with the front panel of an illuminated sign opened, testing an LED module with a multimeter, spare modules in an open case below. Evening, the working half of the sign still lit. photorealistic editorial photograph, full-frame DSLR, 35mm lens, f/5.6, natural light, tack-sharp focus on the subject, fine material texture visible, true-to-life colours, no HDR glow, no illustration, no text distortion, 16:10 aspect ratio"
+  },
+  {
+    id: 93,
+    serviceId: "imalat-tasarim-montaj",
+    type: "variant",
+    variantIndex: 8,
+    name: "Zincir Marka Toplu Uygulama",
+    imagePath: "/images/services/variants/imalat-tasarim-montaj/zincir-marka-toplu-uygulama.jpg",
+    prompt: "Three identical finished shopfront signs standing side by side in a workshop before dispatch, each wrapped in protective film with a shipping label. Even workshop light, receding perspective down the line. photorealistic editorial photograph, full-frame DSLR, 35mm lens, f/5.6, natural light, tack-sharp focus on the subject, fine material texture visible, true-to-life colours, no HDR glow, no illustration, no text distortion, 16:10 aspect ratio"
+  },
+
+  // 11. YOL VE YÖNLENDİRME PANOLARI
+  {
+    id: 94,
+    serviceId: "yol-panolari",
+    type: "card",
+    name: "Yol Panoları — kart görseli",
+    imagePath: "/images/services/yol-panolari.jpg",
+    prompt: "A directional sign on a single galvanised post at the entrance of a business park, dark grey face with white reflective lettering and arrows. Clean powder-coated finish, concrete base, modern office blocks and parked cars softly blurred behind. Bright overcast daylight, sign sharp corner to corner. photorealistic editorial photograph, full-frame DSLR, 35mm lens, f/5.6, natural light, tack-sharp focus on the subject, fine material texture visible, true-to-life colours, no HDR glow, no illustration, no text distortion, 16:10 aspect ratio"
+  },
+  {
+    id: 95,
+    serviceId: "yol-panolari",
+    type: "variant",
+    variantIndex: 0,
+    name: "Çift Direkli Büyük Yol Panosu",
+    imagePath: "/images/services/variants/yol-panolari/cift-direkli-buyuk-yol-panosu.jpg",
+    prompt: "A large twin-post roadside board on two galvanised steel posts beside an intercity road, dark face with bold white lettering and an arrow. Wide landscape, low sun, sign sharp corner to corner. photorealistic editorial photograph, full-frame DSLR, 35mm lens, f/5.6, natural light, tack-sharp focus on the subject, fine material texture visible, true-to-life colours, no HDR glow, no illustration, no text distortion, 16:10 aspect ratio"
+  },
+  {
+    id: 96,
+    serviceId: "yol-panolari",
+    type: "variant",
+    variantIndex: 1,
+    name: "Tek Ayaklı Yönlendirme Levhası",
+    imagePath: "/images/services/variants/yol-panolari/tek-ayakli-yonlendirme-levhasi.jpg",
+    prompt: "A single-post directional sign at the turn-off to a business, mid-size dark grey face with white lettering and an arrow, concrete base visible. Bright overcast daylight, straight-on view. photorealistic editorial photograph, full-frame DSLR, 35mm lens, f/5.6, natural light, tack-sharp focus on the subject, fine material texture visible, true-to-life colours, no HDR glow, no illustration, no text distortion, 16:10 aspect ratio"
+  },
+  {
+    id: 97,
+    serviceId: "yol-panolari",
+    type: "variant",
+    variantIndex: 2,
+    name: "Ok Yönlü Yönlendirme Panosu",
+    imagePath: "/images/services/variants/yol-panolari/ok-yonlu-yonlendirme-panosu.jpg",
+    prompt: "A post carrying four stacked arrow-shaped direction blades pointing different ways, each with a short name and a distance. Shot from below against open sky, every blade legible. photorealistic editorial photograph, full-frame DSLR, 35mm lens, f/5.6, natural light, tack-sharp focus on the subject, fine material texture visible, true-to-life colours, no HDR glow, no illustration, no text distortion, 16:10 aspect ratio"
+  },
+  {
+    id: 98,
+    serviceId: "yol-panolari",
+    type: "variant",
+    variantIndex: 3,
+    name: "Reflektif (Işık Yansıtmalı) Levha",
+    imagePath: "/images/services/variants/yol-panolari/reflektif-levha.jpg",
+    prompt: "A retroreflective road sign photographed at night with headlights striking it, the white lettering and border blazing bright against the dark face while the surroundings stay dark. Sharp, no lens flare. photorealistic editorial photograph, full-frame DSLR, 35mm lens, f/5.6, natural light, tack-sharp focus on the subject, fine material texture visible, true-to-life colours, no HDR glow, no illustration, no text distortion, 16:10 aspect ratio"
+  },
+  {
+    id: 99,
+    serviceId: "yol-panolari",
+    type: "variant",
+    variantIndex: 4,
+    name: "Site İçi Blok ve Yönlendirme Panoları",
+    imagePath: "/images/services/variants/yol-panolari/site-ici-blok-ve-yonlendirme-panolari.jpg",
+    prompt: "A residential development sign showing block letters and arrows on a slim post beside a paved internal road, with matching planting and lighting around it. Morning light, apartment blocks blurred behind. photorealistic editorial photograph, full-frame DSLR, 35mm lens, f/5.6, natural light, tack-sharp focus on the subject, fine material texture visible, true-to-life colours, no HDR glow, no illustration, no text distortion, 16:10 aspect ratio"
+  },
+  {
+    id: 100,
+    serviceId: "yol-panolari",
+    type: "variant",
+    variantIndex: 5,
+    name: "Otopark Yönlendirme ve Kat Panoları",
+    imagePath: "/images/services/variants/yol-panolari/otopark-yonlendirme-ve-kat-panolari.jpg",
+    prompt: "A car park level sign showing a floor number in large characters on a painted concrete wall with entry and exit arrows beneath. Interior car park lighting, parked cars blurred, sign face sharp. photorealistic editorial photograph, full-frame DSLR, 35mm lens, f/5.6, natural light, tack-sharp focus on the subject, fine material texture visible, true-to-life colours, no HDR glow, no illustration, no text distortion, 16:10 aspect ratio"
+  },
+  {
+    id: 101,
+    serviceId: "yol-panolari",
+    type: "variant",
+    variantIndex: 6,
+    name: "Bina İçi Kat ve Kapı Yönlendirme",
+    imagePath: "/images/services/variants/yol-panolari/bina-ici-kat-ve-kapi-yonlendirme.jpg",
+    prompt: "An interior wayfinding set in a hospital corridor: a wall-mounted floor directory with department names and arrows, and a smaller room number plate beside a door. Clean daylight interior, both sharp. photorealistic editorial photograph, full-frame DSLR, 35mm lens, f/5.6, natural light, tack-sharp focus on the subject, fine material texture visible, true-to-life colours, no HDR glow, no illustration, no text distortion, 16:10 aspect ratio"
+  },
+  {
+    id: 102,
+    serviceId: "yol-panolari",
+    type: "variant",
+    variantIndex: 7,
+    name: "Acil Çıkış ve Güvenlik Levhaları",
+    imagePath: "/images/services/variants/yol-panolari/acil-cikis-ve-guvenlik-levhalari.jpg",
+    prompt: "A photoluminescent emergency exit sign above a stairwell door glowing faintly green in dim light, with a fire extinguisher location sign on the adjacent wall. Low ambient light, both signs legible. photorealistic editorial photograph, full-frame DSLR, 35mm lens, f/5.6, natural light, tack-sharp focus on the subject, fine material texture visible, true-to-life colours, no HDR glow, no illustration, no text distortion, 16:10 aspect ratio"
+  },
+  {
+    id: 103,
+    serviceId: "yol-panolari",
+    type: "variant",
+    variantIndex: 8,
+    name: "Şantiye Bilgilendirme Panosu",
+    imagePath: "/images/services/variants/yol-panolari/santiye-bilgilendirme-panosu.jpg",
+    prompt: "A large construction site information board at the gate of a building site carrying permit details and safety pictograms, fixed to a steel frame. Daylight, the site and a crane blurred behind. photorealistic editorial photograph, full-frame DSLR, 35mm lens, f/5.6, natural light, tack-sharp focus on the subject, fine material texture visible, true-to-life colours, no HDR glow, no illustration, no text distortion, 16:10 aspect ratio"
+  },
+
+  // 12. LED EKRAN SİSTEMLERİ
+  {
+    id: 104,
+    serviceId: "led-ekranlar",
+    type: "card",
+    name: "LED Ekranlar — kart görseli",
+    imagePath: "/images/services/led-ekranlar.jpg",
+    prompt: "A large outdoor full-colour LED display mounted on a building corner above a busy city street at night showing a bright abstract colour gradient, the fine pixel grid visible on the panel surface. Wet asphalt reflecting the colour, car light trails below, pedestrians with umbrellas. photorealistic editorial photograph, full-frame DSLR, 35mm lens, f/5.6, natural light, tack-sharp focus on the subject, fine material texture visible, true-to-life colours, no HDR glow, no illustration, no text distortion, 16:10 aspect ratio"
+  },
+  {
+    id: 105,
+    serviceId: "led-ekranlar",
+    type: "variant",
+    variantIndex: 0,
+    name: "Dış Mekân Tam Renkli LED Ekran",
+    imagePath: "/images/services/variants/led-ekranlar/dis-mekan-tam-renkli-led-ekran.jpg",
+    prompt: "A large outdoor LED display on a building façade above a busy street at night showing a bright colour gradient, fine pixel grid visible on the surface. Wet asphalt reflecting the light, traffic trails below. photorealistic editorial photograph, full-frame DSLR, 35mm lens, f/5.6, natural light, tack-sharp focus on the subject, fine material texture visible, true-to-life colours, no HDR glow, no illustration, no text distortion, 16:10 aspect ratio"
+  },
+  {
+    id: 106,
+    serviceId: "led-ekranlar",
+    type: "variant",
+    variantIndex: 1,
+    name: "İç Mekân LED Ekran",
+    imagePath: "/images/services/variants/led-ekranlar/ic-mekan-led-ekran.jpg",
+    prompt: "A fine-pitch indoor LED video wall behind a hotel reception desk showing a soft moving image, seamless with no visible panel joins. Warm lobby lighting, a staff member blurred at the desk. photorealistic editorial photograph, full-frame DSLR, 35mm lens, f/5.6, natural light, tack-sharp focus on the subject, fine material texture visible, true-to-life colours, no HDR glow, no illustration, no text distortion, 16:10 aspect ratio"
+  },
+  {
+    id: 107,
+    serviceId: "led-ekranlar",
+    type: "variant",
+    variantIndex: 2,
+    name: "Kayan Yazı (Tek Renk LED Bant)",
+    imagePath: "/images/services/variants/led-ekranlar/kayan-yazi-led-bant.jpg",
+    prompt: "A single-colour red LED scrolling text strip mounted above a pharmacy window at dusk showing running text, close enough to see the individual LEDs. Street softly blurred behind. photorealistic editorial photograph, full-frame DSLR, 35mm lens, f/5.6, natural light, tack-sharp focus on the subject, fine material texture visible, true-to-life colours, no HDR glow, no illustration, no text distortion, 16:10 aspect ratio"
+  },
+  {
+    id: 108,
+    serviceId: "led-ekranlar",
+    type: "variant",
+    variantIndex: 3,
+    name: "LED Fiyat Göstergesi",
+    imagePath: "/images/services/variants/led-ekranlar/led-fiyat-gostergesi.jpg",
+    prompt: "A fuel station price totem at dusk with three rows of bright LED digits showing prices and a brand panel above. Digits tack-sharp and legible, forecourt lights and a refuelling car blurred behind. photorealistic editorial photograph, full-frame DSLR, 35mm lens, f/5.6, natural light, tack-sharp focus on the subject, fine material texture visible, true-to-life colours, no HDR glow, no illustration, no text distortion, 16:10 aspect ratio"
+  },
+  {
+    id: 109,
+    serviceId: "led-ekranlar",
+    type: "variant",
+    variantIndex: 4,
+    name: "Vitrin İçi LED Poster Ekran",
+    imagePath: "/images/services/variants/led-ekranlar/vitrin-ici-led-poster-ekran.jpg",
+    prompt: "A slim vertical LED poster display standing inside a shop window showing a bright campaign graphic after closing time, the shop dark behind it. Shot from the pavement with faint reflections on the glass. photorealistic editorial photograph, full-frame DSLR, 35mm lens, f/5.6, natural light, tack-sharp focus on the subject, fine material texture visible, true-to-life colours, no HDR glow, no illustration, no text distortion, 16:10 aspect ratio"
+  },
+  {
+    id: 110,
+    serviceId: "led-ekranlar",
+    type: "variant",
+    variantIndex: 5,
+    name: "Çift Yüz LED Totem Ekran",
+    imagePath: "/images/services/variants/led-ekranlar/cift-yuz-led-totem-ekran.jpg",
+    prompt: "A free-standing totem with an LED screen on both faces at a shopping centre entrance, both sides showing content, evening. Shot at an angle so one full face and the edge of the other are visible. photorealistic editorial photograph, full-frame DSLR, 35mm lens, f/5.6, natural light, tack-sharp focus on the subject, fine material texture visible, true-to-life colours, no HDR glow, no illustration, no text distortion, 16:10 aspect ratio"
+  },
+  {
+    id: 111,
+    serviceId: "led-ekranlar",
+    type: "variant",
+    variantIndex: 6,
+    name: "Kavisli / Köşe LED Ekran",
+    imagePath: "/images/services/variants/led-ekranlar/kavisli-kose-led-ekran.jpg",
+    prompt: "A modular LED display wrapping continuously around the curved corner of a building, the image running unbroken across the bend. Night, shot from across the junction, panel seams invisible. photorealistic editorial photograph, full-frame DSLR, 35mm lens, f/5.6, natural light, tack-sharp focus on the subject, fine material texture visible, true-to-life colours, no HDR glow, no illustration, no text distortion, 16:10 aspect ratio"
+  },
+  {
+    id: 112,
+    serviceId: "led-ekranlar",
+    type: "variant",
+    variantIndex: 7,
+    name: "Kiralık LED Ekran",
+    imagePath: "/images/services/variants/led-ekranlar/kiralik-led-ekran.jpg",
+    prompt: "A large LED screen rigged on truss beside an outdoor concert stage showing a live camera feed, crowd silhouettes in the foreground. Night, screen bright and sharp. photorealistic editorial photograph, full-frame DSLR, 35mm lens, f/5.6, natural light, tack-sharp focus on the subject, fine material texture visible, true-to-life colours, no HDR glow, no illustration, no text distortion, 16:10 aspect ratio"
+  },
+  {
+    id: 113,
+    serviceId: "led-ekranlar",
+    type: "variant",
+    variantIndex: 8,
+    name: "Skor ve Spor Salonu Panosu",
+    imagePath: "/images/services/variants/led-ekranlar/skor-ve-spor-salonu-panosu.jpg",
+    prompt: "An LED scoreboard mounted high on the wall of an indoor sports hall showing score and period time in bright digits, court and players blurred below. Hall lighting, digits legible. photorealistic editorial photograph, full-frame DSLR, 35mm lens, f/5.6, natural light, tack-sharp focus on the subject, fine material texture visible, true-to-life colours, no HDR glow, no illustration, no text distortion, 16:10 aspect ratio"
+  }
+];
+
+fs.writeFileSync("scripts/prompts_data.json", JSON.stringify(allPrompts, null, 2));
+console.log(`Saved ${allPrompts.length} prompts to scripts/prompts_data.json`);

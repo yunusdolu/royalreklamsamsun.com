@@ -135,6 +135,17 @@
     scroll-behavior: auto;
   }
 
+  /*
+   * Yatay tasmayi `clip` ile keseriz, `hidden` ile degil.
+   * `overflow-x: hidden` html/body uzerinde bu ogeleri kaydirma kabina
+   * cevirir ve `position: sticky` viewport yerine onlara yapisir — yani
+   * yapiskan ogeler sayfayla birlikte kayip gider. `clip` kaydirma kabi
+   * olusturmadigi icin sticky calismaya devam eder.
+   */
+  html {
+    overflow-x: clip;
+  }
+
   body {
     background-color: var(--color-royal-black);
     color: var(--color-royal-fg);

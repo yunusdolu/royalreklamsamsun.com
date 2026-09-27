@@ -50,6 +50,7 @@
     "leadTime": "Ortalama teslim",
     "days": "iş günü",
     "specsTitle": "Teknik Özellikler",
+    "variantsTitle": "{service} Çeşitleri",
     "priceTitle": "Fiyatı Ne Belirler?",
     "useCasesTitle": "Kimler İçin Uygun?",
     "faqTitle": "Sık Sorulan Sorular",
@@ -61,7 +62,9 @@
     "slide": "Slayt {number}",
     "instagramMore": "Instagram’da Daha Fazlası",
     "instagramBrowse": "Instagram’da İncele",
-    "dayDelivery": "Gün Teslim"
+    "variantsImageLoading": "Görsel hazırlanıyor",
+    "dayDelivery": "Gün Teslim",
+    "variantCount": "+{count} çeşit {service}"
   },
   "home": {
     "hero": {

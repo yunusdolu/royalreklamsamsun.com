@@ -6,12 +6,14 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import { PageHeader } from "@/components/layout/page-header";
 import { Reveal, RevealGroup, RevealItem } from "@/components/motion/reveal";
 import { FaqSection } from "@/components/sections/faq-section";
+import { ServiceVariants } from "@/components/sections/service-variants";
 import { JsonLd } from "@/components/seo/json-ld";
 import { PillAnchor, PillLink } from "@/components/ui/pill-button";
 import { ServiceCard } from "@/components/ui/service-card";
 import { siteConfig, telLink, whatsappLink } from "@/config/site";
 import { getServiceBySlug, services } from "@/content/services";
 import { type Locale, routing } from "@/i18n/routing";
+import { withExistingImages } from "@/lib/variant-images";
 import {
   buildBreadcrumbSchema,
   buildFaqSchema,
@@ -58,7 +60,10 @@ export async function generateMetadata({
     description: clampDescription(copy.metaDescription),
     keywords: copy.keywords,
     alternates: buildLocalizedAlternates(
-      (l) => ({ pathname: "/hizmetler/[slug]", params: { slug: service.slug[l] } }),
+      (l) => ({
+        pathname: "/hizmetler/[slug]",
+        params: { slug: service.slug[l] },
+      }),
       locale,
     ),
     openGraph: buildOpenGraph({
@@ -85,9 +90,7 @@ export default async function ServiceDetailPage({
   const t = await getTranslations("common");
   const tServices = await getTranslations("servicesPage");
 
-  const related = services
-    .filter((item) => item.id !== service.id)
-    .slice(0, 3);
+  const related = services.filter((item) => item.id !== service.id).slice(0, 3);
 
   const crumbs = [
     { name: t("breadcrumbHome"), href: "/" as const },
@@ -99,33 +102,58 @@ export default async function ServiceDetailPage({
 
   return (
     <>
+      {/* Başlıkta tek çağrı var: teklif. WhatsApp ve teslim süresi yan
+          panelde zaten duruyor, burada tekrar etmeleri asıl butonun
+          ağırlığını düşürüyordu. */}
       <PageHeader
         crumbs={crumbs}
-        eyebrow={copy.tagline}
         title={copy.name}
-        answer={copy.answer}
+        lead={copy.summary}
+        image={service.heroImage || service.image}
+        imagePosition={service.heroFocus}
       >
-        <div className="mt-8 flex flex-wrap items-center gap-3">
-          <PillLink href="/teklif-al">{t("getQuote")}</PillLink>
-          <PillAnchor
-            href={whatsappLink(whatsappMessage)}
-            tone="light"
-            icon={MessageCircle}
-          >
-            {t("whatsapp")}
-          </PillAnchor>
-          <span className="ml-1 text-[0.75rem] text-royal-faint">
-            {t("leadTime")}: {service.leadTimeDays[0]}–{service.leadTimeDays[1]}{" "}
-            {t("days")}
-          </span>
-        </div>
+        <PillLink href="/teklif-al">{t("getQuote")}</PillLink>
       </PageHeader>
+
+      {/*
+        Çeşitler — "kutu harf" içindeki "fileli krom harf" gibi alt türler.
+        Sayfanın başında duruyor: ziyaretçinin ilk sorusu "hangi tipini
+        yapıyorsunuz" oluyor. Başlık hizmet adıyla kurulur ("Tabela
+        Çeşitleri"); aranan uzun kuyruk ifadeye de böyle denk gelir.
+      */}
+      <ServiceVariants
+        title={t("variantsTitle", { service: copy.shortName })}
+        variants={withExistingImages(copy.variants)}
+        fallbackImage={service.image}
+      />
 
       {/* Gövde metni + yan panel */}
       <section className="container-royal grid gap-12 py-16 lg:grid-cols-12 lg:gap-14 lg:py-20">
-        <div className="lg:col-span-7 xl:col-span-8">
+        {/*
+          `min-w-0` şart: grid öğeleri varsayılan olarak `min-width: auto`
+          taşır, yani içindeki en geniş öğenin altına inemezler. Teknik
+          özellik tablosunun `min-w-[26rem]` değeri bu yüzden kolonu 390px
+          ekranda 466px'e şişiriyor ve metin kırpılıyordu. Sıfırlanınca kolon
+          ekrana uyuyor, tablo da kendi kutusunda yatay kayıyor.
+        */}
+        <div className="min-w-0 lg:col-span-7 xl:col-span-8">
+          {/*
+            Hizmetin tanımı. Başlık bloğu anasayfa kurgusuna geçince oradan
+            çıktı; sayfanın ilk paragrafı olarak burada duruyor. Dil
+            modellerinin alıntıladığı metin bu, o yüzden `data-speakable`
+            ve vurgulu biçim korundu.
+          */}
           <Reveal>
-            <div className="space-y-5">
+            <p
+              data-speakable
+              className="border-l-2 border-gold-500/60 py-1 pl-5 text-base leading-relaxed text-royal-fg/90 lg:text-lg"
+            >
+              {copy.answer}
+            </p>
+          </Reveal>
+
+          <Reveal delay={0.05}>
+            <div className="mt-8 space-y-5">
               {copy.intro.map((paragraph) => (
                 <p
                   key={paragraph.slice(0, 40)}
@@ -139,7 +167,7 @@ export default async function ServiceDetailPage({
 
           {/* Öne çıkanlar */}
           <div className="mt-14">
-            <h2 className="underline-gold font-display text-xl font-bold text-royal-fg lg:text-2xl">
+            <h2 className="font-display text-xl font-bold text-royal-fg lg:text-2xl">
               {t("highlightsTitle")}
             </h2>
             {/* Numaralı editoryal kartlar — çerçeveli ikon yerine hayalet rakam */}
@@ -174,25 +202,34 @@ export default async function ServiceDetailPage({
 
           {/* Teknik özellikler — LLM'lerin alıntılaması için tablo */}
           <div className="mt-14">
-            <h2 className="underline-gold font-display text-xl font-bold text-royal-fg lg:text-2xl">
+            <h2 className="font-display text-xl font-bold text-royal-fg lg:text-2xl">
               {t("specsTitle")}
             </h2>
+            {/* Tablo çıplak satırlar hâlinde sayfada yüzüyordu; hafif bir
+                yüzey onu bir blok hâline getiriyor. */}
             <Reveal>
-              <div className="mt-8 overflow-x-auto">
-                <table className="w-full min-w-[26rem] border-collapse text-left text-[0.875rem]">
+              {/*
+                Dar ekranda satırlar bloka dönüp etiket/değer alt alta gelir;
+                `min-w-[26rem]` ile yatay kaydırmaya zorlamak hem taşmaya hem
+                okunmayan bir tabloya yol açıyordu. `sm` ve üstünde normal
+                tabloya döner. Tablo etiketleri korunuyor — yapılandırılmış
+                veri hem erişilebilirlik hem arama motorları için değerli.
+              */}
+              <div className="mt-8 rounded-2xl border border-black/[0.06] bg-royal-graphite/60 px-5 py-1 sm:px-6 sm:py-2">
+                <table className="w-full border-collapse text-left text-[0.875rem]">
                   <tbody>
                     {copy.specs.map((spec) => (
                       <tr
                         key={spec.label}
-                        className="border-b border-black/[0.07] last:border-0"
+                        className="block border-b border-black/[0.07] py-3.5 last:border-0 sm:table-row sm:py-0"
                       >
                         <th
                           scope="row"
-                          className="w-2/5 py-4 pr-6 align-top text-[0.6875rem] font-semibold uppercase tracking-[0.12em] text-royal-faint"
+                          className="block pb-1 align-top text-[0.6875rem] font-semibold uppercase tracking-[0.12em] text-royal-faint sm:table-cell sm:w-2/5 sm:py-4 sm:pr-6 sm:pb-4"
                         >
                           {spec.label}
                         </th>
-                        <td className="py-4 align-top font-medium text-royal-fg">
+                        <td className="block align-top font-medium text-royal-fg sm:table-cell sm:py-4">
                           {spec.value}
                         </td>
                       </tr>
@@ -205,7 +242,7 @@ export default async function ServiceDetailPage({
 
           {/* Fiyatı belirleyen etkenler */}
           <div className="mt-14">
-            <h2 className="underline-gold font-display text-xl font-bold text-royal-fg lg:text-2xl">
+            <h2 className="font-display text-xl font-bold text-royal-fg lg:text-2xl">
               {t("priceTitle")}
             </h2>
             <RevealGroup as="ul" className="mt-8" stagger={0.05}>
@@ -231,7 +268,7 @@ export default async function ServiceDetailPage({
         </div>
 
         {/* Yan panel */}
-        <aside className="lg:col-span-5 xl:col-span-4">
+        <aside className="min-w-0 lg:col-span-5 xl:col-span-4">
           <div className="lg:sticky lg:top-28 space-y-6">
             {/* Kimler için uygun — ikon yerine altın çizgi işaretleri */}
             <Reveal direction="left">
@@ -302,28 +339,32 @@ export default async function ServiceDetailPage({
       {/* SSS */}
       <FaqSection faqs={copy.faqs} showCta={false} />
 
-      {/* İlgili hizmetler — iç linkleme SEO'nun temel taşı */}
-      <section className="container-royal pb-20 lg:pb-28">
-        <h2 className="underline-gold font-display text-xl font-bold text-royal-fg lg:text-2xl">
-          {tServices("title")}
-        </h2>
-        <RevealGroup as="ul" className="mt-8 grid gap-5 sm:grid-cols-3">
-          {related.map((item) => (
-            <RevealItem as="li" key={item.id}>
-              <ServiceCard
-                service={item}
-                locale={locale}
-                daysLabel={t("days")}
-                readMoreLabel={t("readMore")}
-              />
-            </RevealItem>
-          ))}
-        </RevealGroup>
+      {/* İlgili hizmetler — iç linkleme SEO'nun temel taşı.
+          Sayfa üç beyaz bölümle üst üste bitiyordu; kapanışa ayrı bir zemin
+          vermek bölümlerin birbirine akmasını engelliyor. */}
+      <section className="bg-royal-graphite/60 py-20 lg:py-28">
+        <div className="container-royal">
+          <h2 className="font-display text-xl font-bold text-royal-fg lg:text-2xl">
+            {tServices("title")}
+          </h2>
+          <RevealGroup as="ul" className="mt-8 grid gap-5 sm:grid-cols-3">
+            {related.map((item) => (
+              <RevealItem as="li" key={item.id}>
+                <ServiceCard
+                  service={item}
+                  locale={locale}
+                  daysLabel={t("days")}
+                  readMoreLabel={t("readMore")}
+                />
+              </RevealItem>
+            ))}
+          </RevealGroup>
 
-        <div className="mt-10">
-          <PillLink href="/hizmetler" tone="light">
-            {t("backToServices")}
-          </PillLink>
+          <div className="mt-10">
+            <PillLink href="/hizmetler" tone="light">
+              {t("backToServices")}
+            </PillLink>
+          </div>
         </div>
       </section>
 

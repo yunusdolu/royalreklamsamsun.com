@@ -87,7 +87,7 @@ export function LanguageSwitcher({
       onClick={toggle}
       disabled={isPending}
       className={cn(
-        "flex h-9 items-center gap-2 rounded-full border px-3 transition-colors",
+        "flex h-9 items-center gap-2 rounded-md border px-3 transition-colors",
         variant === "light"
           ? "border-white/20 bg-transparent text-white hover:bg-white/10"
           : "border-black/20 bg-transparent text-black hover:bg-black/10",

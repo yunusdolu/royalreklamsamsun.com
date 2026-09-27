@@ -167,12 +167,21 @@ export function buildServiceSchema(service: Service, locale: Locale) {
         valueAddedTaxIncluded: false,
       },
     },
+    /**
+     * Katalog, hizmetin alt türlerini listeler. Önceden `useCases`
+     * kullanılıyordu; ama onlar müşteri tipidir ("cadde üstü mağazalar"),
+     * sunulan hizmet değil — arama motoruna yanlış bilgi veriyordu.
+     */
     hasOfferCatalog: {
       "@type": "OfferCatalog",
       name: copy.name,
-      itemListElement: copy.useCases.map((useCase) => ({
+      itemListElement: copy.variants.map((variant) => ({
         "@type": "Offer",
-        itemOffered: { "@type": "Service", name: useCase },
+        itemOffered: {
+          "@type": "Service",
+          name: variant.name,
+          description: variant.description,
+        },
       })),
     },
   };

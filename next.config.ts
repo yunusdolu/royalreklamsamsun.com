@@ -18,6 +18,26 @@ const nextConfig: NextConfig = {
     optimizePackageImports: ["lucide-react", "framer-motion", "gsap"],
   },
 
+  /**
+   * "Işıklı Tabela" hizmeti, ışıksız tipleri de kapsayacak şekilde "Tabela"ya
+   * genişletildi ve adresi değişti. Eski adres Google'a bildirilmişti; kalıcı
+   * yönlendirme olmadan arama sonucundan gelen ziyaretçi 404 görürdü.
+   */
+  async redirects() {
+    return [
+      {
+        source: "/hizmetler/isikli-tabela",
+        destination: "/hizmetler/tabela",
+        permanent: true,
+      },
+      {
+        source: "/en/services/illuminated-signage",
+        destination: "/en/services/signage",
+        permanent: true,
+      },
+    ];
+  },
+
   async headers() {
     return [
       {

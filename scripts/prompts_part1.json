@@ -1,0 +1,200 @@
+[
+  {
+    "id": 1,
+    "category": "isikli-tabela",
+    "type": "card",
+    "name": "Tabela — kart görseli",
+    "imageName": "card_tabela",
+    "targetPath": "public/images/services/isikli-tabela.jpg",
+    "prompt": "A boutique storefront on a Turkish city street at blue hour. Above the window an illuminated box sign, aluminium composite case with a white opal acrylic face lit evenly from within, reading \"MERA\" in clean sans-serif capitals. Warm light spills onto damp pavement, two blurred pedestrians pass. photorealistic editorial photograph, full-frame DSLR, 35mm lens, f/5.6, natural light, tack-sharp focus on the subject, fine material texture visible, true-to-life colours, no HDR glow, no illustration, no text distortion, 16:10 aspect ratio"
+  },
+  {
+    "id": 2,
+    "category": "isikli-tabela",
+    "type": "variant",
+    "variantIndex": 0,
+    "name": "Kompozit Kasa + Pleksi Yüzey",
+    "imageName": "tabela_kompozit_kasa",
+    "targetPath": "public/images/services/variants/isikli-tabela/kompozit-kasa-pleksi-yuzey.jpg",
+    "prompt": "A shopfront box sign with an aluminium composite case and a flat white opal acrylic face, lit evenly from inside with no hotspots, reading \"MERA\". Dusk, the shop window glowing below, straight-on view of the sign. photorealistic editorial photograph, full-frame DSLR, 35mm lens, f/5.6, natural light, tack-sharp focus on the subject, fine material texture visible, true-to-life colours, no HDR glow, no illustration, no text distortion, 16:10 aspect ratio"
+  },
+  {
+    "id": 3,
+    "category": "isikli-tabela",
+    "type": "variant",
+    "variantIndex": 1,
+    "name": "Işıklı Vinil Tabela",
+    "imageName": "isikli_vinil_tabela",
+    "targetPath": "public/images/services/variants/isikli-tabela/isikli-vinil-tabela.jpg",
+    "prompt": "A wide shopfront sign with a translucent vinyl face stretched over an aluminium frame, backlit so the printed green and white artwork glows evenly, reading \"ARDA\". Evening street, a delivery scooter blurred at the kerb. photorealistic editorial photograph, full-frame DSLR, 35mm lens, f/5.6, natural light, tack-sharp focus on the subject, fine material texture visible, true-to-life colours, no HDR glow, no illustration, no text distortion, 16:10 aspect ratio"
+  },
+  {
+    "id": 4,
+    "category": "isikli-tabela",
+    "type": "variant",
+    "variantIndex": 2,
+    "name": "Vakum Pleksi Tabela",
+    "imageName": "vakum_pleksi_tabela",
+    "targetPath": "public/images/services/variants/isikli-tabela/vakum-pleksi-tabela.jpg",
+    "prompt": "Close crop of a vacuum-formed acrylic sign face, the lettering embossed and raised several centimetres from the surface, each raised edge catching a highlight. Reading \"NAR\", lit from within, warm dusk light. photorealistic editorial photograph, full-frame DSLR, 35mm lens, f/5.6, natural light, tack-sharp focus on the subject, fine material texture visible, true-to-life colours, no HDR glow, no illustration, no text distortion, 16:10 aspect ratio"
+  },
+  {
+    "id": 5,
+    "category": "isikli-tabela",
+    "type": "variant",
+    "variantIndex": 3,
+    "name": "Kör Kasa Tabela (Işıksız)",
+    "imageName": "kor_kasa_tabela",
+    "targetPath": "public/images/services/variants/isikli-tabela/kor-kasa-tabela.jpg",
+    "prompt": "A closed aluminium box sign with no lighting on a sun-lit shop frontage under an arcade, matte dark grey face carrying crisp cut-vinyl white lettering reading \"SELVA\". Midday, hard shadows, no glow at all. photorealistic editorial photograph, full-frame DSLR, 35mm lens, f/5.6, natural light, tack-sharp focus on the subject, fine material texture visible, true-to-life colours, no HDR glow, no illustration, no text distortion, 16:10 aspect ratio"
+  },
+  {
+    "id": 6,
+    "category": "isikli-tabela",
+    "type": "variant",
+    "variantIndex": 4,
+    "name": "Fener Tabela",
+    "imageName": "fener_tabela",
+    "targetPath": "public/images/services/variants/isikli-tabela/fener-tabela.jpg",
+    "prompt": "A double-sided projecting lantern sign mounted perpendicular to a façade over a narrow pedestrian street, glowing warm at dusk, reading \"TUNA\" on both faces. Shot along the street so the face and the wall bracket are both visible. photorealistic editorial photograph, full-frame DSLR, 35mm lens, f/5.6, natural light, tack-sharp focus on the subject, fine material texture visible, true-to-life colours, no HDR glow, no illustration, no text distortion, 16:10 aspect ratio"
+  },
+  {
+    "id": 7,
+    "category": "isikli-tabela",
+    "type": "variant",
+    "variantIndex": 5,
+    "name": "Krom / Paslanmaz Kasalı Tabela",
+    "imageName": "krom_kasali_tabela",
+    "targetPath": "public/images/services/variants/isikli-tabela/krom-kasali-tabela.jpg",
+    "prompt": "A brushed stainless steel cased sign on the stone façade of a hotel entrance, metal catching soft directional light, white acrylic face reading \"ORA\". Canopy and warm lobby light blurred behind. photorealistic editorial photograph, full-frame DSLR, 35mm lens, f/5.6, natural light, tack-sharp focus on the subject, fine material texture visible, true-to-life colours, no HDR glow, no illustration, no text distortion, 16:10 aspect ratio"
+  },
+  {
+    "id": 8,
+    "category": "isikli-tabela",
+    "type": "variant",
+    "variantIndex": 6,
+    "name": "Neon Efektli (Neon Flex) Tabela",
+    "imageName": "neon_flex_tabela",
+    "targetPath": "public/images/services/variants/isikli-tabela/neon-flex-tabela.jpg",
+    "prompt": "A warm amber LED neon-flex sign on exposed brick inside a bar, continuous unbroken tubing forming cursive script reading \"EGE\". Evening, bottles and glassware softly out of focus behind. photorealistic editorial photograph, full-frame DSLR, 35mm lens, f/5.6, natural light, tack-sharp focus on the subject, fine material texture visible, true-to-life colours, no HDR glow, no illustration, no text distortion, 16:10 aspect ratio"
+  },
+  {
+    "id": 9,
+    "category": "isikli-tabela",
+    "type": "variant",
+    "variantIndex": 7,
+    "name": "Ahşap Görünümlü Işıklı Tabela",
+    "imageName": "ahsap_isikli_tabela",
+    "targetPath": "public/images/services/variants/isikli-tabela/ahsap-isikli-tabela.jpg",
+    "prompt": "A café sign with a warm oak-veneer face and routed letters backlit from behind, reading \"KIR\", mounted above a timber shopfront with hanging plants. Golden evening light, grain texture visible. photorealistic editorial photograph, full-frame DSLR, 35mm lens, f/5.6, natural light, tack-sharp focus on the subject, fine material texture visible, true-to-life colours, no HDR glow, no illustration, no text distortion, 16:10 aspect ratio"
+  },
+  {
+    "id": 10,
+    "category": "isikli-tabela",
+    "type": "variant",
+    "variantIndex": 8,
+    "name": "Vitrin İçi Işıklı Pano",
+    "imageName": "vitrin_isikli_pano",
+    "targetPath": "public/images/services/variants/isikli-tabela/vitrin-isikli-pano.jpg",
+    "prompt": "A slim illuminated panel standing inside a shop window, glowing evenly, showing a simple promotional graphic. Photographed from the pavement through the glass with faint street reflections, darkened shop interior behind. photorealistic editorial photograph, full-frame DSLR, 35mm lens, f/5.6, natural light, tack-sharp focus on the subject, fine material texture visible, true-to-life colours, no HDR glow, no illustration, no text distortion, 16:10 aspect ratio"
+  },
+  {
+    "id": 11,
+    "category": "kutu-harf-tabela",
+    "type": "card",
+    "name": "Kutu Harf Tabela — kart görseli",
+    "imageName": "card_kutu_harf",
+    "targetPath": "public/images/services/kutu-harf-tabela.jpg",
+    "prompt": "Close-up three-quarter view of dimensional channel letters on a dark stone wall reading \"ARDA\". Brushed stainless returns, white acrylic faces lit from within, a soft halo on the wall behind each letter. Early evening, depth falling off along the word. photorealistic editorial photograph, full-frame DSLR, 35mm lens, f/5.6, natural light, tack-sharp focus on the subject, fine material texture visible, true-to-life colours, no HDR glow, no illustration, no text distortion, 16:10 aspect ratio"
+  },
+  {
+    "id": 12,
+    "category": "kutu-harf-tabela",
+    "type": "variant",
+    "variantIndex": 0,
+    "name": "Standart Kutu Harf",
+    "imageName": "standart_kutu_harf",
+    "targetPath": "public/images/services/variants/kutu-harf-tabela/standart-kutu-harf.jpg",
+    "prompt": "Front-lit channel letters on a dark stone wall reading \"ARDA\": white acrylic faces glowing evenly, slim aluminium returns, crisp trim edge. Early evening, three-quarter view, shallow depth along the word. photorealistic editorial photograph, full-frame DSLR, 35mm lens, f/5.6, natural light, tack-sharp focus on the subject, fine material texture visible, true-to-life colours, no HDR glow, no illustration, no text distortion, 16:10 aspect ratio"
+  },
+  {
+    "id": 13,
+    "category": "kutu-harf-tabela",
+    "type": "variant",
+    "variantIndex": 1,
+    "name": "Krom Harf",
+    "imageName": "krom_harf",
+    "targetPath": "public/images/services/variants/kutu-harf-tabela/krom-harf.jpg",
+    "prompt": "Dimensional letters fabricated entirely from brushed stainless steel, unlit, mounted on a pale concrete wall reading \"ORA\". Raking afternoon light picking out the grain of the metal and casting sharp letter shadows. photorealistic editorial photograph, full-frame DSLR, 35mm lens, f/5.6, natural light, tack-sharp focus on the subject, fine material texture visible, true-to-life colours, no HDR glow, no illustration, no text distortion, 16:10 aspect ratio"
+  },
+  {
+    "id": 14,
+    "category": "kutu-harf-tabela",
+    "type": "variant",
+    "variantIndex": 2,
+    "name": "Fileli Krom Harf",
+    "imageName": "fileli_krom_harf",
+    "targetPath": "public/images/services/variants/kutu-harf-tabela/fileli-krom-harf.jpg",
+    "prompt": "Close-up of a single channel letter B whose front face carries a 2 cm polished chrome border with a glowing white acrylic centre, so the letter reads as light framed in metal. Letter fills most of the frame, dusk. photorealistic editorial photograph, full-frame DSLR, 35mm lens, f/5.6, natural light, tack-sharp focus on the subject, fine material texture visible, true-to-life colours, no HDR glow, no illustration, no text distortion, 16:10 aspect ratio"
+  },
+  {
+    "id": 15,
+    "category": "kutu-harf-tabela",
+    "type": "variant",
+    "variantIndex": 3,
+    "name": "Alttan Aydınlatmalı Krom Harf",
+    "imageName": "alttan_aydinlatmali_krom",
+    "targetPath": "public/images/services/variants/kutu-harf-tabela/alttan-aydinlatmali-krom-harf.jpg",
+    "prompt": "Brushed chrome dimensional letters on a reception wall, lit only from beneath so the metal faces stay dark and a soft pool of light washes down the wall under each letter. Dim interior, marble floor faintly reflecting. photorealistic editorial photograph, full-frame DSLR, 35mm lens, f/5.6, natural light, tack-sharp focus on the subject, fine material texture visible, true-to-life colours, no HDR glow, no illustration, no text distortion, 16:10 aspect ratio"
+  },
+  {
+    "id": 16,
+    "category": "kutu-harf-tabela",
+    "type": "variant",
+    "variantIndex": 4,
+    "name": "Dekota Harf (PVC Köpük)",
+    "imageName": "dekota_harf",
+    "targetPath": "public/images/services/variants/kutu-harf-tabela/dekota-harf.jpg",
+    "prompt": "Matte white PVC foam letters CNC-cut and mounted flush on a soft grey office wall reading \"TUNA\", unlit, clean square edges and a shallow drop shadow. Even daylight from a window to the left. photorealistic editorial photograph, full-frame DSLR, 35mm lens, f/5.6, natural light, tack-sharp focus on the subject, fine material texture visible, true-to-life colours, no HDR glow, no illustration, no text distortion, 16:10 aspect ratio"
+  },
+  {
+    "id": 17,
+    "category": "kutu-harf-tabela",
+    "type": "variant",
+    "variantIndex": 5,
+    "name": "Halo (Arkadan Işıklı) Kutu Harf",
+    "imageName": "halo_kutu_harf",
+    "targetPath": "public/images/services/variants/kutu-harf-tabela/halo-kutu-harf.jpg",
+    "prompt": "Channel letters on a dark wall lit only from behind, each letter a solid dark silhouette in front of a soft even halo of warm light. Reading \"MERA\", night, straight-on view. photorealistic editorial photograph, full-frame DSLR, 35mm lens, f/5.6, natural light, tack-sharp focus on the subject, fine material texture visible, true-to-life colours, no HDR glow, no illustration, no text distortion, 16:10 aspect ratio"
+  },
+  {
+    "id": 18,
+    "category": "kutu-harf-tabela",
+    "type": "variant",
+    "variantIndex": 6,
+    "name": "Çift Yönlü Işıklı Kutu Harf",
+    "imageName": "cift_yonlu_isikli",
+    "targetPath": "public/images/services/variants/kutu-harf-tabela/cift-yonlu-isikli-kutu-harf.jpg",
+    "prompt": "Channel letters glowing both through their white acrylic faces and behind onto the wall, producing a lit letter sitting inside a halo. Reading \"NAR\", dark textured façade, night. photorealistic editorial photograph, full-frame DSLR, 35mm lens, f/5.6, natural light, tack-sharp focus on the subject, fine material texture visible, true-to-life colours, no HDR glow, no illustration, no text distortion, 16:10 aspect ratio"
+  },
+  {
+    "id": 19,
+    "category": "kutu-harf-tabela",
+    "type": "variant",
+    "variantIndex": 7,
+    "name": "Trimless (Çerçevesiz) Kutu Harf",
+    "imageName": "trimless_kutu_harf",
+    "targetPath": "public/images/services/variants/kutu-harf-tabela/trimless-kutu-harf.jpg",
+    "prompt": "Macro detail of a trimless channel letter corner: the acrylic face meets the return with no visible trim cap, one crisp seamless edge. Letter glowing softly, dark background, very shallow depth. photorealistic editorial photograph, full-frame DSLR, 35mm lens, f/5.6, natural light, tack-sharp focus on the subject, fine material texture visible, true-to-life colours, no HDR glow, no illustration, no text distortion, 16:10 aspect ratio"
+  },
+  {
+    "id": 20,
+    "category": "kutu-harf-tabela",
+    "type": "variant",
+    "variantIndex": 8,
+    "name": "Işıksız Dekoratif Kutu Harf",
+    "imageName": "isiksiz_dekoratif_harf",
+    "targetPath": "public/images/services/variants/kutu-harf-tabela/isiksiz-dekoratif-kutu-harf.jpg",
+    "prompt": "Unlit dimensional letters in matte black mounted on a pale oak reception wall behind a desk, reading \"ORA\". Daylight from a side window casting soft letter shadows, plant blurred in the foreground. photorealistic editorial photograph, full-frame DSLR, 35mm lens, f/5.6, natural light, tack-sharp focus on the subject, fine material texture visible, true-to-life colours, no HDR glow, no illustration, no text distortion, 16:10 aspect ratio"
+  }
+]

@@ -2,7 +2,13 @@
 import React, { useState, useEffect, useRef } from "react";
 import { motion, useInView } from "framer-motion";
 import { cn } from "@/lib/utils";
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
+
+/**
+ * Dahili yol tipi `Link`ten türetiliyor; `routing.ts` içindeki yollar
+ * değişirse burası da derlemede uyarır.
+ */
+type LocalizedHref = React.ComponentProps<typeof Link>["href"];
 
 export const PinContainer = ({
   children,
@@ -13,17 +19,19 @@ export const PinContainer = ({
 }: {
   children: React.ReactNode;
   title?: string;
-  href?: string;
+  href: LocalizedHref;
   className?: string;
   containerClassName?: string;
 }) => {
   const containerRef = useRef<HTMLAnchorElement>(null);
   const [isHovered, setIsHovered] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
-  
+
   useEffect(() => {
     const checkMobile = () => {
-      setIsMobile(window.innerWidth < 1024 || window.matchMedia("(hover: none)").matches);
+      setIsMobile(
+        window.innerWidth < 1024 || window.matchMedia("(hover: none)").matches,
+      );
     };
     checkMobile();
     window.addEventListener("resize", checkMobile);
@@ -48,11 +56,11 @@ export const PinContainer = ({
       ref={containerRef}
       className={cn(
         "relative group/pin z-50 cursor-pointer",
-        containerClassName
+        containerClassName,
       )}
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
-      href={href || "/"}
+      href={href}
     >
       <div
         style={{
@@ -67,45 +75,53 @@ export const PinContainer = ({
           style={{
             transform: transform,
           }}
+          /*
+            Karti saran kalin serit. Duruyorken beyaz ve sakin; kart yatinca
+            altin bir isiga donuyor — hem kenar rengi hem disa vuran parilti
+            ayni anda degisiyor.
+          */
           className={cn(
-            "absolute left-1/2 p-1.5 top-1/2 flex justify-start items-start rounded-3xl shadow-xl bg-white border transition duration-700",
-            isActive ? "border-black/10" : "border-black/5 group-hover/pin:border-black/10"
+            "absolute left-1/2 p-1.5 top-1/2 flex justify-start items-start rounded-3xl border transition-all duration-700",
+            isActive
+              ? "border-gold-500/70 bg-gold-200/90 shadow-[0_0_0_1px_rgba(212,175,55,0.35),0_10px_40px_-6px_rgba(212,175,55,0.55)]"
+              : "border-black/5 bg-white shadow-xl group-hover/pin:border-gold-500/70 group-hover/pin:bg-gold-200/90 group-hover/pin:shadow-[0_0_0_1px_rgba(212,175,55,0.35),0_10px_40px_-6px_rgba(212,175,55,0.55)]",
           )}
         >
           <div className={cn(" relative z-50 ", className)}>{children}</div>
         </div>
       </div>
-      <PinPerspective title={title} href={href} isActive={isActive} />
+      <PinPerspective title={title} isActive={isActive} />
     </Link>
   );
 };
 
 export const PinPerspective = ({
   title,
-  href,
   isActive,
 }: {
   title?: string;
-  href?: string;
   isActive?: boolean;
 }) => {
   return (
-    <motion.div 
+    <motion.div
       className={cn(
         "pointer-events-none w-96 h-80 flex items-center justify-center z-[60] transition duration-500",
-        isActive ? "opacity-100" : "opacity-0 group-hover/pin:opacity-100"
+        isActive ? "opacity-100" : "opacity-0 group-hover/pin:opacity-100",
       )}
     >
       <div className=" w-full h-full -mt-7 flex-none  inset-0">
-        <div className="absolute top-0 inset-x-0  flex justify-center">
-          <div
-            className="relative flex space-x-2 items-center z-10 py-0.5 px-4"
-          >
-            <span className="relative z-20 text-black text-sm font-bold inline-block py-0.5 underline decoration-black decoration-2 underline-offset-4">
-              {title}
-            </span>
+        {/* Etiket yalnızca başlık verilirse çizilir. Kartın kendisi çağrıyı
+            taşıyorsa (anasayfadaki hizmet kartları gibi) aynı yazının iki
+            kez görünmemesi için başlık geçilmez. */}
+        {title && (
+          <div className="absolute top-0 inset-x-0  flex justify-center">
+            <div className="relative flex space-x-2 items-center z-10 py-0.5 px-4">
+              <span className="relative z-20 inline-block whitespace-nowrap py-0.5 text-[0.8125rem] font-semibold text-royal-fg">
+                {title}
+              </span>
+            </div>
           </div>
-        </div>
+        )}
 
         <div
           style={{
@@ -186,11 +202,30 @@ export const PinPerspective = ({
           ulaşmıyordu. 13.25rem tepeyi başlığın hemen altına taşıyor; gradyan
           da baştan görünür bir altınla başlıyor ki bağ kopuk görünmesin.
         */}
+        {/*
+          İğne çizgisi: kartın tepesindeki etiketi karta bağlar. Yükseklik
+          13.25rem, çünkü çizginin alt ucu kart kutusunun dikey ortasına
+          sabitli ve üst ucunun etiketin hemen altına ulaşması gerekiyor.
+        */}
         <>
-          <motion.div className={cn("absolute right-1/2 bottom-1/2 bg-gradient-to-b from-gold-500/35 via-gold-500/60 to-gold-500/70 translate-y-[14px] w-px blur-[2px] transition-all duration-500", isActive ? "h-[13.25rem]" : "h-[6.625rem] group-hover/pin:h-[13.25rem]")} />
-          <motion.div className={cn("absolute right-1/2 bottom-1/2 bg-gradient-to-b from-gold-500/35 via-gold-500/60 to-gold-500/70 translate-y-[14px] w-px transition-all duration-500", isActive ? "h-[13.25rem]" : "h-[6.625rem] group-hover/pin:h-[13.25rem]")} />
+          <motion.div
+            className={cn(
+              "absolute right-1/2 bottom-1/2 bg-gradient-to-b from-gold-500/35 via-gold-500/60 to-gold-500/70 translate-y-[14px] w-px blur-[2px] transition-all duration-500",
+              isActive
+                ? "h-[13.25rem]"
+                : "h-[6.625rem] group-hover/pin:h-[13.25rem]",
+            )}
+          />
+          <motion.div
+            className={cn(
+              "absolute right-1/2 bottom-1/2 bg-gradient-to-b from-gold-500/35 via-gold-500/60 to-gold-500/70 translate-y-[14px] w-px transition-all duration-500",
+              isActive
+                ? "h-[13.25rem]"
+                : "h-[6.625rem] group-hover/pin:h-[13.25rem]",
+            )}
+          />
           <motion.div className="absolute right-1/2 translate-x-[1.5px] bottom-1/2 bg-gold-600 translate-y-[14px] w-[4px] h-[4px] rounded-full z-40 blur-[3px]" />
-          <motion.div className="absolute right-1/2 translate-x-[0.5px] bottom-1/2 bg-gold-300 translate-y-[14px] w-[2px] h-[2px] rounded-full z-40 " />
+          <motion.div className="absolute right-1/2 translate-x-[0.5px] bottom-1/2 bg-gold-300 translate-y-[14px] w-[2px] h-[2px] rounded-full z-40" />
         </>
       </div>
     </motion.div>

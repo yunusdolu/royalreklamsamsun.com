@@ -5,7 +5,6 @@ import { getLocale, getTranslations } from "next-intl/server";
 import { RevealGroup, RevealItem } from "@/components/motion/reveal";
 import { SectionHeading } from "@/components/sections/section-heading";
 import { services } from "@/content/services";
-import { Link } from "@/i18n/navigation";
 import type { Locale } from "@/i18n/routing";
 import { PinContainer } from "@/components/ui/3d-pin";
 
@@ -15,28 +14,50 @@ export async function ServicesSection() {
   const tCommon = await getTranslations("common");
 
   return (
-    <section className="container-royal scroll-mt-24 py-20 lg:py-28" id="hizmetler">
+    <section
+      className="container-royal scroll-mt-24 py-20 lg:py-28"
+      id="hizmetler"
+    >
       <div className="mb-16">
-        <SectionHeading
-          title={t("title")}
-          description={t("description")}
-        />
+        <SectionHeading title={t("title")} description={t("description")} />
       </div>
 
       <RevealGroup className="mt-16" stagger={0.1}>
         <div className="grid gap-x-6 gap-y-16 sm:gap-x-8 sm:gap-y-20 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 place-items-center">
           {services.map((service) => {
             const copy = service.copy[locale];
-            const href = `/hizmetler/${service.slug[locale]}`;
+            // Düz dize yerine tipli yol: next-intl dile göre çevirir
+            const href = {
+              pathname: "/hizmetler/[slug]" as const,
+              params: { slug: service.slug[locale] },
+            };
             const maxDays = service.leadTimeDays[1] || 5;
 
             return (
-              <RevealItem key={service.id} className="flex justify-center w-full">
-                <PinContainer title={tCommon("learnMore")} href={href} containerClassName="w-[292px] h-[28.75rem]">
-                  <div className="flex flex-col tracking-tight w-[292px] h-[28.75rem] bg-white border border-black/10 rounded-2xl overflow-hidden shadow-2xl group/card relative">
-                    
-                    {/* Resim Alanı */}
-                    <div className="relative w-full h-[55%] overflow-hidden bg-zinc-100">
+              <RevealItem
+                key={service.id}
+                className="flex justify-center w-full"
+              >
+                {/*
+                  Yayındaki tasarım: üstte fotoğraf ve teslim rozeti, altında
+                  beyaz alanda ad, iki satırlık özet, ince ayırıcı ve sağ
+                  alttaki "İncele".
+
+                  `sizes` 292 değil 420: kart görsel alanı 16:10 fotoğrafı
+                  1.15 orana kırptığı için gerçekte 405px genişlik görünüyor;
+                  292 verildiğinde tarayıcı küçük sürümü indirip büyütüyor ve
+                  fotoğraf bulanıklaşıyordu.
+                */}
+                <PinContainer
+                  title={tCommon("variantCount", {
+                    count: service.copy[locale].variants.length,
+                    service: copy.shortName,
+                  })}
+                  href={href}
+                  containerClassName="w-[292px] h-[28.75rem]"
+                >
+                  <div className="group/card relative flex h-[28.75rem] w-[292px] flex-col overflow-hidden rounded-2xl border border-black/10 bg-white tracking-tight shadow-2xl">
+                    <div className="relative h-[60%] w-full overflow-hidden bg-zinc-100">
                       <Image
                         src={service.image}
                         alt={copy.name}
@@ -46,34 +67,36 @@ export async function ServicesSection() {
                         className="object-cover transition-transform duration-700 group-hover/card:scale-110"
                       />
 
-                      {/* Teslim rozeti beyaz yazılı; aydınlık fotoğraflarda
-                          okunabilirliği bu koyu geçiş sağlıyor. */}
+                      {/* Rozet beyaz yazılı; aydınlık fotoğraflarda okunması
+                          için üstten inen koyu geçiş. */}
                       <span
                         aria-hidden="true"
                         className="pointer-events-none absolute inset-x-0 top-0 h-1/2 bg-gradient-to-b from-black/55 via-black/20 to-transparent"
                       />
 
-                      {/* Sağ Üstteki Stat (Sayı) */}
-                      <div className="absolute top-4 right-5 z-20 text-right drop-shadow-md">
-                        <div className="text-[22px] font-bold text-white leading-none">{maxDays}+</div>
-                        <div className="text-[11px] text-white/90 mt-1">{tCommon("dayDelivery")}</div>
+                      <div className="absolute right-5 top-4 z-20 text-right drop-shadow-md">
+                        <div className="text-[22px] font-bold leading-none text-white">
+                          {maxDays}+
+                        </div>
+                        <div className="mt-1 text-[11px] text-white/90">
+                          {tCommon("dayDelivery")}
+                        </div>
                       </div>
                     </div>
 
-                    {/* Metin ve İçerik Alanı */}
-                    <div className="flex flex-col flex-1 px-6 pt-5 pb-6 z-20">
-                      <h3 className="text-[20px] font-bold text-black text-balance leading-tight tracking-tight">
+                    <div className="z-20 flex flex-1 flex-col px-6 pb-6 pt-5">
+                      <h3 className="text-balance text-[20px] font-bold leading-tight tracking-tight text-black">
                         {copy.name}
                       </h3>
-                      
-                      <p className="mt-2 text-[13px] text-zinc-600 leading-relaxed line-clamp-2 font-medium">
+
+                      <p className="mt-2 line-clamp-2 text-[13px] font-medium leading-relaxed text-zinc-600">
                         {copy.summary}
                       </p>
-                      
-                      {/* Alt Kısım (Footer) */}
+
                       <div className="mt-auto flex items-center justify-end border-t border-black/10 pt-4">
-                        <div className="text-black text-[13px] font-semibold flex items-center gap-1.5 transition-colors group-hover/card:text-gold-500">
-                          {tCommon("learnMore")} <ArrowUpRight className="size-3.5 group-hover/card:translate-x-1 group-hover/card:-translate-y-1 transition-transform" />
+                        <div className="flex items-center gap-1.5 text-[13px] font-semibold text-black transition-colors group-hover/card:text-gold-500">
+                          {tCommon("learnMore")}
+                          <ArrowUpRight className="size-3.5 transition-transform group-hover/card:translate-x-1 group-hover/card:-translate-y-1" />
                         </div>
                       </div>
                     </div>
