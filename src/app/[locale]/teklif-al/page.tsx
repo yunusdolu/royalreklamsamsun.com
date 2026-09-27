@@ -62,11 +62,11 @@ export default async function QuotePage({
         <RevealGroup as="ul" className="mt-10 grid gap-3 sm:grid-cols-3">
           {steps.map((step, index) => (
             <RevealItem as="li" key={step}>
-              <div className="flex h-full items-start gap-3.5 rounded-2xl border border-black/[0.07] bg-white/70 p-4 backdrop-blur-sm">
-                <span className="grid size-9 shrink-0 place-items-center rounded-xl bg-royal-fg text-[0.75rem] font-bold tabular-nums text-white">
+              <div className="border-t-2 border-royal-fg pt-3.5">
+                <span className="font-display text-[0.75rem] font-bold tabular-nums text-gold-600">
                   {String(index + 1).padStart(2, "0")}
                 </span>
-                <span className="pt-1 text-[0.9375rem] font-medium leading-snug text-royal-fg">
+                <span className="mt-1 block text-[0.9375rem] font-medium leading-snug text-royal-fg">
                   {step}
                 </span>
               </div>

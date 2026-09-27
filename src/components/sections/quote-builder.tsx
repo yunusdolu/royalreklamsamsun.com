@@ -223,13 +223,13 @@ export function QuoteBuilder({ services }: { services: Service[] }) {
   };
 
   const fieldClass =
-    "h-12 rounded-xl border-black/10 bg-white text-[0.9375rem] text-royal-fg placeholder:text-royal-faint/70 focus-visible:border-black/40 focus-visible:ring-black/10";
+    "h-12 rounded-lg border-black/10 bg-white text-[0.9375rem] text-royal-fg placeholder:text-royal-faint/70 focus-visible:border-black/40 focus-visible:ring-black/10";
 
   const labelClass = "text-[0.8125rem] font-medium text-royal-fg";
 
   const chip = (active: boolean) =>
     cn(
-      "inline-flex items-center gap-2 rounded-full px-4 py-2.5 text-[0.875rem] font-medium transition-all duration-300",
+      "inline-flex items-center gap-2 rounded-[0.3rem] px-4 py-2.5 text-[0.875rem] font-medium transition-all duration-300",
       active
         ? "bg-black text-white shadow-[0_12px_28px_-16px_rgba(0,0,0,0.9)]"
         : "border border-black/[0.09] bg-white text-royal-muted hover:border-black/30 hover:text-royal-fg",
@@ -238,7 +238,7 @@ export function QuoteBuilder({ services }: { services: Service[] }) {
   return (
     <div className="grid gap-8 pb-28 lg:grid-cols-12 lg:gap-12 lg:pb-0">
       {/* ---------------- Sol: form ---------------- */}
-      <div className="space-y-6 lg:col-span-7">
+      <div className="space-y-10 lg:col-span-7">
         {/* 01 — Hizmet seçimi */}
         <Section index="01" title={t("sectionWhat")} hint={t("serviceHint")}>
           <fieldset>
@@ -264,7 +264,7 @@ export function QuoteBuilder({ services }: { services: Service[] }) {
                     onClick={() => toggleService(item.id)}
                     aria-pressed={active}
                     className={cn(
-                      "flex items-center gap-3 rounded-2xl border px-3.5 py-3 text-left transition-all duration-300",
+                      "flex items-center gap-3 rounded-lg border px-3.5 py-3 text-left transition-all duration-300",
                       active
                         ? "border-black bg-black text-white"
                         : "border-black/[0.09] bg-white text-royal-fg hover:border-black/30",
@@ -272,7 +272,7 @@ export function QuoteBuilder({ services }: { services: Service[] }) {
                   >
                     <span
                       className={cn(
-                        "grid size-9 shrink-0 place-items-center rounded-xl transition-colors",
+                        "grid size-9 shrink-0 place-items-center rounded-[0.3rem] transition-colors",
                         active ? "bg-white/15 text-white" : "bg-black/[0.04] text-royal-muted",
                       )}
                     >
@@ -322,7 +322,7 @@ export function QuoteBuilder({ services }: { services: Service[] }) {
                               aria-pressed={picked}
                               title={variant.description}
                               className={cn(
-                                "rounded-full px-3.5 py-2 text-[0.8125rem] transition-all duration-300",
+                                "rounded-[0.3rem] px-3.5 py-2 text-[0.8125rem] transition-all duration-300",
                                 picked
                                   ? "bg-black font-medium text-white"
                                   : "border border-black/[0.09] bg-white text-royal-muted hover:border-black/30 hover:text-royal-fg",
@@ -590,13 +590,18 @@ function SummaryPanel({
 }) {
   const done = steps.filter((step) => step.done).length;
 
+  /*
+    Sayfanın tek koyu öğesi. Beyaz üstüne beyaz form göz için düz bir yüzeydi;
+    gönderim tarafını siyaha çekmek hem onu ayırıyor hem de markanın
+    siyah-altın diline oturuyor.
+  */
   return (
-    <div className="rounded-3xl border border-black/[0.07] bg-white p-6 shadow-[0_1px_2px_rgba(0,0,0,0.04)] sm:p-7 lg:sticky lg:top-28">
+    <div className="rounded-xl bg-royal-fg p-6 text-white sm:p-7 lg:sticky lg:top-28">
       <div className="flex items-baseline justify-between gap-4">
-        <h2 className="font-display text-[1.125rem] font-bold text-royal-fg">
+        <h2 className="font-display text-[1.125rem] font-bold text-white">
           {t("summaryTitle")}
         </h2>
-        <span className="text-[0.8125rem] font-medium tabular-nums text-royal-faint">
+        <span className="text-[0.8125rem] font-medium tabular-nums text-gold-500">
           {done}/3
         </span>
       </div>
@@ -608,8 +613,8 @@ function SummaryPanel({
               className={cn(
                 "grid size-6 shrink-0 place-items-center rounded-full text-[0.6875rem] font-bold transition-colors",
                 step.done
-                  ? "bg-black text-white"
-                  : "border border-black/15 text-royal-faint",
+                  ? "bg-gold-500 text-black"
+                  : "border border-white/20 text-white/45",
               )}
             >
               {step.done ? (
@@ -621,7 +626,7 @@ function SummaryPanel({
             <span
               className={cn(
                 "text-[0.875rem] transition-colors",
-                step.done ? "font-medium text-royal-fg" : "text-royal-faint",
+                step.done ? "font-medium text-white" : "text-white/45",
               )}
             >
               {step.label}
@@ -630,25 +635,25 @@ function SummaryPanel({
         ))}
       </ol>
 
-      <div className="mt-6 border-t border-black/[0.06] pt-5">
+      <div className="mt-6 border-t border-white/12 pt-5">
         {summary.length > 0 ? (
           <div className="flex flex-wrap gap-1.5">
             {summary.map((part) => (
               <span
                 key={part}
-                className="rounded-full bg-black/[0.04] px-3 py-1.5 text-[0.8125rem] font-medium text-royal-fg"
+                className="rounded-[0.3rem] bg-white/10 px-3 py-1.5 text-[0.8125rem] font-medium text-white/90"
               >
                 {part}
               </span>
             ))}
             {area && (
-              <span className="rounded-full border border-gold-500/40 bg-gold-100/40 px-3 py-1.5 text-[0.8125rem] font-medium text-royal-fg">
+              <span className="rounded-[0.3rem] bg-gold-500 px-3 py-1.5 text-[0.8125rem] font-bold text-black">
                 {area} m²
               </span>
             )}
           </div>
         ) : (
-          <p className="text-[0.875rem] text-royal-faint">{t("emptySummary")}</p>
+          <p className="text-[0.875rem] text-white/45">{t("emptySummary")}</p>
         )}
       </div>
 
@@ -657,8 +662,8 @@ function SummaryPanel({
         gönderiyor, ama bakmak isteyenden de gizlemek olmaz; açık haliyle
         kartın yarısını kaplıyordu.
       */}
-      <details className="group mt-5 border-t border-black/[0.06] pt-5">
-        <summary className="flex cursor-pointer items-center justify-between gap-3 text-[0.8125rem] font-medium text-royal-muted transition-colors hover:text-royal-fg">
+      <details className="group mt-5 border-t border-white/12 pt-5">
+        <summary className="flex cursor-pointer items-center justify-between gap-3 text-[0.8125rem] font-medium text-white/65 transition-colors hover:text-white">
           {t("previewTitle")}
           <ChevronDown
             className="size-4 shrink-0 transition-transform group-open:rotate-180"
@@ -667,7 +672,7 @@ function SummaryPanel({
         </summary>
         <pre
           data-lenis-prevent
-          className="mt-3 max-h-56 overflow-y-auto overscroll-contain whitespace-pre-wrap break-words rounded-2xl bg-black/[0.03] p-4 font-sans text-[0.8125rem] leading-relaxed text-royal-muted"
+          className="mt-3 max-h-56 overflow-y-auto overscroll-contain whitespace-pre-wrap break-words rounded-lg bg-black/40 p-4 font-sans text-[0.8125rem] leading-relaxed text-white/70"
         >
           {message}
         </pre>
@@ -683,34 +688,34 @@ function SummaryPanel({
         }}
         aria-disabled={!isValid}
         className={cn(
-          "mt-6 flex h-14 items-center justify-center gap-2.5 rounded-full text-[0.9375rem] font-bold transition-colors",
+          "mt-6 flex h-14 items-center justify-center gap-2.5 rounded-lg text-[0.9375rem] font-bold transition-colors",
           isValid
             ? "bg-[#25d366] text-black hover:bg-[#2ee674]"
-            : "cursor-not-allowed bg-black/[0.06] text-royal-faint",
+            : "cursor-not-allowed bg-white/10 text-white/40",
         )}
       >
         <MessageCircle className="size-5" aria-hidden="true" />
         {t("submit")}
       </a>
 
-      <p className="mt-2.5 text-center text-[0.75rem] text-royal-faint">
+      <p className="mt-2.5 text-center text-[0.75rem] text-white/45">
         {isValid ? t("ready") : t("missing")}
       </p>
 
       <a
         href={telLink}
-        className="mt-4 flex h-12 items-center justify-center gap-2 rounded-full border border-black/15 text-[0.875rem] font-semibold text-royal-fg transition-colors hover:border-black/35"
+        className="mt-4 flex h-12 items-center justify-center gap-2 rounded-lg border border-white/20 text-[0.875rem] font-semibold text-white/85 transition-colors hover:border-white/45 hover:text-white"
       >
         <Phone className="size-4" aria-hidden="true" />
         {t("call")} · {siteConfig.contact.phoneDisplay}
       </a>
 
-      <ul className="mt-6 flex flex-col gap-2 border-t border-black/[0.06] pt-5">
+      <ul className="mt-6 flex flex-col gap-2 border-t border-white/12 pt-5">
         {[tReassure("free"), tReassure("noSpam"), tReassure("fast")].map(
           (line) => (
             <li
               key={line}
-              className="flex items-baseline gap-2.5 text-[0.8125rem] leading-relaxed text-royal-muted"
+              className="flex items-baseline gap-2.5 text-[0.8125rem] leading-relaxed text-white/60"
             >
               <span
                 className="h-px w-3 shrink-0 translate-y-[-0.25rem] bg-gold-500"
@@ -725,7 +730,7 @@ function SummaryPanel({
       <button
         type="button"
         onClick={onReset}
-        className="mt-5 w-full text-center text-[0.75rem] text-royal-faint transition-colors hover:text-royal-fg"
+        className="mt-5 w-full text-center text-[0.75rem] text-white/35 transition-colors hover:text-white/80"
       >
         {t("clear")}
       </button>
@@ -779,10 +784,10 @@ function MobileSendBar({
           }}
           aria-disabled={!isValid}
           className={cn(
-            "flex h-12 items-center justify-center gap-2 rounded-full text-[0.875rem] font-bold transition-colors",
+            "flex h-12 items-center justify-center gap-2 rounded-lg text-[0.875rem] font-bold transition-colors",
             isValid
               ? "bg-[#25d366] text-black"
-              : "cursor-not-allowed bg-black/[0.06] text-royal-faint",
+              : "cursor-not-allowed bg-royal-fg text-white/45",
           )}
         >
           <MessageCircle className="size-4" aria-hidden="true" />
@@ -805,11 +810,16 @@ function Section({
   hint?: string;
   children: React.ReactNode;
 }) {
+  /*
+    Kart içinde kart yerine açık bölüm: üstte ince çizgi, solda siyah numara.
+    Üç beyaz kutu üst üste dizilince sayfa kendi içeriğinden çok kendi
+    çerçevelerini gösteriyordu.
+  */
   return (
-    <section className="rounded-3xl border border-black/[0.07] bg-white p-6 shadow-[0_1px_2px_rgba(0,0,0,0.04)] sm:p-8">
-      <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1 border-b border-black/[0.06] pb-5">
-        <h2 className="flex items-baseline gap-3 font-display text-[1.125rem] font-bold text-royal-fg">
-          <span className="font-display text-[0.75rem] font-bold tabular-nums text-gold-600">
+    <section className="border-t border-black/10 pt-8 first:border-t-0 first:pt-0">
+      <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
+        <h2 className="flex items-center gap-3 font-display text-[1.125rem] font-bold text-royal-fg">
+          <span className="grid size-7 shrink-0 place-items-center rounded-[0.3rem] bg-royal-fg text-[0.6875rem] font-bold tabular-nums text-white">
             {index}
           </span>
           {title}
@@ -905,7 +915,7 @@ function SizeSlider({
             value={value}
             onChange={(event) => onChange(event.target.value.replace(/[^\d.,]/g, ""))}
             placeholder="0"
-            className="w-16 rounded-lg border border-black/10 bg-white px-2 py-1 text-right text-[0.9375rem] font-bold tabular-nums text-royal-fg outline-none focus:border-black/40"
+            className="w-16 rounded-[0.3rem] border border-black/10 bg-white px-2 py-1 text-right text-[0.9375rem] font-bold tabular-nums text-royal-fg outline-none focus:border-black/40"
           />
           <span className="text-[0.75rem] text-royal-faint">cm</span>
         </span>
