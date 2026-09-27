@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Check } from "lucide-react";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 
 import { PageHeader } from "@/components/layout/page-header";
@@ -58,21 +59,32 @@ export default async function QuotePage({
         title={t("title")}
         lead={t("lead")}
       >
-        {/* Adımlar — çerçeveli rakam yerine üstte altın çizgi + numara */}
-        <RevealGroup as="ul" className="mt-9 grid gap-6 sm:grid-cols-3">
+        <RevealGroup as="ul" className="mt-10 grid gap-3 sm:grid-cols-3">
           {steps.map((step, index) => (
             <RevealItem as="li" key={step}>
-              <span className="block h-px w-full bg-black/10" aria-hidden="true">
-                <span className="block h-px w-10 bg-gold-500" />
-              </span>
-              <span className="mt-4 block font-display text-[0.6875rem] font-bold tabular-nums text-gold-600">
-                {String(index + 1).padStart(2, "0")}
-              </span>
-              <span className="mt-1.5 block text-[0.9375rem] font-medium text-royal-fg">
-                {step}
-              </span>
+              <div className="flex h-full items-start gap-3.5 rounded-2xl border border-black/[0.07] bg-white/70 p-4 backdrop-blur-sm">
+                <span className="grid size-9 shrink-0 place-items-center rounded-xl bg-royal-fg text-[0.75rem] font-bold tabular-nums text-white">
+                  {String(index + 1).padStart(2, "0")}
+                </span>
+                <span className="pt-1 text-[0.9375rem] font-medium leading-snug text-royal-fg">
+                  {step}
+                </span>
+              </div>
             </RevealItem>
           ))}
+        </RevealGroup>
+
+        <RevealGroup as="ul" className="mt-5 flex flex-wrap gap-x-6 gap-y-2">
+          {[t("reassure.free"), t("reassure.noSpam"), t("reassure.fast")].map(
+            (line) => (
+              <RevealItem as="li" key={line}>
+                <span className="flex items-center gap-2 text-[0.8125rem] text-royal-muted">
+                  <Check className="size-3.5 shrink-0 text-gold-600" aria-hidden="true" />
+                  {line}
+                </span>
+              </RevealItem>
+            ),
+          )}
         </RevealGroup>
       </PageHeader>
 

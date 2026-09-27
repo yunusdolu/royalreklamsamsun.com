@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { Check, ChevronDown, MessageCircle, Phone } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
 import { useMemo, useState } from "react";
@@ -194,7 +195,12 @@ export function QuoteBuilder({ services }: { services: Service[] }) {
         <Section index="01" title={t("sectionWhat")} hint={t("serviceHint")}>
           <fieldset>
             <legend className="sr-only">{t("serviceLabel")}</legend>
-            <div className="flex flex-wrap gap-2.5">
+            {/*
+              Onikisi de aynı boyda gri çipti; hangisinin ne olduğunu ancak
+              okuyarak anlıyordun. Tabela işi görsel bir iş, seçim de öyle
+              olmalı — kartın fotoğrafı zaten panelde yönetiliyor.
+            */}
+            <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-3">
               {services.map((item) => {
                 const label = item.copy[locale].name;
                 const active = selectedServices.includes(label);
@@ -204,12 +210,38 @@ export function QuoteBuilder({ services }: { services: Service[] }) {
                     type="button"
                     onClick={() => toggleService(label)}
                     aria-pressed={active}
-                    className={chip(active)}
-                  >
-                    {active && (
-                      <Check className="size-3.5 shrink-0" aria-hidden="true" />
+                    className={cn(
+                      "group relative overflow-hidden rounded-2xl border text-left transition-all duration-300",
+                      active
+                        ? "border-black ring-2 ring-black/85"
+                        : "border-black/[0.09] hover:border-black/30",
                     )}
-                    {label}
+                  >
+                    <span className="relative block aspect-[4/3] w-full overflow-hidden bg-royal-graphite">
+                      <Image
+                        src={item.image}
+                        alt=""
+                        fill
+                        sizes="(min-width:1024px) 180px, 45vw"
+                        style={{ objectPosition: item.cardFocus }}
+                        className={cn(
+                          "object-cover transition-transform duration-500",
+                          active ? "scale-105" : "group-hover:scale-105",
+                        )}
+                      />
+                      <span
+                        aria-hidden="true"
+                        className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-transparent"
+                      />
+                      {active && (
+                        <span className="absolute right-2 top-2 grid size-6 place-items-center rounded-full bg-white text-black">
+                          <Check className="size-3.5" aria-hidden="true" />
+                        </span>
+                      )}
+                      <span className="absolute inset-x-0 bottom-0 p-2.5 text-[0.8125rem] font-semibold leading-tight text-white">
+                        {label}
+                      </span>
+                    </span>
                   </button>
                 );
               })}
@@ -225,34 +257,31 @@ export function QuoteBuilder({ services }: { services: Service[] }) {
 
         {/* 02 — Ölçü ve koşullar */}
         <Section index="02" title={t("sectionSpec")}>
-          <div className="grid gap-5 sm:grid-cols-3">
-            <div>
-              <Label htmlFor="q-width" className={labelClass}>
-                {t("widthLabel")}
-              </Label>
-              <Input
-                id="q-width"
-                inputMode="numeric"
-                value={width}
-                onChange={(event) => setWidth(event.target.value)}
-                placeholder="400"
-                className={cn("mt-2", fieldClass)}
-              />
-            </div>
-            <div>
-              <Label htmlFor="q-height" className={labelClass}>
-                {t("heightLabel")}
-              </Label>
-              <Input
-                id="q-height"
-                inputMode="numeric"
-                value={height}
-                onChange={(event) => setHeight(event.target.value)}
-                placeholder="80"
-                className={cn("mt-2", fieldClass)}
-              />
-            </div>
-            <div>
+          {/*
+            Genişlik ve yükseklik artık kaydırakla veriliyor. Boş bir sayı
+            kutusu "buraya ne yazacağım" sorusunu doğuruyordu; kaydırak makul
+            aralığı baştan gösteriyor ve sürüklerken m² anında güncelleniyor.
+            Kesin ölçüsü olan yine sayıyı elle yazabiliyor.
+          */}
+          <div className="flex flex-col gap-6">
+            <SizeSlider
+              id="q-width"
+              label={t("widthLabel")}
+              value={width}
+              onChange={setWidth}
+              max={1000}
+              step={10}
+            />
+            <SizeSlider
+              id="q-height"
+              label={t("heightLabel")}
+              value={height}
+              onChange={setHeight}
+              max={500}
+              step={5}
+            />
+
+            <div className="w-full sm:max-w-[12rem]">
               <Label htmlFor="q-quantity" className={labelClass}>
                 {t("quantityLabel")}
               </Label>
@@ -742,5 +771,69 @@ function ChipGroup({
         })}
       </div>
     </fieldset>
+  );
+}
+
+/**
+ * Ölçü kaydırağı.
+ *
+ * Kaydırak ve sayı kutusu aynı değeri paylaşıyor: sürükleyerek yaklaşık
+ * ölçüyü veren de, elinde kesin rakam olup yazan da aynı alanı kullanıyor.
+ * Değer metin olarak tutuluyor çünkü alan boş bırakılabilmeli — sıfır ile
+ * "girilmedi" farklı şeyler.
+ */
+function SizeSlider({
+  id,
+  label,
+  value,
+  onChange,
+  max,
+  step,
+}: {
+  id: string;
+  label: string;
+  value: string;
+  onChange: (next: string) => void;
+  max: number;
+  step: number;
+}) {
+  const numeric = Number.parseFloat(value.replace(",", "."));
+  const current = Number.isFinite(numeric) ? numeric : 0;
+
+  return (
+    <div>
+      <div className="flex items-baseline justify-between gap-4">
+        <Label htmlFor={id} className="text-[0.8125rem] font-medium text-royal-fg">
+          {label}
+        </Label>
+        <span className="flex items-baseline gap-1.5">
+          <input
+            aria-label={label}
+            inputMode="numeric"
+            value={value}
+            onChange={(event) => onChange(event.target.value.replace(/[^\d.,]/g, ""))}
+            placeholder="0"
+            className="w-16 rounded-lg border border-black/10 bg-white px-2 py-1 text-right text-[0.9375rem] font-bold tabular-nums text-royal-fg outline-none focus:border-black/40"
+          />
+          <span className="text-[0.75rem] text-royal-faint">cm</span>
+        </span>
+      </div>
+
+      <input
+        id={id}
+        type="range"
+        min={0}
+        max={max}
+        step={step}
+        value={Math.min(current, max)}
+        onChange={(event) => onChange(event.target.value)}
+        className="mt-3 h-1.5 w-full cursor-pointer appearance-none rounded-full bg-black/10 accent-black outline-none [&::-webkit-slider-thumb]:size-5 [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-black [&::-webkit-slider-thumb]:shadow-[0_2px_8px_rgba(0,0,0,0.35)] [&::-moz-range-thumb]:size-5 [&::-moz-range-thumb]:rounded-full [&::-moz-range-thumb]:border-0 [&::-moz-range-thumb]:bg-black"
+      />
+
+      <div className="mt-1.5 flex justify-between text-[0.6875rem] tabular-nums text-royal-faint">
+        <span>0</span>
+        <span>{max} cm</span>
+      </div>
+    </div>
   );
 }
