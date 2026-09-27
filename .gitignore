@@ -50,3 +50,6 @@ hizmetkart görseller/
 # 54 MB ham dosyayi depoda tutmanin karsiligi yok.
 /royal hizmet kapak fotoları/
 /Royal Reklam referans işler/
+
+# Gecici calisma betikleri (tarayici surucusu, olcum, tek seferlik donusum)
+/.tmp-*
