@@ -377,7 +377,8 @@
       "phone": "Telefon",
       "summaryServices": "{count} hizmet",
       "summaryQuantity": "{count} adet"
-    }
+    },
+    "heroAlt": "Royal Reklam binasının cephesinde altın renkli ışıklı kutu harf tabela"
   },
   "faqPage": {
     "title": "Sık Sorulan Sorular",

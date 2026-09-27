@@ -377,7 +377,8 @@
       "phone": "Phone",
       "summaryServices": "{count} services",
       "summaryQuantity": "{count} pcs"
-    }
+    },
+    "heroAlt": "Gold illuminated channel letter sign on the Royal Reklam building facade"
   },
   "faqPage": {
     "title": "Frequently Asked Questions",
