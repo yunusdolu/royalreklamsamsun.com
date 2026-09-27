@@ -7,13 +7,7 @@ import { useState, useEffect } from "react";
 import { AnimatePresence, motion, type Variants } from "framer-motion";
 
 import { Link } from "@/i18n/navigation";
-
-/** Slayt görselleri; başlık ve açıklamalar çeviri dosyasından gelir. */
-const slideImages = [
-  "/images/hero/hero1.jpeg",
-  "/images/hero/hero2.jpeg",
-  "/images/hero/hero3.jpeg",
-];
+import type { HeroSlide } from "@/lib/content/hero";
 
 const container: Variants = {
   hidden: {},
@@ -60,26 +54,21 @@ function Reveal({
   );
 }
 
-export function Hero() {
+export function Hero({ slides }: { slides: HeroSlide[] }) {
   const t = useTranslations("home.hero");
   const tCommon = useTranslations("common");
   const [currentSlide, setCurrentSlide] = useState(0);
 
   useEffect(() => {
+    if (slides.length < 2) return;
     const timer = setInterval(() => {
-      setCurrentSlide((prev) => (prev + 1) % slideImages.length);
+      setCurrentSlide((prev) => (prev + 1) % slides.length);
     }, 5000);
     return () => clearInterval(timer);
-  }, []);
+  }, [slides.length]);
 
-  const slides = slideImages.map((image, index) => ({
-    image,
-    title: t(`slides.${index + 1}.title`),
-    titleLine2: t(`slides.${index + 1}.titleLine2`),
-    description: t(`slides.${index + 1}.description`),
-    alt: t(`slides.${index + 1}.alt`),
-  }));
-  const activeSlide = slides[currentSlide];
+  const activeSlide = slides[currentSlide] ?? slides[0];
+  if (!activeSlide) return null;
 
   return (
     <section className="bg-background relative isolate w-full overflow-hidden bg-white">
@@ -98,6 +87,7 @@ export function Hero() {
                 key={currentSlide}
                 src={activeSlide.image}
                 alt={activeSlide.alt}
+                style={{ objectPosition: activeSlide.imageFocus }}
                 className="absolute inset-0 size-full object-cover"
                 initial={{ opacity: 0, scale: 1.05 }}
                 animate={{ opacity: 1, scale: 1 }}

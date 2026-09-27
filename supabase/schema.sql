@@ -190,3 +190,48 @@ alter table public.projects
 
 alter table public.campaigns
   add column if not exists image_focus text;
+
+-- ---------------------------------------------------------------------------
+-- 8) Anasayfa kahraman slaytları
+-- ---------------------------------------------------------------------------
+-- Anasayfanın en üstündeki üç slayt. Tablo boşsa site çeviri dosyalarındaki
+-- özgün metinleri ve koddaki görselleri kullanmaya devam eder; yani panelden
+-- tek satır bile girilmemişken anasayfa bugünkü haliyle çalışır.
+create table if not exists public.hero_slides (
+  id            uuid primary key default gen_random_uuid(),
+
+  image         text,
+  image_focus   text,
+
+  title_tr      text not null,
+  title_en      text,
+  -- Başlığın ikinci satırı. Ayrı tutuluyor çünkü tasarımda satır kırılması
+  -- rastgele değil; cümlenin nerede bölüneceğine yazan kişi karar veriyor.
+  title2_tr     text,
+  title2_en     text,
+  description_tr text,
+  description_en text,
+  -- Görme engelli okuyucular ve görsel yüklenmezse görünen metin
+  alt_tr        text,
+  alt_en        text,
+
+  is_active     boolean not null default true,
+  sort          int not null default 0,
+
+  created_at    timestamptz not null default now(),
+  updated_at    timestamptz not null default now()
+);
+
+create index if not exists hero_slides_order_idx
+  on public.hero_slides (is_active, sort);
+
+drop trigger if exists hero_slides_touch on public.hero_slides;
+create trigger hero_slides_touch
+  before update on public.hero_slides
+  for each row execute function public.touch_updated_at();
+
+alter table public.hero_slides enable row level security;
+
+drop policy if exists "herkes okuyabilir" on public.hero_slides;
+create policy "herkes okuyabilir" on public.hero_slides
+  for select using (true);

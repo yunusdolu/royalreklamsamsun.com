@@ -10,6 +10,7 @@ import { StatsBar } from "@/components/sections/stats-bar";
 import { JsonLd } from "@/components/seo/json-ld";
 import { homeFaqs } from "@/content/faq";
 import type { Locale } from "@/i18n/routing";
+import { getHeroSlides } from "@/lib/content/hero";
 import { buildFaqSchema, buildSpeakableSchema } from "@/lib/schema";
 
 export default async function HomePage({
@@ -20,9 +21,11 @@ export default async function HomePage({
   const { locale } = await params;
   setRequestLocale(locale);
 
+  const heroSlides = await getHeroSlides(locale);
+
   return (
     <>
-      <Hero />
+      <Hero slides={heroSlides} />
       <StatsBar />
       <ServicesSection />
       <ProcessSection />

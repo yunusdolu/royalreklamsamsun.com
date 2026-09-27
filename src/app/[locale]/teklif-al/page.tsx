@@ -4,6 +4,7 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import { PageHeader } from "@/components/layout/page-header";
 import { RevealGroup, RevealItem } from "@/components/motion/reveal";
 import { QuoteBuilder } from "@/components/sections/quote-builder";
+import { getServices } from "@/lib/content/services";
 import { JsonLd } from "@/components/seo/json-ld";
 import { type Locale, routing } from "@/i18n/routing";
 import { buildBreadcrumbSchema } from "@/lib/schema";
@@ -76,7 +77,7 @@ export default async function QuotePage({
       </PageHeader>
 
       <section className="container-royal py-16 lg:py-20">
-        <QuoteBuilder />
+        <QuoteBuilder services={await getServices()} />
       </section>
 
       <JsonLd

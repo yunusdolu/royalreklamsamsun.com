@@ -1,6 +1,6 @@
 "use client";
 
-import { Check, MessageCircle, Phone } from "lucide-react";
+import { Check, ChevronDown, MessageCircle, Phone } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
 import { useMemo, useState } from "react";
 
@@ -9,7 +9,7 @@ import { Label } from "@/components/ui/label";
 import { Combobox } from "@/components/ui/combobox";
 import { Textarea } from "@/components/ui/textarea";
 import { siteConfig, telLink, whatsappLink } from "@/config/site";
-import { services } from "@/content/services";
+import type { Service } from "@/content/services";
 import { homeProvince, provinces } from "@/content/turkey";
 import type { Locale } from "@/i18n/routing";
 import { cn } from "@/lib/utils";
@@ -38,7 +38,7 @@ type Lighting = (typeof LIGHTING)[number];
 type Placement = (typeof PLACEMENT)[number];
 type Timing = (typeof TIMING)[number];
 
-export function QuoteBuilder() {
+export function QuoteBuilder({ services }: { services: Service[] }) {
   const t = useTranslations("quotePage.form");
   const tReassure = useTranslations("quotePage.reassure");
   const tMessage = useTranslations("quotePage.message");
@@ -187,7 +187,7 @@ export function QuoteBuilder() {
     );
 
   return (
-    <div className="grid gap-8 lg:grid-cols-12 lg:gap-12">
+    <div className="grid gap-8 pb-28 lg:grid-cols-12 lg:gap-12 lg:pb-0">
       {/* ---------------- Sol: form ---------------- */}
       <div className="space-y-6 lg:col-span-7">
         {/* 01 — Hizmet seçimi */}
@@ -400,130 +400,273 @@ export function QuoteBuilder() {
 
       {/* ---------------- Sağ: özet ve gönderim ---------------- */}
       <div className="lg:col-span-5">
-        <div className="overflow-hidden rounded-3xl bg-[linear-gradient(150deg,#141416_0%,#252017_58%,#141416_100%)] p-7 sm:p-8 lg:sticky lg:top-28">
-          {/* İlerleme — hangi bölüm dolduruldu */}
-          <div className="flex items-center justify-between gap-4">
-            <span className="text-[0.6875rem] font-semibold uppercase tracking-[0.16em] text-gold-400">
-              {t("summaryTitle")}
-            </span>
-            <span className="text-[0.6875rem] font-medium tabular-nums text-white/40">
-              {t("progress")} {steps.filter((s) => s.done).length}/3
-            </span>
-          </div>
+        <SummaryPanel
+          steps={steps}
+          summary={summary}
+          message={message}
+          isValid={isValid}
+          area={area}
+          onSend={() => setTouched(true)}
+          onReset={reset}
+          t={t}
+          tReassure={tReassure}
+        />
+      </div>
 
-          <div className="mt-4 grid grid-cols-3 gap-2">
+      {/*
+        Telefonda gönderim çubuğu ekranın altına sabitleniyor. Önceki
+        tasarımda özet paneli formun altında kalıyordu: kullanıcı on alanı
+        dolduruyor, sonra göndermek için sayfanın sonuna kadar kaydırmak
+        zorunda kalıyordu. Buton artık her an elinin altında.
+      */}
+      <MobileSendBar
+        steps={steps}
+        isValid={isValid}
+        message={message}
+        onSend={() => setTouched(true)}
+        t={t}
+      />
+    </div>
+  );
+}
+
+interface StepState {
+  label: string;
+  done: boolean;
+}
+
+type Translate = (key: string) => string;
+
+/**
+ * Özet ve gönderim kartı.
+ *
+ * Eskiden koyu bir gradyan kutuydu; beyaz sayfanın ortasında yamalı duruyor
+ * ve içindeki her şey (ilerleme, çipler, mesaj önizlemesi, üç buton, üç
+ * güvence satırı) aynı görsel ağırlıkta yarışıyordu. Artık formun kendisiyle
+ * aynı beyaz kart dilinde ve tek bir hiyerarşisi var: ne seçtin, ne gidecek,
+ * gönder.
+ */
+function SummaryPanel({
+  steps,
+  summary,
+  message,
+  isValid,
+  area,
+  onSend,
+  onReset,
+  t,
+  tReassure,
+}: {
+  steps: StepState[];
+  summary: string[];
+  message: string;
+  isValid: boolean;
+  area: string | null;
+  onSend: () => void;
+  onReset: () => void;
+  t: Translate;
+  tReassure: Translate;
+}) {
+  const done = steps.filter((step) => step.done).length;
+
+  return (
+    <div className="rounded-3xl border border-black/[0.07] bg-white p-6 shadow-[0_1px_2px_rgba(0,0,0,0.04)] sm:p-7 lg:sticky lg:top-28">
+      <div className="flex items-baseline justify-between gap-4">
+        <h2 className="font-display text-[1.125rem] font-bold text-royal-fg">
+          {t("summaryTitle")}
+        </h2>
+        <span className="text-[0.8125rem] font-medium tabular-nums text-royal-faint">
+          {done}/3
+        </span>
+      </div>
+
+      <ol className="mt-5 flex flex-col gap-2.5">
+        {steps.map((step, index) => (
+          <li key={step.label} className="flex items-center gap-3">
+            <span
+              className={cn(
+                "grid size-6 shrink-0 place-items-center rounded-full text-[0.6875rem] font-bold transition-colors",
+                step.done
+                  ? "bg-black text-white"
+                  : "border border-black/15 text-royal-faint",
+              )}
+            >
+              {step.done ? (
+                <Check className="size-3.5" aria-hidden="true" />
+              ) : (
+                index + 1
+              )}
+            </span>
+            <span
+              className={cn(
+                "text-[0.875rem] transition-colors",
+                step.done ? "font-medium text-royal-fg" : "text-royal-faint",
+              )}
+            >
+              {step.label}
+            </span>
+          </li>
+        ))}
+      </ol>
+
+      <div className="mt-6 border-t border-black/[0.06] pt-5">
+        {summary.length > 0 ? (
+          <div className="flex flex-wrap gap-1.5">
+            {summary.map((part) => (
+              <span
+                key={part}
+                className="rounded-full bg-black/[0.04] px-3 py-1.5 text-[0.8125rem] font-medium text-royal-fg"
+              >
+                {part}
+              </span>
+            ))}
+            {area && (
+              <span className="rounded-full border border-gold-500/40 bg-gold-100/40 px-3 py-1.5 text-[0.8125rem] font-medium text-royal-fg">
+                {area} m²
+              </span>
+            )}
+          </div>
+        ) : (
+          <p className="text-[0.875rem] text-royal-faint">{t("emptySummary")}</p>
+        )}
+      </div>
+
+      {/*
+        Mesaj önizlemesi katlanır. Kullanıcıların çoğu ona bakmadan
+        gönderiyor, ama bakmak isteyenden de gizlemek olmaz; açık haliyle
+        kartın yarısını kaplıyordu.
+      */}
+      <details className="group mt-5 border-t border-black/[0.06] pt-5">
+        <summary className="flex cursor-pointer items-center justify-between gap-3 text-[0.8125rem] font-medium text-royal-muted transition-colors hover:text-royal-fg">
+          {t("previewTitle")}
+          <ChevronDown
+            className="size-4 shrink-0 transition-transform group-open:rotate-180"
+            aria-hidden="true"
+          />
+        </summary>
+        <pre
+          data-lenis-prevent
+          className="mt-3 max-h-56 overflow-y-auto overscroll-contain whitespace-pre-wrap break-words rounded-2xl bg-black/[0.03] p-4 font-sans text-[0.8125rem] leading-relaxed text-royal-muted"
+        >
+          {message}
+        </pre>
+      </details>
+
+      <a
+        href={isValid ? whatsappLink(message) : undefined}
+        target="_blank"
+        rel="noopener noreferrer"
+        onClick={(event) => {
+          onSend();
+          if (!isValid) event.preventDefault();
+        }}
+        aria-disabled={!isValid}
+        className={cn(
+          "mt-6 flex h-14 items-center justify-center gap-2.5 rounded-full text-[0.9375rem] font-bold transition-colors",
+          isValid
+            ? "bg-[#25d366] text-black hover:bg-[#2ee674]"
+            : "cursor-not-allowed bg-black/[0.06] text-royal-faint",
+        )}
+      >
+        <MessageCircle className="size-5" aria-hidden="true" />
+        {t("submit")}
+      </a>
+
+      <p className="mt-2.5 text-center text-[0.75rem] text-royal-faint">
+        {isValid ? t("ready") : t("missing")}
+      </p>
+
+      <a
+        href={telLink}
+        className="mt-4 flex h-12 items-center justify-center gap-2 rounded-full border border-black/15 text-[0.875rem] font-semibold text-royal-fg transition-colors hover:border-black/35"
+      >
+        <Phone className="size-4" aria-hidden="true" />
+        {t("call")} · {siteConfig.contact.phoneDisplay}
+      </a>
+
+      <ul className="mt-6 flex flex-col gap-2 border-t border-black/[0.06] pt-5">
+        {[tReassure("free"), tReassure("noSpam"), tReassure("fast")].map(
+          (line) => (
+            <li
+              key={line}
+              className="flex items-baseline gap-2.5 text-[0.8125rem] leading-relaxed text-royal-muted"
+            >
+              <span
+                className="h-px w-3 shrink-0 translate-y-[-0.25rem] bg-gold-500"
+                aria-hidden="true"
+              />
+              {line}
+            </li>
+          ),
+        )}
+      </ul>
+
+      <button
+        type="button"
+        onClick={onReset}
+        className="mt-5 w-full text-center text-[0.75rem] text-royal-faint transition-colors hover:text-royal-fg"
+      >
+        {t("clear")}
+      </button>
+    </div>
+  );
+}
+
+/** Telefonda ekranın altına sabitlenen gönderim çubuğu. */
+function MobileSendBar({
+  steps,
+  isValid,
+  message,
+  onSend,
+  t,
+}: {
+  steps: StepState[];
+  isValid: boolean;
+  message: string;
+  onSend: () => void;
+  t: Translate;
+}) {
+  const done = steps.filter((step) => step.done).length;
+
+  return (
+    <div className="fixed inset-x-0 bottom-0 z-40 border-t border-black/10 bg-white/95 px-4 pb-3 pt-2.5 backdrop-blur-sm lg:hidden">
+      <div className="mx-auto flex max-w-2xl flex-col gap-2">
+        <div className="flex items-center gap-3">
+          <div className="flex flex-1 gap-1">
             {steps.map((step) => (
-              <div key={step.label}>
-                <span
-                  className={cn(
-                    "block h-1 rounded-full transition-colors duration-500",
-                    step.done ? "bg-gold-500" : "bg-white/12",
-                  )}
-                />
-                <span
-                  className={cn(
-                    "mt-2 block text-[0.6875rem] transition-colors duration-500",
-                    step.done ? "text-white/80" : "text-white/35",
-                  )}
-                >
-                  {step.label}
-                </span>
-              </div>
+              <span
+                key={step.label}
+                className={cn(
+                  "h-1 flex-1 rounded-full transition-colors duration-500",
+                  step.done ? "bg-gold-500" : "bg-black/10",
+                )}
+              />
             ))}
           </div>
-
-          {/* Seçim özeti */}
-          <div className="mt-7 border-t border-white/10 pt-6">
-            {summary.length > 0 ? (
-              <div className="flex flex-wrap gap-1.5">
-                {summary.map((part) => (
-                  <span
-                    key={part}
-                    className="rounded-full bg-white/[0.08] px-3 py-1.5 text-[0.8125rem] font-medium text-white/85"
-                  >
-                    {part}
-                  </span>
-                ))}
-              </div>
-            ) : (
-              <p className="text-[0.875rem] text-white/40">
-                {t("emptySummary")}
-              </p>
-            )}
-          </div>
-
-          {/* Gidecek mesaj */}
-          <div className="mt-6">
-            <span className="text-[0.6875rem] font-semibold uppercase tracking-[0.16em] text-white/40">
-              {t("previewTitle")}
-            </span>
-            <pre
-              data-lenis-prevent
-              className="mt-3 max-h-56 overflow-y-auto overscroll-contain whitespace-pre-wrap break-words rounded-2xl bg-black/40 p-4 font-sans text-[0.8125rem] leading-relaxed text-white/70"
-            >
-              {message}
-            </pre>
-          </div>
-
-          {/* Gönderim */}
-          <a
-            href={isValid ? whatsappLink(message) : undefined}
-            target="_blank"
-            rel="noopener noreferrer"
-            onClick={(event) => {
-              setTouched(true);
-              if (!isValid) event.preventDefault();
-            }}
-            aria-disabled={!isValid}
-            className={cn(
-              "mt-6 flex h-14 items-center justify-center gap-2.5 rounded-full text-[0.9375rem] font-bold transition-colors",
-              isValid
-                ? "bg-[#25d366] text-black hover:bg-[#2ee674]"
-                : "cursor-not-allowed bg-white/10 text-white/35",
-            )}
-          >
-            <MessageCircle className="size-5" aria-hidden="true" />
-            {t("submit")}
-          </a>
-
-          <p className="mt-2.5 text-center text-[0.75rem] text-white/40">
-            {isValid ? t("ready") : t("missing")}
-          </p>
-
-          <a
-            href={telLink}
-            className="mt-4 flex h-12 items-center justify-center gap-2 rounded-full border border-white/15 text-[0.875rem] font-semibold text-white/80 transition-colors hover:border-white/35 hover:text-white"
-          >
-            <Phone className="size-4" aria-hidden="true" />
-            {t("call")} · {siteConfig.contact.phoneDisplay}
-          </a>
-
-          {/* Güvenceler — eskiden formun altında öksüz duruyordu */}
-          <ul className="mt-7 space-y-2.5 border-t border-white/10 pt-6">
-            {[tReassure("free"), tReassure("noSpam"), tReassure("fast")].map(
-              (line) => (
-                <li
-                  key={line}
-                  className="flex items-baseline gap-3 text-[0.8125rem] leading-relaxed text-white/55"
-                >
-                  <span
-                    className="h-px w-3 shrink-0 translate-y-[-0.25rem] bg-gold-500"
-                    aria-hidden="true"
-                  />
-                  {line}
-                </li>
-              ),
-            )}
-          </ul>
-
-          <button
-            type="button"
-            onClick={reset}
-            className="mt-6 w-full text-center text-[0.75rem] text-white/30 transition-colors hover:text-white/70"
-          >
-            {t("clear")}
-          </button>
+          <span className="shrink-0 text-[0.75rem] font-medium tabular-nums text-royal-faint">
+            {done}/3
+          </span>
         </div>
+
+        <a
+          href={isValid ? whatsappLink(message) : undefined}
+          target="_blank"
+          rel="noopener noreferrer"
+          onClick={(event) => {
+            onSend();
+            if (!isValid) event.preventDefault();
+          }}
+          aria-disabled={!isValid}
+          className={cn(
+            "flex h-12 items-center justify-center gap-2 rounded-full text-[0.875rem] font-bold transition-colors",
+            isValid
+              ? "bg-[#25d366] text-black"
+              : "cursor-not-allowed bg-black/[0.06] text-royal-faint",
+          )}
+        >
+          <MessageCircle className="size-4" aria-hidden="true" />
+          {isValid ? t("submit") : t("missing")}
+        </a>
       </div>
     </div>
   );

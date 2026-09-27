@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import { useState } from "react";
 import {
   ExternalLink,
+  Home,
   Images,
   LayoutDashboard,
   LogOut,
@@ -19,6 +20,7 @@ import { signOut } from "./actions";
 
 const NAV: { href: string; label: string; icon: typeof Package; exact?: boolean }[] = [
   { href: "/admin", label: "Panel", icon: LayoutDashboard, exact: true },
+  { href: "/admin/anasayfa", label: "Anasayfa", icon: Home },
   { href: "/admin/hizmetler", label: "Hizmetler", icon: Package },
   { href: "/admin/kampanyalar", label: "Kampanyalar", icon: Megaphone },
   { href: "/admin/referanslar", label: "Referans İşler", icon: Images },
