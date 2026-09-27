@@ -3,7 +3,7 @@
 import * as React from "react";
 import { ArrowUpRight } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { useState, useEffect } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { AnimatePresence, motion, type Variants } from "framer-motion";
 
 import { Link } from "@/i18n/navigation";
@@ -57,17 +57,50 @@ function Reveal({
 export function Hero({ slides }: { slides: HeroSlide[] }) {
   const t = useTranslations("home.hero");
   const tCommon = useTranslations("common");
-  const [currentSlide, setCurrentSlide] = useState(0);
+  /*
+    Geçişin tamamı tek bir durumda tutuluyor: üstte açılan slayt, onun
+    altında tam opak duran bir önceki slayt ve her değişimde artan sayaç.
+    Üçünü birlikte güncellemek şart — alt katman bir kare geç gelirse yeni
+    görselin opaklığı sıfırken arkadaki boşluk görünüyor.
+  */
+  const [view, setView] = useState({
+    current: 0,
+    under: null as number | null,
+    sequence: 0,
+  });
+
+  const advance = useCallback(
+    (next: (previous: number) => number) =>
+      setView((value) => {
+        const target = next(value.current);
+        if (target === value.current) return value;
+        return {
+          current: target,
+          under: value.current,
+          sequence: value.sequence + 1,
+        };
+      }),
+    [],
+  );
+
+  const goTo = useCallback(
+    (index: number) => advance(() => index),
+    [advance],
+  );
 
   useEffect(() => {
     if (slides.length < 2) return;
-    const timer = setInterval(() => {
-      setCurrentSlide((prev) => (prev + 1) % slides.length);
-    }, 5000);
+    const timer = setInterval(
+      () => advance((previous) => (previous + 1) % slides.length),
+      5000,
+    );
     return () => clearInterval(timer);
-  }, [slides.length]);
+  }, [slides.length, advance]);
+
+  const currentSlide = view.current;
 
   const activeSlide = slides[currentSlide] ?? slides[0];
+  const underSlide = view.under === null ? null : (slides[view.under] ?? null);
   if (!activeSlide) return null;
 
   return (
@@ -82,19 +115,39 @@ export function Hero({ slides }: { slides: HeroSlide[] }) {
       >
         <Reveal active={true} variants={mediaItem} className="w-full">
           <div className="relative w-full aspect-[4/5] sm:aspect-[16/9] md:aspect-[24/9] overflow-hidden rounded-3xl outline outline-black/10 shadow-xl bg-gray-100">
-            <AnimatePresence mode="wait">
+            {/*
+              İki katman: altta bir önceki görsel tam opak duruyor, üstte
+              yenisi soluyor. Önceki kurguda tek katman ve AnimatePresence
+              vardı; "wait" kipinde eskisi tamamen kaybolmadan yenisi
+              başlamıyor, aradaki anda kutunun arka planı beyaz bir kare
+              olarak görünüyordu. İkisini birlikte soldurmak da çözüm değil:
+              çapraz geçişin ortasında toplam opaklık 1'in altına düşüp aynı
+              beyazlık sızıyor.
+            */}
+            {underSlide && (
               <motion.img
-                key={currentSlide}
-                src={activeSlide.image}
-                alt={activeSlide.alt}
-                style={{ objectPosition: activeSlide.imageFocus }}
+                key={`alt-${view.sequence}`}
+                src={underSlide.image}
+                alt=""
+                aria-hidden="true"
+                style={{ objectPosition: underSlide.imageFocus }}
                 className="absolute inset-0 size-full object-cover"
-                initial={{ opacity: 0, scale: 1.05 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.8 }}
               />
-            </AnimatePresence>
+            )}
+            <motion.img
+              key={view.sequence}
+              src={activeSlide.image}
+              alt={activeSlide.alt}
+              style={{ objectPosition: activeSlide.imageFocus }}
+              className="absolute inset-0 z-[1] size-full object-cover"
+              initial={{ opacity: 0, scale: 1.05 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.8 }}
+              /* Üstteki tamamen oturunca alttakini bırakıyoruz. */
+              onAnimationComplete={() =>
+                setView((value) => (value.under === null ? value : { ...value, under: null }))
+              }
+            />
             
             <div className="from-black/5 via-transparent to-black/30 absolute inset-0 bg-gradient-to-b mix-blend-multiply" />
             
@@ -103,7 +156,7 @@ export function Hero({ slides }: { slides: HeroSlide[] }) {
               {slides.map((_, index) => (
                 <button
                   key={index}
-                  onClick={() => setCurrentSlide(index)}
+                  onClick={() => goTo(index)}
                   className={`h-2 rounded-full transition-all duration-300 ${
                     index === currentSlide
                       ? "w-8 bg-white"
