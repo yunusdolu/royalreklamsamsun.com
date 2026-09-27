@@ -355,7 +355,8 @@
       "missing": "Service and name are required",
       "provinceLabel": "Province",
       "provincePlaceholder": "Select or type a province",
-      "noMatch": "No matches"
+      "noMatch": "No matches",
+      "variantSummary": "{count} types selected"
     },
     "reassure": {
       "free": "Survey and quotation are free",

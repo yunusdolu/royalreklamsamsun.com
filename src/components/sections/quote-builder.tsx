@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import { Check, ChevronDown, MessageCircle, Phone } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
 import { useMemo, useState } from "react";
@@ -8,6 +7,7 @@ import { useMemo, useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Combobox } from "@/components/ui/combobox";
+import { ServiceIcon } from "@/components/ui/service-icon";
 import { Textarea } from "@/components/ui/textarea";
 import { siteConfig, telLink, whatsappLink } from "@/config/site";
 import type { Service } from "@/content/services";
@@ -43,9 +43,16 @@ export function QuoteBuilder({ services }: { services: Service[] }) {
   const t = useTranslations("quotePage.form");
   const tReassure = useTranslations("quotePage.reassure");
   const tMessage = useTranslations("quotePage.message");
+  const tCommon = useTranslations("common");
   const locale = useLocale() as Locale;
 
+  /*
+    Kimlik tutuluyor, ad değil: çeşitleri hizmete bağlamak için kimlik şart
+    ve paneldeki bir ad değişikliği seçimi bozmuyor.
+  */
   const [selectedServices, setSelectedServices] = useState<string[]>([]);
+  /** "hizmetKimligi::çeşitAdı" — aynı çeşit adı iki hizmette geçebiliyor. */
+  const [selectedVariants, setSelectedVariants] = useState<string[]>([]);
   const [quantity, setQuantity] = useState("1");
   const [width, setWidth] = useState("");
   const [height, setHeight] = useState("");
@@ -59,11 +66,26 @@ export function QuoteBuilder({ services }: { services: Service[] }) {
   const [details, setDetails] = useState("");
   const [touched, setTouched] = useState(false);
 
-  const toggleService = (label: string) =>
-    setSelectedServices((prev) =>
-      prev.includes(label)
-        ? prev.filter((item) => item !== label)
-        : [...prev, label],
+  const byId = useMemo(
+    () => new Map(services.map((item) => [item.id, item])),
+    [services],
+  );
+
+  const serviceName = (id: string) => byId.get(id)?.copy[locale].name ?? id;
+
+  const toggleService = (id: string) =>
+    setSelectedServices((prev) => {
+      if (!prev.includes(id)) return [...prev, id];
+      /* Hizmet kaldırılınca altındaki çeşit seçimleri de gitmeli. */
+      setSelectedVariants((list) =>
+        list.filter((key) => !key.startsWith(`${id}::`)),
+      );
+      return prev.filter((item) => item !== id);
+    });
+
+  const toggleVariant = (key: string) =>
+    setSelectedVariants((prev) =>
+      prev.includes(key) ? prev.filter((item) => item !== key) : [...prev, key],
     );
 
   /** Girilen cm ölçülerinden m² — yalnızca ikisi de doluysa hesaplanır */
@@ -80,7 +102,24 @@ export function QuoteBuilder({ services }: { services: Service[] }) {
     const lines: string[] = [tMessage("intro"), ""];
 
     if (selectedServices.length > 0) {
-      lines.push(`• ${tMessage("service")}: ${selectedServices.join(", ")}`);
+      /*
+        Çeşitler ayrı bir satır değil, ait oldukları hizmetin parantezi:
+        "Tabela (kör kasa, fener)" okunurken hangi çeşidin hangi işe ait
+        olduğu belli oluyor, ayrı satırda olsaydı olmazdı.
+      */
+      const parts = selectedServices.map((id) => {
+        const item = byId.get(id);
+        if (!item) return id;
+        const picked = item.copy[locale].variants
+          .filter((variant) =>
+            selectedVariants.includes(`${id}::${variant.name}`),
+          )
+          .map((variant) => variant.name);
+        return picked.length > 0
+          ? `${item.copy[locale].name} (${picked.join(", ")})`
+          : item.copy[locale].name;
+      });
+      lines.push(`• ${tMessage("service")}: ${parts.join(", ")}`);
     }
     if (quantity && quantity !== "1")
       lines.push(`• ${tMessage("quantity")}: ${quantity}`);
@@ -109,6 +148,9 @@ export function QuoteBuilder({ services }: { services: Service[] }) {
     return lines.join("\n");
   }, [
     selectedServices,
+    selectedVariants,
+    byId,
+    locale,
     quantity,
     width,
     height,
@@ -146,9 +188,12 @@ export function QuoteBuilder({ services }: { services: Service[] }) {
     if (selectedServices.length > 0) {
       parts.push(
         selectedServices.length === 1
-          ? selectedServices[0]
+          ? serviceName(selectedServices[0])
           : tMessage("summaryServices", { count: selectedServices.length }),
       );
+    }
+    if (selectedVariants.length > 0) {
+      parts.push(t("variantSummary", { count: selectedVariants.length }));
     }
     if (quantity && quantity !== "1") {
       parts.push(tMessage("summaryQuantity", { count: quantity }));
@@ -156,10 +201,13 @@ export function QuoteBuilder({ services }: { services: Service[] }) {
     if (area) parts.push(`${area} m²`);
     if (timing) parts.push(t(`timingOptions.${timing}`));
     return parts;
-  }, [selectedServices, quantity, area, timing, t, tMessage]);
+    // serviceName yalnızca byId'ye bakıyor; ayrı bağımlılık gerekmiyor
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedServices, selectedVariants, byId, quantity, area, timing, t, tMessage]);
 
   const reset = () => {
     setSelectedServices([]);
+    setSelectedVariants([]);
     setQuantity("1");
     setWidth("");
     setHeight("");
@@ -200,52 +248,96 @@ export function QuoteBuilder({ services }: { services: Service[] }) {
               okuyarak anlıyordun. Tabela işi görsel bir iş, seçim de öyle
               olmalı — kartın fotoğrafı zaten panelde yönetiliyor.
             */}
+            {/*
+              Fotoğraf denendi ve iyi görünüyordu ama on iki fotoğrafın
+              yüksekliği altındaki çeşit listesini ekrandan itiyordu. İkon
+              hem sayfayı hafifletiyor hem de asıl seçim burada değil, altta
+              açılan çeşitlerde.
+            */}
             <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-3">
               {services.map((item) => {
-                const label = item.copy[locale].name;
-                const active = selectedServices.includes(label);
+                const active = selectedServices.includes(item.id);
                 return (
                   <button
                     key={item.id}
                     type="button"
-                    onClick={() => toggleService(label)}
+                    onClick={() => toggleService(item.id)}
                     aria-pressed={active}
                     className={cn(
-                      "group relative overflow-hidden rounded-2xl border text-left transition-all duration-300",
+                      "flex items-center gap-3 rounded-2xl border px-3.5 py-3 text-left transition-all duration-300",
                       active
-                        ? "border-black ring-2 ring-black/85"
-                        : "border-black/[0.09] hover:border-black/30",
+                        ? "border-black bg-black text-white"
+                        : "border-black/[0.09] bg-white text-royal-fg hover:border-black/30",
                     )}
                   >
-                    <span className="relative block aspect-[4/3] w-full overflow-hidden bg-royal-graphite">
-                      <Image
-                        src={item.image}
-                        alt=""
-                        fill
-                        sizes="(min-width:1024px) 180px, 45vw"
-                        style={{ objectPosition: item.cardFocus }}
-                        className={cn(
-                          "object-cover transition-transform duration-500",
-                          active ? "scale-105" : "group-hover:scale-105",
-                        )}
-                      />
-                      <span
-                        aria-hidden="true"
-                        className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-transparent"
-                      />
-                      {active && (
-                        <span className="absolute right-2 top-2 grid size-6 place-items-center rounded-full bg-white text-black">
-                          <Check className="size-3.5" aria-hidden="true" />
-                        </span>
+                    <span
+                      className={cn(
+                        "grid size-9 shrink-0 place-items-center rounded-xl transition-colors",
+                        active ? "bg-white/15 text-white" : "bg-black/[0.04] text-royal-muted",
                       )}
-                      <span className="absolute inset-x-0 bottom-0 p-2.5 text-[0.8125rem] font-semibold leading-tight text-white">
-                        {label}
-                      </span>
+                    >
+                      <ServiceIcon name={item.icon} className="size-4.5" />
                     </span>
+                    <span className="min-w-0 text-[0.8125rem] font-medium leading-tight">
+                      {item.copy[locale].name}
+                    </span>
+                    {active && (
+                      <Check className="ml-auto size-4 shrink-0" aria-hidden="true" />
+                    )}
                   </button>
                 );
               })}
             </div>
+
+            {/*
+              Çeşitler yalnızca ilgili hizmet seçilince açılıyor. Hepsini
+              birden göstermek 101 seçenek demekti; kimse okumaz.
+            */}
+            {selectedServices.length > 0 && (
+              <div className="mt-7 flex flex-col gap-6 border-t border-black/[0.06] pt-7">
+                {selectedServices.map((id) => {
+                  const item = byId.get(id);
+                  if (!item || item.copy[locale].variants.length === 0) return null;
+                  return (
+                    <fieldset key={id}>
+                      <legend className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
+                        <span className="text-[0.8125rem] font-medium text-royal-fg">
+                          {tCommon("variantsTitle", {
+                            service: item.copy[locale].shortName,
+                          })}
+                        </span>
+                        <span className="text-[0.75rem] text-royal-faint">
+                          {t("serviceHint")}
+                        </span>
+                      </legend>
+                      <div className="mt-3 flex flex-wrap gap-2">
+                        {item.copy[locale].variants.map((variant) => {
+                          const key = `${id}::${variant.name}`;
+                          const picked = selectedVariants.includes(key);
+                          return (
+                            <button
+                              key={key}
+                              type="button"
+                              onClick={() => toggleVariant(key)}
+                              aria-pressed={picked}
+                              title={variant.description}
+                              className={cn(
+                                "rounded-full px-3.5 py-2 text-[0.8125rem] transition-all duration-300",
+                                picked
+                                  ? "bg-black font-medium text-white"
+                                  : "border border-black/[0.09] bg-white text-royal-muted hover:border-black/30 hover:text-royal-fg",
+                              )}
+                            >
+                              {variant.name}
+                            </button>
+                          );
+                        })}
+                      </div>
+                    </fieldset>
+                  );
+                })}
+              </div>
+            )}
           </fieldset>
 
           {touched && selectedServices.length === 0 && (

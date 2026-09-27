@@ -355,7 +355,8 @@
       "missing": "Hizmet ve ad alanı gerekli",
       "provinceLabel": "İl",
       "provincePlaceholder": "İl seçin veya yazın",
-      "noMatch": "Eşleşen sonuç yok"
+      "noMatch": "Eşleşen sonuç yok",
+      "variantSummary": "{count} çeşit seçildi"
     },
     "reassure": {
       "free": "Keşif ve teklif ücretsiz",
