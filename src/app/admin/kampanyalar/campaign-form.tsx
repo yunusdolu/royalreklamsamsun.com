@@ -4,7 +4,8 @@ import { useActionState } from "react";
 
 import type { Service } from "@/content/services";
 import type { CampaignRow } from "@/lib/content/campaigns";
-import { Field, ImageField, SubmitButton, TextArea } from "../ui";
+import { Field, SubmitButton, TextArea } from "../ui";
+import { ImageField } from "../image-field";
 import { saveCampaign } from "./actions";
 
 /** ISO tarihi `datetime-local` alanının beklediği yerel biçime çevirir. */
@@ -68,7 +69,12 @@ export function CampaignForm({
             label="Kampanya görseli"
             name="image"
             current={campaign?.image}
+            currentFocus={campaign?.image_focus}
             hint="Yatay (16:9) bir görsel en iyi sonucu verir."
+            previews={[
+              { label: "Kampanya kartı", ratio: 16 / 9 },
+              { label: "Anasayfa şeridi", ratio: 3 },
+            ]}
           />
           <label className="flex items-center gap-2.5 rounded-lg border border-black/10 bg-white px-3 py-2.5">
             <input

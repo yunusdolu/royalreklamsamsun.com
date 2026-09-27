@@ -77,7 +77,8 @@ export async function saveService(
     summary_en: text(formData, "summary_en"),
     card_image: cardImage,
     hero_image: heroImage,
-    hero_focus: text(formData, "hero_focus"),
+    hero_focus: text(formData, "hero_image_focus"),
+    card_focus: text(formData, "card_image_focus"),
     lead_time_min: number(formData, "lead_time_min"),
     lead_time_max: number(formData, "lead_time_max"),
   });

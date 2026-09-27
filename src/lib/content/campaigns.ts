@@ -20,6 +20,7 @@ export interface CampaignRow {
   badge_tr: string | null;
   badge_en: string | null;
   image: string | null;
+  image_focus: string | null;
   service_ids: string[];
   starts_at: string | null;
   ends_at: string | null;

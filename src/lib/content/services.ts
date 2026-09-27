@@ -28,6 +28,7 @@ interface ServiceOverrideRow {
   card_image: string | null;
   hero_image: string | null;
   hero_focus: string | null;
+  card_focus: string | null;
   lead_time_min: number | null;
   lead_time_max: number | null;
 }
@@ -58,6 +59,7 @@ function merge(service: Service, row: ServiceOverrideRow | undefined): Service {
     image: pick(row.card_image, service.image),
     heroImage: pick(row.hero_image, service.heroImage),
     heroFocus: pick(row.hero_focus, service.heroFocus),
+    cardFocus: pick(row.card_focus, service.cardFocus),
     leadTimeDays: [
       pick(row.lead_time_min, service.leadTimeDays[0]),
       pick(row.lead_time_max, service.leadTimeDays[1]),

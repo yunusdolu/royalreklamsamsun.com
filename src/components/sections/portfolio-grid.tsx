@@ -174,6 +174,7 @@ export function PortfolioGrid() {
                     alt={copy.title}
                     fill
                     sizes="(min-width:1024px) 33vw, (min-width:640px) 50vw, 100vw"
+                    style={{ objectPosition: project.coverFocus }}
                     className="object-cover transition-transform duration-700 group-hover:scale-[1.06]"
                   />
                   <div

@@ -90,6 +90,7 @@ export async function saveCampaign(
     badge_tr: text(formData, "badge_tr"),
     badge_en: text(formData, "badge_en"),
     image,
+    image_focus: text(formData, "image_focus"),
     service_ids: formData.getAll("service_ids").map(String),
     starts_at: starts,
     ends_at: ends,

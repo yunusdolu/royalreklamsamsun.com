@@ -48,6 +48,7 @@ export function ServiceCard({
           fill
           sizes="(min-width:1024px) 33vw, (min-width:640px) 50vw, 100vw"
           quality={85}
+          style={{ objectPosition: service.cardFocus }}
           className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.06]"
         />
         <span className="absolute inset-0 bg-gradient-to-t from-black/55 via-black/10 to-black/5" />

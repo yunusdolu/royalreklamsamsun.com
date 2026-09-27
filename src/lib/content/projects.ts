@@ -34,6 +34,7 @@ export interface ProjectRow {
   scope_tr: string[];
   scope_en: string[];
   cover: string | null;
+  cover_focus: string | null;
   gallery: string[];
   is_published: boolean;
   sort: number;
@@ -63,6 +64,7 @@ function toProject(row: ProjectRow): Project {
     regionId: row.region_id ?? undefined,
     year: row.year ?? new Date().getFullYear(),
     cover: row.cover ?? "",
+    coverFocus: row.cover_focus ?? undefined,
     gallery: row.gallery?.length ? row.gallery : undefined,
     copy: {
       tr: trCopy,

@@ -15,6 +15,8 @@ export interface Project {
   regionId?: string;
   year: number;
   cover: string;
+  /** Kapak fotoğrafının odak noktası (`object-position`). */
+  coverFocus?: string;
   gallery?: string[];
   copy: Record<Locale, ProjectCopy>;
 }

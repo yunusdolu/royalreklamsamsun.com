@@ -5,7 +5,8 @@ import { X } from "lucide-react";
 
 import type { Service } from "@/content/services";
 import type { ProjectRow } from "@/lib/content/projects";
-import { Field, ImageField, SubmitButton, TextArea } from "../ui";
+import { Field, SubmitButton, TextArea } from "../ui";
+import { ImageField } from "../image-field";
 import { saveProject } from "./actions";
 
 /**
@@ -117,7 +118,9 @@ export function ProjectForm({
             label="Kapak fotoğrafı"
             name="cover"
             current={project?.cover}
+            currentFocus={project?.cover_focus}
             hint="Referans listesindeki kart görseli."
+            previews={[{ label: "Referans kartı", ratio: 4 / 3 }]}
           />
           <label className="flex items-center gap-2.5 rounded-lg border border-black/10 bg-white px-3 py-2.5">
             <input

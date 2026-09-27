@@ -3,7 +3,8 @@
 import { useActionState } from "react";
 
 import type { Service } from "@/content/services";
-import { Field, ImageField, SubmitButton, TextArea } from "../../ui";
+import { Field, SubmitButton, TextArea } from "../../ui";
+import { ImageField } from "../../image-field";
 import { saveService } from "../actions";
 
 interface OverrideRow {
@@ -16,6 +17,7 @@ interface OverrideRow {
   card_image: string | null;
   hero_image: string | null;
   hero_focus: string | null;
+  card_focus: string | null;
   lead_time_min: number | null;
   lead_time_max: number | null;
 }
@@ -45,23 +47,26 @@ export function ServiceForm({
           label="Kart görseli"
           name="card_image"
           current={row?.card_image ?? service.image}
+          currentFocus={row?.card_focus ?? service.cardFocus}
           hint="Anasayfa ve hizmetler sayfasındaki kart. Kare (1:1) en iyi sonucu verir."
+          previews={[
+            { label: "Anasayfa kartı", ratio: 292 / 275 },
+            { label: "Hizmetler listesi", ratio: 16 / 10 },
+          ]}
         />
         <ImageField
           label="Sayfa banner'ı"
           name="hero_image"
           current={row?.hero_image ?? service.heroImage ?? service.image}
+          currentFocus={row?.hero_focus ?? service.heroFocus}
           hint="Hizmet sayfasının üstündeki geniş görsel. 3:1 oranında olmalı."
+          previews={[
+            { label: "Masaüstü", ratio: 3 },
+            { label: "Tablet", ratio: 2 },
+            { label: "Telefon", ratio: 16 / 10 },
+          ]}
         />
       </section>
-
-      <Field
-        label="Banner odak noktası"
-        name="hero_focus"
-        defaultValue={row?.hero_focus}
-        placeholder={service.heroFocus ?? "center center"}
-        hint="Telefonda banner'ın ortadan kırpıldığı yer. Tabela sağda kalıyorsa '80% center', solda kalıyorsa '20% center' gibi bir değer yaz. Emin değilsen boş bırak."
-      />
 
       <section className="grid gap-6 sm:grid-cols-2">
         <div className="flex flex-col gap-5">

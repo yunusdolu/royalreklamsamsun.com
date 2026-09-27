@@ -65,6 +65,7 @@ export async function ServicesSection() {
                         fill
                         sizes="420px"
                         quality={85}
+                        style={{ objectPosition: service.cardFocus }}
                         className="object-cover transition-transform duration-700 group-hover/card:scale-110"
                       />
 

@@ -170,3 +170,23 @@ on conflict (id) do nothing;
 drop policy if exists "medya herkese acik" on storage.objects;
 create policy "medya herkese acik" on storage.objects
   for select using (bucket_id = 'media');
+
+-- ---------------------------------------------------------------------------
+-- 7) Sonradan eklenen alanlar
+-- ---------------------------------------------------------------------------
+-- Şema bir kez çalıştırıldıktan sonra eklenen sütunlar buraya yazılıyor;
+-- "create table if not exists" mevcut tabloya sütun eklemez. Dosyayı yeniden
+-- çalıştırmak güvenli.
+
+-- Görsellerin odak noktası. Panelde fotoğrafın üstüne tıklayarak seçiliyor,
+-- `object-position` değeri olarak saklanıyor (örn. "62% 40%"). Site bu
+-- görselleri farklı oranlarda kırptığı için, konunun nerede kalacağına
+-- yükleyen kişi karar verebilsin diye var.
+alter table public.service_overrides
+  add column if not exists card_focus text;
+
+alter table public.projects
+  add column if not exists cover_focus text;
+
+alter table public.campaigns
+  add column if not exists image_focus text;

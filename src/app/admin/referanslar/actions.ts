@@ -103,6 +103,7 @@ export async function saveProject(
     scope_tr: lines(formData, "scope_tr"),
     scope_en: lines(formData, "scope_en"),
     cover,
+    cover_focus: text(formData, "cover_focus"),
     gallery,
     is_published: formData.get("is_published") === "on",
     sort: Number(text(formData, "sort") ?? 0) || 0,

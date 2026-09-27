@@ -83,6 +83,12 @@ export interface Service {
    * Boş bırakılırsa ortalanır.
    */
   heroFocus?: string;
+  /**
+   * Kart görselinin odak noktası. Kart anasayfada neredeyse kare, hizmetler
+   * listesinde 16:10 kırpılıyor; konu kadranın kenarındaysa panelden
+   * işaretlenen nokta merkezde tutuluyor.
+   */
+  cardFocus?: string;
   /** Anasayfada öne çıkarılsın mı */
   featured: boolean;
   /** Ortalama teslim süresi (schema.org ve kart rozeti için) */
