@@ -89,6 +89,24 @@ export function QuoteBuilder({ services }: { services: Service[] }) {
       prev.includes(key) ? prev.filter((item) => item !== key) : [...prev, key],
     );
 
+  /*
+    Telefon alanı yalnızca rakam kabul ediyor. Serbest metin bırakıldığında
+    "ararsınız" gibi cevaplar geliyordu ve numara olmadan geri dönmenin yolu
+    yok; WhatsApp'a düşen mesajda da işe yaramaz bir satır kalıyordu.
+  */
+  const phoneDigits = phone.replace(/\D/g, "");
+  const phoneValid = phoneDigits.length === 10 || phoneDigits.length === 11;
+
+  /** 0544 230 71 77 — yazarken kendiliğinden gruplanır. */
+  const formatPhone = (raw: string) => {
+    const digits = raw.replace(/\D/g, "").slice(0, 11);
+    const groups =
+      digits.length > 10
+        ? [digits.slice(0, 4), digits.slice(4, 7), digits.slice(7, 9), digits.slice(9)]
+        : [digits.slice(0, 4), digits.slice(4, 7), digits.slice(7, 9), digits.slice(9, 11)];
+    return groups.filter(Boolean).join(" ");
+  };
+
   /** Girilen cm ölçülerinden m² — yalnızca ikisi de doluysa hesaplanır */
   const area = useMemo(() => {
     const w = Number.parseFloat(width.replace(",", "."));
@@ -168,7 +186,13 @@ export function QuoteBuilder({ services }: { services: Service[] }) {
     tMessage,
   ]);
 
-  const isValid = selectedServices.length > 0 && name.trim().length > 0;
+  /*
+    Ad tek başına yetmiyordu: ilk harfe basar basmaz buton yeşile dönüyor ve
+    telefonsuz bir mesaj gidiyordu. Geri dönüş numaradan yapıldığı için
+    telefon da zorunlu.
+  */
+  const isValid =
+    selectedServices.length > 0 && name.trim().length > 1 && phoneValid;
 
   /** Üç bölümün doluluk durumu — sağ paneldeki ilerleme göstergesi */
   const steps = useMemo(
@@ -178,9 +202,19 @@ export function QuoteBuilder({ services }: { services: Service[] }) {
         label: t("stepSpec"),
         done: Boolean((width && height) || lighting || placement || timing),
       },
-      { label: t("stepWho"), done: name.trim().length > 0 },
+      { label: t("stepWho"), done: name.trim().length > 1 && phoneValid },
     ],
-    [selectedServices, width, height, lighting, placement, timing, name, t],
+    [
+      selectedServices,
+      width,
+      height,
+      lighting,
+      placement,
+      timing,
+      name,
+      phoneValid,
+      t,
+    ],
   );
 
   /** Panelin üstündeki tek satırlık özet çipleri */
@@ -456,17 +490,30 @@ export function QuoteBuilder({ services }: { services: Service[] }) {
 
             <div>
               <Label htmlFor="q-phone" className={labelClass}>
-                {t("phoneLabel")}
+                {t("phoneLabel")} <span className="text-gold-600">*</span>
               </Label>
               <Input
                 id="q-phone"
                 type="tel"
+                inputMode="tel"
                 value={phone}
-                onChange={(event) => setPhone(event.target.value)}
+                onChange={(event) => setPhone(formatPhone(event.target.value))}
                 placeholder={t("phonePlaceholder")}
                 autoComplete="tel"
-                className={cn("mt-2", fieldClass)}
+                aria-invalid={touched && !phoneValid}
+                className={cn(
+                  "mt-2",
+                  fieldClass,
+                  touched && !phoneValid && "border-destructive/70",
+                )}
               />
+              {touched && !phoneValid && (
+                <p className="mt-1.5 text-xs text-destructive">
+                  {phoneDigits.length === 0
+                    ? t("phoneRequired")
+                    : t("phoneInvalid")}
+                </p>
+              )}
             </div>
 
             <div>
@@ -591,6 +638,11 @@ function SummaryPanel({
   const done = steps.filter((step) => step.done).length;
   const prefersReduced = useReducedMotion();
 
+  const chips = [
+    ...summary.map((part) => ({ id: part, label: part, gold: false })),
+    ...(area ? [{ id: "alan", label: `${area} m²`, gold: true }] : []),
+  ];
+
   /* Hareketi kapatmış kullanıcıda her şey anında yerine otursun. */
   const ease = prefersReduced
     ? { duration: 0 }
@@ -705,35 +757,27 @@ function SummaryPanel({
       </ol>
 
       <div className="mt-6 border-t border-white/12 pt-5">
-        {summary.length > 0 ? (
+        {chips.length > 0 ? (
           <motion.div layout className="flex flex-wrap gap-1.5">
             <AnimatePresence mode="popLayout" initial={false}>
-              {summary.map((part) => (
+              {chips.map((chip) => (
                 <motion.span
-                  key={part}
+                  key={chip.id}
                   layout
                   initial={prefersReduced ? false : { opacity: 0, scale: 0.85, y: 6 }}
                   animate={{ opacity: 1, scale: 1, y: 0 }}
                   exit={prefersReduced ? { opacity: 0 } : { opacity: 0, scale: 0.85 }}
                   transition={ease}
-                  className="rounded-[0.3rem] bg-white/10 px-3 py-1.5 text-[0.8125rem] font-medium text-white/90"
+                  className={cn(
+                    "rounded-[0.3rem] px-3 py-1.5 text-[0.8125rem]",
+                    chip.gold
+                      ? "bg-gold-500 font-bold text-black"
+                      : "bg-white/10 font-medium text-white/90",
+                  )}
                 >
-                  {part}
+                  {chip.label}
                 </motion.span>
               ))}
-              {area && (
-                <motion.span
-                  key={`alan-${area}`}
-                  layout
-                  initial={prefersReduced ? false : { opacity: 0, scale: 0.85, y: 6 }}
-                  animate={{ opacity: 1, scale: 1, y: 0 }}
-                  exit={prefersReduced ? { opacity: 0 } : { opacity: 0, scale: 0.85 }}
-                  transition={ease}
-                  className="rounded-[0.3rem] bg-gold-500 px-3 py-1.5 text-[0.8125rem] font-bold text-black"
-                >
-                  {area} m²
-                </motion.span>
-              )}
             </AnimatePresence>
           </motion.div>
         ) : (

@@ -356,7 +356,9 @@
       "provinceLabel": "Province",
       "provincePlaceholder": "Select or type a province",
       "noMatch": "No matches",
-      "variantSummary": "{count} types selected"
+      "variantSummary": "{count} types selected",
+      "phoneInvalid": "Enter a 10-digit phone number, e.g. 0544 230 71 77",
+      "phoneRequired": "We need a phone number to get back to you"
     },
     "reassure": {
       "free": "Survey and quotation are free",

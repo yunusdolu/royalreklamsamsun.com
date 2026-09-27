@@ -356,7 +356,9 @@
       "provinceLabel": "İl",
       "provincePlaceholder": "İl seçin veya yazın",
       "noMatch": "Eşleşen sonuç yok",
-      "variantSummary": "{count} çeşit seçildi"
+      "variantSummary": "{count} çeşit seçildi",
+      "phoneInvalid": "Telefon numarası 10 haneli olmalı, örn. 0544 230 71 77",
+      "phoneRequired": "Size dönebilmemiz için telefon gerekli"
     },
     "reassure": {
       "free": "Keşif ve teklif ücretsiz",
