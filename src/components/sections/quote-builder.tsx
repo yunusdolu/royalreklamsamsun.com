@@ -1,6 +1,6 @@
 "use client";
 
-import { Check, ChevronDown, MessageCircle, Phone } from "lucide-react";
+import { Check, ChevronDown, MessageCircle, Minus, Phone, Plus } from "lucide-react";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { useLocale, useTranslations } from "next-intl";
 import { useMemo, useState } from "react";
@@ -408,15 +408,11 @@ export function QuoteBuilder({ services }: { services: Service[] }) {
             />
 
             <div className="w-full sm:max-w-[12rem]">
-              <Label htmlFor="q-quantity" className={labelClass}>
-                {t("quantityLabel")}
-              </Label>
-              <Input
-                id="q-quantity"
-                inputMode="numeric"
+              <span className={cn("block", labelClass)}>{t("quantityLabel")}</span>
+              <QuantityStepper
                 value={quantity}
-                onChange={(event) => setQuantity(event.target.value)}
-                className={cn("mt-2", fieldClass)}
+                onChange={setQuantity}
+                label={t("quantityLabel")}
               />
             </div>
           </div>
@@ -649,7 +645,20 @@ function SummaryPanel({
     : { type: "spring" as const, stiffness: 260, damping: 26 };
 
   return (
-    <div className="relative overflow-hidden rounded-xl bg-royal-fg p-6 text-white sm:p-7 lg:sticky lg:top-28">
+    <motion.div
+      initial={false}
+      /* Üçü de tamamlanınca kartın kenarı altınla çevreleniyor: kullanıcı
+         aşağıdaki butona bakmıyorken bile bittiğini çevresel görüşle
+         yakalıyor. Gölge kullanıldı, çünkü kenarlık düzeni kaydırırdı. */
+      animate={{
+        boxShadow:
+          done === steps.length
+            ? "0 0 0 1px rgba(212,175,55,0.55), 0 18px 50px -24px rgba(212,175,55,0.5)"
+            : "0 0 0 1px rgba(255,255,255,0.06), 0 0px 0px 0px rgba(212,175,55,0)",
+      }}
+      transition={prefersReduced ? { duration: 0 } : { duration: 0.5 }}
+      className="relative overflow-hidden rounded-xl bg-royal-fg p-6 text-white sm:p-7 lg:sticky lg:top-28"
+    >
       {/* Kartın tepesindeki ilerleme şeridi — formu doldurdukça soldan sağa dolar. */}
       <span
         aria-hidden="true"
@@ -687,30 +696,39 @@ function SummaryPanel({
         </span>
       </div>
 
-      {/* Dikey adım çizgisi: rozetleri birbirine bağlayan hat altınla doluyor. */}
-      <ol className="relative mt-6 flex flex-col gap-4">
+      {/*
+        Adımlar yan yana: sağda boşluk vardı ve üç satır alt alta kartın
+        yarısını yiyordu. Rozetleri birbirine bağlayan yatay hat ilerledikçe
+        altınla doluyor, tamamlanan rozet bir zıplayıp onay işaretine
+        dönüşüyor.
+      */}
+      <ol className="relative mt-6 grid grid-cols-3 gap-1">
         <span
           aria-hidden="true"
-          className="absolute bottom-3 left-3 top-3 w-px bg-white/12"
+          className="absolute left-[16.6%] right-[16.6%] top-3 h-px -translate-y-1/2 bg-white/12"
         />
         <motion.span
           aria-hidden="true"
-          className="absolute bottom-3 left-3 top-3 w-px origin-top bg-gold-500"
+          className="absolute left-[16.6%] right-[16.6%] top-3 h-px origin-left -translate-y-1/2 bg-gold-500"
           initial={false}
-          animate={{ scaleY: done === 0 ? 0 : (done - 1) / (steps.length - 1) }}
-          transition={prefersReduced ? { duration: 0 } : { duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+          animate={{ scaleX: done === 0 ? 0 : (done - 1) / (steps.length - 1) }}
+          transition={
+            prefersReduced
+              ? { duration: 0 }
+              : { duration: 0.5, ease: [0.22, 1, 0.36, 1] }
+          }
         />
 
         {steps.map((step, index) => (
-          <li key={step.label} className="relative flex items-center gap-3">
+          <li key={step.label} className="relative flex flex-col items-center gap-2">
             <motion.span
               initial={false}
               animate={
                 prefersReduced || !step.done
                   ? { scale: 1 }
-                  : { scale: [1, 1.18, 1] }
+                  : { scale: [1, 1.22, 1] }
               }
-              transition={{ duration: prefersReduced ? 0 : 0.34 }}
+              transition={{ duration: prefersReduced ? 0 : 0.36 }}
               className={cn(
                 "relative z-10 grid size-6 shrink-0 place-items-center rounded-full text-[0.6875rem] font-bold transition-colors duration-300",
                 step.done
@@ -746,7 +764,7 @@ function SummaryPanel({
 
             <span
               className={cn(
-                "text-[0.875rem] transition-colors duration-300",
+                "text-center text-[0.75rem] leading-tight transition-colors duration-300",
                 step.done ? "font-medium text-white" : "text-white/45",
               )}
             >
@@ -882,7 +900,7 @@ function SummaryPanel({
       >
         {t("clear")}
       </button>
-    </div>
+    </motion.div>
   );
 }
 
@@ -1084,6 +1102,83 @@ function SizeSlider({
         <span>0</span>
         <span>{max} cm</span>
       </div>
+    </div>
+  );
+}
+
+/**
+ * Adet seçici.
+ *
+ * Sayı kutusu yerine artır/azalt: teklif isteyen kişi genelde 1–5 arası bir
+ * sayı giriyor, bunun için klavye açtırmak gereksiz. Değer yine metin olarak
+ * tutuluyor çünkü mesaj üretimi ve "1 ise yazma" kuralı metne bakıyor.
+ */
+function QuantityStepper({
+  value,
+  onChange,
+  label,
+}: {
+  value: string;
+  /*
+    Doğrudan React ayarlayıcısı alıyor: art arda iki kez basıldığında her iki
+    tıklama da yeniden çizimden önce çalışıyor ve `value` propu hâlâ eski
+    değeri taşıyor. Güncelleyici biçimi her tıklamanın bir öncekini görmesini
+    sağlıyor — yoksa hızlı çift tıklama tek artış sayılıyordu.
+  */
+  onChange: React.Dispatch<React.SetStateAction<string>>;
+  label: string;
+}) {
+  const prefersReduced = useReducedMotion();
+  const current = Math.min(Math.max(Number.parseInt(value, 10) || 1, 1), 99);
+  const step = (delta: number) =>
+    onChange((prev) => {
+      const next = (Number.parseInt(prev, 10) || 1) + delta;
+      return String(Math.min(Math.max(next, 1), 99));
+    });
+
+  const button =
+    "grid size-11 place-items-center text-royal-muted transition-colors hover:bg-black/[0.04] hover:text-royal-fg disabled:cursor-not-allowed disabled:text-royal-faint/50 disabled:hover:bg-transparent";
+
+  return (
+    <div className="mt-2 inline-flex items-center overflow-hidden rounded-lg border border-black/10 bg-white">
+      <button
+        type="button"
+        onClick={() => step(-1)}
+        disabled={current <= 1}
+        aria-label={`${label} −`}
+        className={button}
+      >
+        <Minus className="size-4" aria-hidden="true" />
+      </button>
+
+      {/* Sayı yerinde durup değişmiyor; eskisi kayıp yenisi geliyor. */}
+      <span
+        aria-live="polite"
+        className="relative h-11 w-12 overflow-hidden border-x border-black/10"
+      >
+        <AnimatePresence initial={false} mode="popLayout">
+          <motion.span
+            key={current}
+            initial={prefersReduced ? false : { y: 16, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            exit={prefersReduced ? { opacity: 0 } : { y: -16, opacity: 0 }}
+            transition={{ duration: prefersReduced ? 0 : 0.22 }}
+            className="absolute inset-0 grid place-items-center text-[0.9375rem] font-bold tabular-nums text-royal-fg"
+          >
+            {current}
+          </motion.span>
+        </AnimatePresence>
+      </span>
+
+      <button
+        type="button"
+        onClick={() => step(1)}
+        disabled={current >= 99}
+        aria-label={`${label} +`}
+        className={button}
+      >
+        <Plus className="size-4" aria-hidden="true" />
+      </button>
     </div>
   );
 }
