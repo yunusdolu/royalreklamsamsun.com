@@ -46,6 +46,7 @@ export function ServiceForm({
         <ImageField
           label="Kart görseli"
           name="card_image"
+          folder={`services/${service.id}/kart`}
           current={row?.card_image ?? service.image}
           currentFocus={row?.card_focus ?? service.cardFocus}
           hint="Anasayfa ve hizmetler sayfasındaki kart. Kare (1:1) en iyi sonucu verir."
@@ -57,13 +58,14 @@ export function ServiceForm({
         <ImageField
           label="Sayfa banner'ı"
           name="hero_image"
+          folder={`services/${service.id}/banner`}
           current={row?.hero_image ?? service.heroImage ?? service.image}
           currentFocus={row?.hero_focus ?? service.heroFocus}
-          hint="Hizmet sayfasının üstündeki geniş görsel. 3:1 oranında olmalı."
+          hint="Hizmet sayfasının başlığının arkasındaki görsel; yazı sol tarafta durur. Konusu sağda olan yatay bir fotoğraf en iyi sonucu verir."
           previews={[
-            { label: "Masaüstü", ratio: 3 },
-            { label: "Tablet", ratio: 2 },
-            { label: "Telefon", ratio: 16 / 10 },
+            { label: "Masaüstü", ratio: 4 },
+            { label: "Tablet", ratio: 2.4 },
+            { label: "Telefon", ratio: 1.2 },
           ]}
         />
       </section>

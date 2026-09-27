@@ -9,7 +9,7 @@ import { useEffect, useMemo, useState } from "react";
 import { refreshScroll } from "@/components/motion/smooth-scroll-provider";
 import { PillAnchor, PillLink } from "@/components/ui/pill-button";
 import { siteConfig } from "@/config/site";
-import { projects } from "@/content/projects";
+import type { Project } from "@/content/projects";
 import { getServiceById, services } from "@/content/services";
 import { Link } from "@/i18n/navigation";
 import type { Locale } from "@/i18n/routing";
@@ -24,8 +24,11 @@ const PAGE_SIZE = 12;
  * kategorideki iş sayısı yazar ve fotoğrafı olmayan kategoriler pasif
  * kalır — böylece hem tüm hizmetler görünür olur hem de boş sonuç dönen
  * bir filtreye tıklanamaz.
+ *
+ * Liste sunucudan geliyor (panelde girilen işler, tablo boşsa koddaki
+ * liste); bileşen istemcide çalıştığı için veritabanını kendisi okuyamaz.
  */
-export function PortfolioGrid() {
+export function PortfolioGrid({ projects }: { projects: Project[] }) {
   const locale = useLocale() as Locale;
   const t = useTranslations("portfolioPage");
   const [active, setActive] = useState<string>("all");
@@ -37,7 +40,7 @@ export function PortfolioGrid() {
       map.set(project.serviceId, (map.get(project.serviceId) ?? 0) + 1);
     }
     return map;
-  }, []);
+  }, [projects]);
 
   const filters = useMemo(
     () => [
@@ -48,7 +51,7 @@ export function PortfolioGrid() {
         count: counts.get(service.id) ?? 0,
       })),
     ],
-    [counts, locale, t],
+    [counts, locale, projects.length, t],
   );
 
   const filtered = useMemo(
@@ -56,7 +59,7 @@ export function PortfolioGrid() {
       active === "all"
         ? projects
         : projects.filter((project) => project.serviceId === active),
-    [active],
+    [active, projects],
   );
 
   const handleFilterChange = (id: string) => {
@@ -78,7 +81,7 @@ export function PortfolioGrid() {
 
   if (projects.length === 0) {
     return (
-      <div className="rounded-2xl bg-[linear-gradient(150deg,#141416_0%,#252017_58%,#141416_100%)] px-6 py-16 text-center sm:px-12">
+      <div className="rounded-2xl bg-[#121214] px-6 py-16 text-center sm:px-12">
         <p className="mx-auto max-w-xl text-[0.9375rem] leading-relaxed text-white/60">
           {t("comingSoon")}
         </p>

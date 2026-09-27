@@ -3,6 +3,7 @@ import Link from "next/link";
 import { services } from "@/content/services";
 import { requireSession } from "@/lib/admin/auth";
 import { adminClient } from "@/lib/supabase/server";
+import { PageHeaderCard } from "../sayfalar/header-card";
 import { Notice, PageTitle } from "../ui-server";
 
 export default async function ServicesPage({
@@ -35,6 +36,8 @@ export default async function ServicesPage({
       {params.sifirlandi && (
         <Notice>Düzenlemeler silindi, hizmet eski haline döndü.</Notice>
       )}
+
+      <PageHeaderCard pageKey="hizmetler" />
 
       <ul className="divide-y divide-black/10 overflow-hidden rounded-xl border border-black/10 bg-white">
         {services.map((service) => {

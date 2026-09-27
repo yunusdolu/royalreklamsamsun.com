@@ -1,25 +1,42 @@
 import Link from "next/link";
-import { Images, Plus } from "lucide-react";
+import { Download, Images, Plus } from "lucide-react";
 
 import { requireSession } from "@/lib/admin/auth";
-import { getAllHeroSlides } from "@/lib/content/hero";
+import { getAllHeroSlides, getCodeSlides } from "@/lib/content/hero";
+import { SubmitButton } from "../ui";
 import { Notice, PageTitle } from "../ui-server";
-import { toggleSlide } from "./actions";
+import { importCodeSlides, toggleSlide } from "./actions";
 
 export default async function HeroPage({
   searchParams,
 }: {
-  searchParams: Promise<{ kaydedildi?: string; silindi?: string }>;
+  searchParams: Promise<{
+    kaydedildi?: string;
+    silindi?: string;
+    aktarildi?: string;
+    son?: string;
+    hata?: string;
+  }>;
 }) {
   await requireSession();
   const params = await searchParams;
   const slides = await getAllHeroSlides();
+  /*
+    Panelde yayında slayt yoksa sitede koddaki üç slayt görünüyor; panelde de
+    aynısı listelensin. Daha önce aktarılmış olanlar (aynı başlık) tekrar
+    gösterilmiyor.
+  */
+  const hasLive = slides.some((slide) => slide.is_active);
+  const known = new Set(slides.map((slide) => slide.title_tr.trim()));
+  const codeSlides = hasLive
+    ? []
+    : (await getCodeSlides()).filter((slide) => !known.has(slide.title_tr.trim()));
 
   return (
     <div className="flex flex-col gap-6">
       <PageTitle
         title="Anasayfa"
-        lead="Sayfanın en üstündeki kayan slaytlar. Tablo boşken sitede koddaki üç özgün slayt görünür; buraya ilk slaydı eklediğinde onların yerini alır."
+        lead="Sayfanın en üstündeki kayan slaytlar. Bir slayta tıklayıp görselini, başlığını ve açıklamasını değiştirebilirsin; küçük sıra numarası önce görünür."
       >
         <Link
           href="/admin/anasayfa/yeni"
@@ -32,25 +49,81 @@ export default async function HeroPage({
 
       {params.kaydedildi && <Notice>Kaydedildi. Site tazelendi.</Notice>}
       {params.silindi && <Notice>Slayt silindi.</Notice>}
+      {params.aktarildi && (
+        <Notice>
+          Sitedeki {params.aktarildi} slayt panele aktarıldı. Artık her birini
+          buradan düzenleyebilirsin; sitede hiçbir şey değişmedi.
+        </Notice>
+      )}
+      {params.son && (
+        <p role="alert" className="rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+          Anasayfada en az bir slayt yayında kalmalı. Önce başka bir slaytı
+          yayına al, sonra bunu kaldır.
+        </p>
+      )}
+      {params.hata && (
+        <p role="alert" className="rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+          Slaytlar aktarılamadı. Supabase bağlantısını kontrol edip tekrar dene.
+        </p>
+      )}
 
-      {slides.length === 0 ? (
-        <div className="rounded-xl border border-dashed border-black/15 bg-white px-6 py-14 text-center">
-          <Images className="mx-auto size-7 text-zinc-400" />
-          <p className="mt-3 text-sm font-medium">Slayt eklenmemiş</p>
-          <p className="mx-auto mt-1 max-w-md text-sm text-zinc-500">
-            Anasayfa şu an koddaki üç slaytla çalışıyor. Buraya slayt
-            eklediğinde tamamı senin girdiklerinle değişir — yarısı panelden
-            yarısı koddan gelirse başlıklar birbirini tutmaz.
-          </p>
-          <Link
-            href="/admin/anasayfa/yeni"
-            className="mt-5 inline-flex items-center gap-2 rounded-lg bg-zinc-900 px-4 py-2.5 text-sm font-semibold text-white"
-          >
-            <Plus className="size-4" />
-            Yeni slayt
-          </Link>
-        </div>
-      ) : (
+      {codeSlides.length > 0 && (
+        <>
+          <div className="flex flex-col gap-4 rounded-xl border border-amber-200 bg-amber-50/60 p-5 sm:flex-row sm:items-center sm:justify-between">
+            <div className="max-w-2xl">
+              <p className="text-sm font-semibold text-zinc-900">
+                Sitede {codeSlides.length} slayt görünüyor, ama henüz panelde değiller
+              </p>
+              <p className="mt-1 text-sm leading-relaxed text-zinc-600">
+                {slides.length > 0 &&
+                  "Panelde yayında slayt olmadığı için anasayfada şu an bunlar çıkıyor. "}
+                Aşağıdaki slaytlar sitenin koduna gömülü; bu yüzden buradan
+                düzenlenemiyor. Panele aktardığında her biri ayrı kayıt olur:
+                görselini, başlığını ve açıklamasını değiştirebilir, sırasını
+                ayarlayabilirsin. Aktarım sitede hiçbir şeyi değiştirmez.
+              </p>
+            </div>
+            <form action={importCodeSlides} className="shrink-0">
+              <SubmitButton pendingLabel="Aktarılıyor…">
+                <span className="inline-flex items-center gap-2">
+                  <Download className="size-4" aria-hidden="true" />
+                  {codeSlides.length} slaytı panele aktar
+                </span>
+              </SubmitButton>
+            </form>
+          </div>
+
+          <ul className="flex flex-col gap-4">
+            {codeSlides.map((slide, index) => (
+              <li
+                key={slide.image}
+                className="flex flex-col gap-4 rounded-xl border border-black/10 bg-white p-4 sm:flex-row sm:items-center"
+              >
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={slide.image ?? ""}
+                  alt=""
+                  className="h-24 w-full shrink-0 rounded-lg object-cover sm:w-56"
+                />
+                <div className="min-w-0 flex-1">
+                  <p className="text-xs text-zinc-400">{index + 1}. slayt</p>
+                  <p className="mt-0.5 font-medium">
+                    {slide.title_tr} {slide.title2_tr}
+                  </p>
+                  <p className="mt-1 line-clamp-2 text-sm text-zinc-500">
+                    {slide.description_tr}
+                  </p>
+                </div>
+                <span className="shrink-0 rounded-full bg-zinc-100 px-2.5 py-1 text-[11px] font-medium text-zinc-600">
+                  Sitede · koddan
+                </span>
+              </li>
+            ))}
+          </ul>
+        </>
+      )}
+
+      {slides.length > 0 && (
         <ul className="flex flex-col gap-4">
           {slides.map((slide, index) => (
             <li

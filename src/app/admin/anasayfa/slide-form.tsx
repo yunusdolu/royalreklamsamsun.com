@@ -18,6 +18,7 @@ export function SlideForm({ slide }: { slide: HeroSlideRow | null }) {
         <ImageField
           label="Slayt görseli"
           name="image"
+          folder="hero"
           current={slide?.image}
           currentFocus={slide?.image_focus}
           hint="Geniş (24:9) bir fotoğraf en iyi sonucu verir. Telefonda dikey kırpıldığı için odak noktasını konunun üstüne koy."

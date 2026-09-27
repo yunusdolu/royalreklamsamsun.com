@@ -50,9 +50,7 @@ export default async function AdminLayout({
             </main>
           </div>
         ) : (
-          <main className="mx-auto flex min-h-screen w-full max-w-sm items-center px-4">
-            <div className="w-full">{children}</div>
-          </main>
+          <div className="min-h-screen w-full">{children}</div>
         )}
       </body>
     </html>

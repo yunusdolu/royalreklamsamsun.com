@@ -12,6 +12,7 @@ import { Link } from "@/i18n/navigation";
 import { type Locale, routing } from "@/i18n/routing";
 import { buildBreadcrumbSchema, buildSpeakableSchema } from "@/lib/schema";
 import { buildAlternates, buildOpenGraph } from "@/lib/seo";
+import { getPageContent } from "@/lib/content/pages";
 
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
@@ -46,6 +47,9 @@ export default async function RegionsPage({
   const { locale } = await params;
   setRequestLocale(locale);
 
+  /* Başlık bloğu panelden düzenlenebilir; boşsa koddaki metin gelir. */
+  const page = await getPageContent("bolgeler", locale);
+
   const t = await getTranslations("regionsPage");
   const tCommon = await getTranslations("common");
 
@@ -56,8 +60,10 @@ export default async function RegionsPage({
           { name: tCommon("breadcrumbHome"), href: "/" },
           { name: t("title") },
         ]}
-        title={t("title")}
-        lead={t("lead")}
+        title={page.title}
+        lead={page.lead}
+        image={page.image}
+        imagePosition={page.imageFocus}
         answer={t("answer")}
       />
 
@@ -132,7 +138,7 @@ export default async function RegionsPage({
 
         {/* Ayrı sayfası olmayan ilçeler — koyu şerit */}
         <Reveal>
-          <div className="mt-14 overflow-hidden rounded-2xl bg-[linear-gradient(150deg,#141416_0%,#252017_58%,#141416_100%)] p-8 sm:p-10">
+          <div className="mt-14 overflow-hidden rounded-2xl bg-[#121214] p-8 sm:p-10">
             <h2 className="text-[0.6875rem] font-semibold uppercase tracking-[0.16em] text-gold-400">
               {t("otherDistricts")}
             </h2>

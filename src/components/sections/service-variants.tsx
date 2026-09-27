@@ -18,19 +18,32 @@ import { cn } from "@/lib/utils";
  *
  * Kapalı satırların açıklaması DOM'dan silinmez, yalnızca gizlenir —
  * arama motorları hepsini görsün diye.
+ *
+ * Açık satır dışarıdan da yönetilebiliyor (`openIndex` + `onOpenChange`):
+ * hizmet sayfasında alttaki bilgi bölümü hangi çeşidin seçili olduğunu
+ * bilmek zorunda.
  */
 export function ServiceVariants({
   title,
   variants,
   fallbackImage,
+  openIndex: controlledIndex,
+  onOpenChange,
 }: {
   title: string;
   variants: ServiceVariant[];
   fallbackImage?: string;
+  openIndex?: number;
+  onOpenChange?: (index: number) => void;
 }) {
   const t = useTranslations("common");
   const baseId = useId();
-  const [openIndex, setOpenIndex] = useState(0);
+  const [ownIndex, setOwnIndex] = useState(0);
+  const openIndex = controlledIndex ?? ownIndex;
+  const setOpenIndex = (index: number) => {
+    setOwnIndex(index);
+    onOpenChange?.(index);
+  };
   const prefersReduced = useReducedMotion();
 
   return (

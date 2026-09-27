@@ -99,6 +99,38 @@ export async function getHeroSlides(locale: Locale): Promise<HeroSlide[]> {
   }));
 }
 
+/**
+ * Koddaki üç özgün slayt, tablo satırı biçiminde. Panel bunları hem
+ * "sitede şu an bunlar var" önizlemesi olarak gösteriyor hem de tek
+ * tıkla tabloya aktarıyor; aktarımdan sonra site aynı görünür, fark
+ * yalnızca artık panelden düzenlenebilmeleri.
+ */
+export async function getCodeSlides(): Promise<
+  Omit<HeroSlideRow, "id" | "created_at" | "updated_at">[]
+> {
+  const [tr, en] = await Promise.all([
+    getTranslations({ locale: "tr", namespace: "home.hero" }),
+    getTranslations({ locale: "en", namespace: "home.hero" }),
+  ]);
+  return FALLBACK_IMAGES.map((image, index) => {
+    const key = `slides.${index + 1}`;
+    return {
+      image,
+      image_focus: null,
+      title_tr: tr(`${key}.title`),
+      title_en: en(`${key}.title`),
+      title2_tr: tr(`${key}.titleLine2`),
+      title2_en: en(`${key}.titleLine2`),
+      description_tr: tr(`${key}.description`),
+      description_en: en(`${key}.description`),
+      alt_tr: tr(`${key}.alt`),
+      alt_en: en(`${key}.alt`),
+      is_active: true,
+      sort: (index + 1) * 10,
+    };
+  });
+}
+
 /** Panel listesi — yayında olmayanları da gösterir, önbelleğe girmez. */
 export async function getAllHeroSlides(): Promise<HeroSlideRow[]> {
   return fetchSlides();

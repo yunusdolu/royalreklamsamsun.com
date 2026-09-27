@@ -19,6 +19,7 @@ import {
   buildSpeakableSchema,
 } from "@/lib/schema";
 import { buildAlternates, buildOpenGraph } from "@/lib/seo";
+import { getPageContent } from "@/lib/content/pages";
 
 const CATEGORY_ORDER: FaqCategory[] = [
   "general",
@@ -61,6 +62,9 @@ export default async function FaqPage({
   const { locale } = await params;
   setRequestLocale(locale);
 
+  /* Başlık bloğu panelden düzenlenebilir; boşsa koddaki metin gelir. */
+  const page = await getPageContent("sss", locale);
+
   const t = await getTranslations("faqPage");
   const tCommon = await getTranslations("common");
   const faqs = allFaqs[locale];
@@ -72,8 +76,10 @@ export default async function FaqPage({
           { name: tCommon("breadcrumbHome"), href: "/" },
           { name: t("title") },
         ]}
-        title={t("title")}
-        lead={t("lead")}
+        title={page.title}
+        lead={page.lead}
+        image={page.image}
+        imagePosition={page.imageFocus}
       />
 
       <section className="container-royal py-16 lg:py-20">

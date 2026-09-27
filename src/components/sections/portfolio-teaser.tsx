@@ -6,8 +6,7 @@ import { getLocale, getTranslations } from "next-intl/server";
 import { Reveal, RevealGroup, RevealItem } from "@/components/motion/reveal";
 import { SectionHeading } from "@/components/sections/section-heading";
 import { siteConfig } from "@/config/site";
-import { projects } from "@/content/projects";
-import { getServiceById } from "@/content/services";
+import { getProjects } from "@/lib/content/projects";
 import { Link } from "@/i18n/navigation";
 import type { Locale } from "@/i18n/routing";
 import { PortfolioCarousel } from "./portfolio-carousel";
@@ -26,7 +25,7 @@ export async function PortfolioTeaser() {
   const tPortfolio = await getTranslations("portfolioPage");
   const tCommon = await getTranslations("common");
 
-  const featured = projects.slice(0, 6);
+  const featured = (await getProjects()).slice(0, 6);
 
   return (
     <section className="container-royal py-20 lg:py-28">

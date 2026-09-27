@@ -3,9 +3,10 @@
 import { redirect } from "next/navigation";
 
 import { requireSession } from "@/lib/admin/auth";
+import { describeDbError } from "@/lib/admin/errors";
 import { UploadError, resolveImageField } from "@/lib/admin/media";
 import { publishContent } from "@/lib/admin/publish";
-import { HERO_TAG } from "@/lib/content/hero";
+import { HERO_TAG, getCodeSlides } from "@/lib/content/hero";
 import { adminClient } from "@/lib/supabase/server";
 
 function text(formData: FormData, key: string): string | null {
@@ -59,14 +60,35 @@ export async function saveSlide(
     sort: Number(text(formData, "sort") ?? 0) || 0,
   };
 
+  if (id && !row.is_active && (await isLastLive(db, id))) {
+    return "Anasayfada en az bir slayt yayında kalmalı. Önce başka bir slaytı yayına al.";
+  }
+
   const { error } = id
     ? await db.from("hero_slides").update(row).eq("id", id)
     : await db.from("hero_slides").insert(row);
 
-  if (error) return `Kaydedilemedi: ${error.message}`;
+  if (error) return describeDbError(error);
 
   publishContent(HERO_TAG);
   redirect("/admin/anasayfa?kaydedildi=1");
+}
+
+/**
+ * Bu slayt kaldırılırsa yayında hiç slayt kalmıyor mu?
+ *
+ * Anasayfanın tepesi boş kalamaz; tablo tamamen yayından kalkınca site
+ * koddaki eski üç slayta geri düşüyor. Panelden "hepsini kaldırdım" diyen
+ * kişi sitede eski slaytları görünce ne olduğunu anlamazdı, o yüzden son
+ * yayındaki slaytın kaldırılmasına izin verilmiyor.
+ */
+async function isLastLive(
+  db: NonNullable<ReturnType<typeof adminClient>>,
+  id: string,
+): Promise<boolean> {
+  const { data } = await db.from("hero_slides").select("id").eq("is_active", true);
+  const live = (data ?? []).map((row) => row.id as string);
+  return live.length === 1 && live[0] === id;
 }
 
 export async function deleteSlide(formData: FormData) {
@@ -74,7 +96,10 @@ export async function deleteSlide(formData: FormData) {
   const db = adminClient();
   if (!db) return;
 
-  await db.from("hero_slides").delete().eq("id", String(formData.get("id") ?? ""));
+  const id = String(formData.get("id") ?? "");
+  if (await isLastLive(db, id)) redirect("/admin/anasayfa?son=1");
+
+  await db.from("hero_slides").delete().eq("id", id);
   publishContent(HERO_TAG);
   redirect("/admin/anasayfa?silindi=1");
 }
@@ -84,11 +109,42 @@ export async function toggleSlide(formData: FormData) {
   const db = adminClient();
   if (!db) return;
 
-  await db
-    .from("hero_slides")
-    .update({ is_active: formData.get("next") === "1" })
-    .eq("id", String(formData.get("id") ?? ""));
+  const id = String(formData.get("id") ?? "");
+  const next = formData.get("next") === "1";
+  if (!next && (await isLastLive(db, id))) redirect("/admin/anasayfa?son=1");
+
+  await db.from("hero_slides").update({ is_active: next }).eq("id", id);
 
   publishContent(HERO_TAG);
   redirect("/admin/anasayfa");
+}
+
+/**
+ * Koddaki üç özgün slaytı tabloya aktarır. Tabloda aynı başlıklı slayt
+ * varsa onu atlar; ikinci kez basılırsa kopya üretmez. Panelde önceden
+ * eklenmiş slaytlara dokunmaz.
+ */
+export async function importCodeSlides() {
+  await requireSession();
+  const db = adminClient();
+  if (!db) redirect("/admin/anasayfa?hata=anahtar");
+
+  const { data: existing, error: readError } = await db
+    .from("hero_slides")
+    .select("title_tr");
+  if (readError) {
+    console.error("[hero] okunamadı:", readError.message);
+    redirect("/admin/anasayfa?hata=aktarim");
+  }
+  const known = new Set((existing ?? []).map((row) => String(row.title_tr).trim()));
+  const rows = (await getCodeSlides()).filter((row) => !known.has(row.title_tr.trim()));
+  if (rows.length === 0) redirect("/admin/anasayfa");
+  const { error } = await db.from("hero_slides").insert(rows);
+  if (error) {
+    console.error("[hero] aktarılamadı:", error.message);
+    redirect("/admin/anasayfa?hata=aktarim");
+  }
+
+  publishContent(HERO_TAG);
+  redirect(`/admin/anasayfa?aktarildi=${rows.length}`);
 }

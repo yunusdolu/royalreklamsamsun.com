@@ -71,7 +71,13 @@ export function TextArea({
   );
 }
 
-export function SubmitButton({ children }: { children: React.ReactNode }) {
+export function SubmitButton({
+  children,
+  pendingLabel = "Kaydediliyor…",
+}: {
+  children: React.ReactNode;
+  pendingLabel?: string;
+}) {
   const { pending } = useFormStatus();
   return (
     <button
@@ -79,7 +85,7 @@ export function SubmitButton({ children }: { children: React.ReactNode }) {
       disabled={pending}
       className="rounded-lg bg-zinc-900 px-5 py-2.5 text-sm font-semibold text-white transition-opacity hover:opacity-90 disabled:opacity-50"
     >
-      {pending ? "Kaydediliyor…" : children}
+      {pending ? pendingLabel : children}
     </button>
   );
 }

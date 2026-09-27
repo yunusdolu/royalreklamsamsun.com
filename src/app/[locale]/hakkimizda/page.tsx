@@ -16,6 +16,7 @@ import {
 } from "@/lib/schema";
 import { buildAlternates, buildOpenGraph } from "@/lib/seo";
 import { cn } from "@/lib/utils";
+import { getPageContent } from "@/lib/content/pages";
 
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
@@ -50,6 +51,9 @@ export default async function AboutPage({
   const { locale } = await params;
   setRequestLocale(locale);
 
+  /* Başlık bloğu panelden düzenlenebilir; boşsa koddaki metin gelir. */
+  const page = await getPageContent("hakkimizda", locale);
+
   const t = await getTranslations("aboutPage");
   const tCommon = await getTranslations("common");
   const tNav = await getTranslations("nav");
@@ -79,8 +83,10 @@ export default async function AboutPage({
           { name: tCommon("breadcrumbHome"), href: "/" },
           { name: t("title") },
         ]}
-        title={t("title")}
-        lead={t("lead")}
+        title={page.title}
+        lead={page.lead}
+        image={page.image}
+        imagePosition={page.imageFocus}
         answer={t("answer")}
       />
 
@@ -114,7 +120,7 @@ export default async function AboutPage({
           {/* Art direktör — çerçeveli avatar yerine dev hayalet monogram */}
           <div className="space-y-5 lg:col-span-5 lg:sticky lg:top-28 lg:self-start">
             <Reveal direction="left">
-              <div className="relative overflow-hidden rounded-2xl bg-[linear-gradient(150deg,#141416_0%,#252017_58%,#141416_100%)] p-7 sm:p-8">
+              <div className="relative overflow-hidden rounded-2xl bg-[#121214] p-7 sm:p-8">
                 <span
                   className="pointer-events-none absolute -top-8 right-2 font-display text-[8rem] font-black leading-none text-white/[0.045]"
                   aria-hidden="true"
@@ -195,7 +201,7 @@ export default async function AboutPage({
           </h2>
 
           <Reveal>
-            <ul className="mt-10 grid overflow-hidden rounded-2xl bg-[linear-gradient(150deg,#141416_0%,#252017_58%,#141416_100%)] sm:grid-cols-2">
+            <ul className="mt-10 grid overflow-hidden rounded-2xl bg-[#121214] sm:grid-cols-2">
               {valueKeys.map((key, index) => (
                 <li
                   key={key}

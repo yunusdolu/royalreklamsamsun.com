@@ -36,6 +36,16 @@ const nextConfig: NextConfig = {
   // Ağır kütüphanelerden yalnızca kullanılan modüller paketlensin
   experimental: {
     optimizePackageImports: ["lucide-react", "framer-motion", "gsap"],
+    /*
+      Panel formları görselleri server action ile gönderiyor. Varsayılan
+      1 MB sınırında 1 MB'tan büyük her fotoğraf "Failed to fetch" ile
+      düşüyordu. 4 MB: Vercel'in 4,5 MB'lık sabit istek sınırının altında.
+      Görseller zaten tarayıcıda küçültülüp öyle gönderiliyor
+      (src/app/admin/shrink-image.ts); bu pay yalnızca güvenlik payı.
+    */
+    serverActions: {
+      bodySizeLimit: "4mb",
+    },
   },
 
   /**

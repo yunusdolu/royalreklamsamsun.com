@@ -12,6 +12,7 @@ import { Link } from "@/i18n/navigation";
 import { type Locale, routing } from "@/i18n/routing";
 import { buildBreadcrumbSchema, schemaIds } from "@/lib/schema";
 import { buildAlternates, buildOpenGraph, localizedUrl } from "@/lib/seo";
+import { getPageContent } from "@/lib/content/pages";
 
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
@@ -46,6 +47,9 @@ export default async function BlogPage({
   const { locale } = await params;
   setRequestLocale(locale);
 
+  /* Başlık bloğu panelden düzenlenebilir; boşsa koddaki metin gelir. */
+  const page = await getPageContent("blog", locale);
+
   const t = await getTranslations("blogPage");
   const tCommon = await getTranslations("common");
   const format = await getFormatter();
@@ -60,8 +64,10 @@ export default async function BlogPage({
           { name: tCommon("breadcrumbHome"), href: "/" },
           { name: t("title") },
         ]}
-        title={t("title")}
-        lead={t("lead")}
+        title={page.title}
+        lead={page.lead}
+        image={page.image}
+        imagePosition={page.imageFocus}
       />
 
       <section className="container-royal py-16 lg:py-20">
@@ -79,7 +85,7 @@ export default async function BlogPage({
                     pathname: "/blog/[slug]",
                     params: { slug: featured.slug[locale] },
                   }}
-                  className="group relative block overflow-hidden rounded-2xl bg-[linear-gradient(150deg,#141416_0%,#252017_58%,#141416_100%)] p-8 transition-transform duration-500 hover:-translate-y-1 sm:p-12"
+                  className="group relative block overflow-hidden rounded-2xl bg-[#121214] p-8 transition-transform duration-500 hover:-translate-y-1 sm:p-12"
                 >
                   <span className="flex flex-wrap items-center gap-x-3 gap-y-1 text-[0.6875rem] font-semibold uppercase tracking-[0.16em] text-gold-400">
                     {t("featured")}

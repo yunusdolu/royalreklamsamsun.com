@@ -3,8 +3,10 @@
 import { redirect } from "next/navigation";
 
 import { requireSession } from "@/lib/admin/auth";
+import { describeDbError } from "@/lib/admin/errors";
 import { UploadError, resolveImageField, uploadImage } from "@/lib/admin/media";
 import { publishContent } from "@/lib/admin/publish";
+import { projects as baseProjects } from "@/content/projects";
 import { PROJECTS_TAG } from "@/lib/content/projects";
 import { adminClient } from "@/lib/supabase/server";
 
@@ -118,11 +120,61 @@ export async function saveProject(
     if (error.code === "23505") {
       return "Bu adres zaten kullanılıyor. Adres alanına farklı bir değer yaz.";
     }
-    return `Kaydedilemedi: ${error.message}`;
+    return describeDbError(error);
   }
 
   publishContent(PROJECTS_TAG);
   redirect("/admin/referanslar?kaydedildi=1");
+}
+
+/**
+ * Sitede şu an görünen, kodda duran işleri tabloya kopyalar.
+ *
+ * Tablo boşken site koddaki listeyi gösteriyor ama panel onları
+ * düzenleyemiyor. Aktarım sonrası her iş panelde ayrı bir kayıt olur;
+ * adresleri, kapakları ve sıraları aynen korunduğu için sitede hiçbir şey
+ * değişmez, Google'daki adresler de kırılmaz. Aynı adresli kayıt zaten
+ * varsa atlanır, yani düğmeye iki kez basmak kopya üretmez.
+ */
+export async function importCodeProjects() {
+  await requireSession();
+  const db = adminClient();
+  if (!db) redirect("/admin/referanslar?hata=anahtar");
+
+  const rows = baseProjects.map((project, index) => ({
+    slug_tr: project.slug.tr,
+    slug_en: project.slug.en,
+    service_id: project.serviceId || null,
+    region_id: project.regionId ?? null,
+    year: project.year,
+    title_tr: project.copy.tr.title,
+    title_en: project.copy.en.title,
+    client: project.copy.tr.client ?? null,
+    summary_tr: project.copy.tr.summary || null,
+    summary_en: project.copy.en.summary || null,
+    body_tr: project.copy.tr.description,
+    body_en: project.copy.en.description,
+    scope_tr: project.copy.tr.scope,
+    scope_en: project.copy.en.scope,
+    cover: project.cover || null,
+    cover_focus: project.coverFocus ?? null,
+    gallery: project.gallery ?? [],
+    is_published: true,
+    /* Koddaki sıra korunsun; 10'ar aralık, araya iş eklemeye yer bırakıyor. */
+    sort: (index + 1) * 10,
+  }));
+
+  const { error } = await db
+    .from("projects")
+    .upsert(rows, { onConflict: "slug_tr", ignoreDuplicates: true });
+
+  if (error) {
+    console.error("[projects] aktarılamadı:", error.message);
+    redirect("/admin/referanslar?hata=aktarim");
+  }
+
+  publishContent(PROJECTS_TAG);
+  redirect(`/admin/referanslar?aktarildi=${rows.length}`);
 }
 
 export async function deleteProject(formData: FormData) {

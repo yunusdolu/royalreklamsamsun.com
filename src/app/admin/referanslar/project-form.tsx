@@ -1,23 +1,67 @@
 "use client";
 
-import { useActionState, useState } from "react";
+import { useActionState, useEffect, useRef, useState } from "react";
 import { X } from "lucide-react";
 
 import type { Service } from "@/content/services";
 import type { ProjectRow } from "@/lib/content/projects";
 import { Field, SubmitButton, TextArea } from "../ui";
 import { ImageField } from "../image-field";
+import { DirectUploadError, blockSubmitWhile, uploadDirect } from "../upload-client";
 import { saveProject } from "./actions";
 
 /**
  * Galeri alanı.
  *
  * Kayıtlı fotoğraflar gizli alanlarla geri gönderiliyor; kaldırılan biri
- * listeden düşünce sunucuya hiç ulaşmıyor. Yeni dosyalar kaydetme anında
- * topluca yükleniyor.
+ * listeden düşünce sunucuya hiç ulaşmıyor. Yeni seçilen fotoğraflar
+ * seçildiği anda, küçültülmeden doğrudan depoya yükleniyor ve listeye
+ * ekleniyor; form yalnızca adresleri gönderiyor.
  */
 function Gallery({ current }: { current: string[] }) {
   const [kept, setKept] = useState(current);
+  const [note, setNote] = useState<{ tone: "info" | "error"; text: string } | null>(null);
+  const [busy, setBusy] = useState(false);
+  const busyRef = useRef(false);
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(
+    () =>
+      blockSubmitWhile(
+        inputRef.current?.form,
+        () => busyRef.current,
+        () => setNote({ tone: "error", text: "Fotoğraflar hâlâ yükleniyor; bitince kaydet." }),
+      ),
+    [],
+  );
+
+  async function upload(files: File[]) {
+    busyRef.current = true;
+    setBusy(true);
+    const failed: string[] = [];
+    /* Sırayla: aynı anda on büyük dosya zayıf bağlantıyı kilitliyordu. */
+    for (const [index, file] of files.entries()) {
+      try {
+        const url = await uploadDirect(file, "projects/galeri", (ratio) =>
+          setNote({
+            tone: "info",
+            text: `${index + 1}/${files.length} yükleniyor… %${Math.round(ratio * 100)}`,
+          }),
+        );
+        setKept((list) => [...list, url]);
+      } catch (error) {
+        failed.push(error instanceof DirectUploadError ? `${file.name}: ${error.message}` : file.name);
+      }
+    }
+    busyRef.current = false;
+    setBusy(false);
+    if (inputRef.current) inputRef.current.value = "";
+    setNote(
+      failed.length > 0
+        ? { tone: "error", text: `Yüklenemeyenler — ${failed.join(" · ")}` }
+        : { tone: "info", text: `${files.length} fotoğraf yüklendi, özgün kalitede. Kaydetmeyi unutma.` },
+    );
+  }
 
   return (
     <div className="flex flex-col gap-3">
@@ -47,16 +91,32 @@ function Gallery({ current }: { current: string[] }) {
         </ul>
       )}
 
+      {/* `name` yok: dosyalar formla bir daha gitmesin, yalnızca adresleri. */}
       <input
-        name="gallery"
+        ref={inputRef}
         type="file"
         multiple
+        disabled={busy}
         accept="image/jpeg,image/png,image/webp,image/avif"
+        onChange={(event) => {
+          const files = Array.from(event.currentTarget.files ?? []);
+          if (files.length > 0) void upload(files);
+        }}
         className="text-sm file:mr-3 file:rounded-lg file:border-0 file:bg-zinc-900 file:px-3 file:py-2 file:text-sm file:font-medium file:text-white"
       />
-      <span className="text-xs text-zinc-500">
-        Birden fazla fotoğrafı tek seferde seçebilirsin.
-      </span>
+      {note ? (
+        <span
+          role={note.tone === "error" ? "alert" : "status"}
+          className={`text-xs ${note.tone === "error" ? "text-red-600" : "text-zinc-500"}`}
+        >
+          {note.text}
+        </span>
+      ) : (
+        <span className="text-xs text-zinc-500">
+          Birden fazla fotoğrafı tek seferde seçebilirsin. Fotoğraflar özgün
+          kalitesinde yüklenir.
+        </span>
+      )}
     </div>
   );
 }
@@ -117,6 +177,7 @@ export function ProjectForm({
           <ImageField
             label="Kapak fotoğrafı"
             name="cover"
+            folder="projects/kapak"
             current={project?.cover}
             currentFocus={project?.cover_focus}
             hint="Referans listesindeki kart görseli."

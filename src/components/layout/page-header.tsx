@@ -14,10 +14,12 @@ import { cn } from "@/lib/utils";
  * İki düzen var:
  *  - `image` verilmeden: klasik dar başlık bloğu. Sitedeki 14 sayfa bunu
  *    kullanıyor, davranışı değişmedi.
- *  - `image` verilince: anasayfa kahramanıyla aynı kurgu — üstte geniş
- *    fotoğraf, altında solda başlık ve kısa açıklama, sağda butonlar.
- *    Fotoğraf bilinçli olarak anasayfadakinden daha alçak (3/1 karşısında
- *    24/9); iç sayfada ekranı tümüyle kaplaması istenmiyor.
+ *  - `image` verilince: Teklif Al sayfasıyla aynı kurgu — fotoğraf
+ *    yuvarlak köşeli bir kutunun zemini, başlık ve açıklama onun üstünde.
+ *    Soldan sağa açılan koyu geçiş yazının okunmasını sağlıyor; fotoğraf
+ *    sağ tarafta daha açık kaldığı için konusu yine seçiliyor. Butonlar
+ *    koyu zemin üstünde duracağı için çağıran sayfa `tone="onDark"`
+ *    vermeli.
  */
 export function PageHeader({
   crumbs,
@@ -51,7 +53,12 @@ export function PageHeader({
       data-speakable
       className="mt-6 max-w-3xl border-l-2 border-gold-500/60 bg-white/[0.02] py-4 pl-5 pr-4"
     >
-      <p className="text-[0.9375rem] leading-relaxed text-royal-fg/90">
+      <p
+        className={cn(
+          "text-[0.9375rem] leading-relaxed",
+          image ? "text-white/85" : "text-royal-fg/90",
+        )}
+      >
         {answer}
       </p>
     </div>
@@ -74,30 +81,30 @@ export function PageHeader({
         <Breadcrumbs items={crumbs} />
 
         {image ? (
-          <>
-            <Reveal>
-              <div className="relative mt-7 aspect-[16/10] w-full overflow-hidden rounded-xl border border-black/10 bg-royal-graphite shadow-[0_18px_44px_-24px_rgba(0,0,0,0.45)] sm:aspect-[2/1] lg:mt-8 lg:aspect-[3/1]">
-                <Image
-                  src={image}
-                  alt={title}
-                  fill
-                  priority
-                  sizes="(min-width: 1312px) 1248px, 100vw"
-                  style={{ objectPosition: imagePosition }}
-                  className="object-cover object-center"
-                />
-              </div>
-            </Reveal>
+          <Reveal>
+            <div className="relative mt-7 overflow-hidden rounded-3xl bg-royal-graphite lg:mt-8">
+              <Image
+                src={image}
+                alt={title}
+                fill
+                priority
+                sizes="(min-width: 1312px) 1248px, 100vw"
+                style={{ objectPosition: imagePosition }}
+                className="object-cover object-center"
+              />
+              <span
+                aria-hidden="true"
+                className="absolute inset-0 bg-gradient-to-r from-black/85 via-black/65 to-black/35"
+              />
 
-            <Reveal delay={0.08}>
-              <div className="mt-8 flex flex-col gap-7 lg:mt-10 lg:flex-row lg:items-end lg:justify-between lg:gap-14">
+              <div className="relative flex flex-col gap-8 px-6 py-12 sm:px-10 sm:py-16 lg:flex-row lg:items-end lg:justify-between lg:gap-14 lg:px-14 lg:py-20">
                 <div className="min-w-0 max-w-2xl">
                   {eyebrowNode}
-                  <h1 className="mt-3 font-display text-3xl leading-[1.12] text-royal-fg sm:text-4xl lg:text-[2.75rem]">
+                  <h1 className="mt-3 font-display text-3xl leading-[1.12] text-white sm:text-4xl lg:text-[2.75rem]">
                     {title}
                   </h1>
                   {lead && (
-                    <p className="mt-4 text-base leading-relaxed text-royal-muted lg:text-lg">
+                    <p className="mt-4 text-base leading-relaxed text-white/75 lg:text-lg">
                       {lead}
                     </p>
                   )}
@@ -106,8 +113,8 @@ export function PageHeader({
 
                 {children && <div className="shrink-0">{children}</div>}
               </div>
-            </Reveal>
-          </>
+            </div>
+          </Reveal>
         ) : (
           <div className="mt-7 max-w-3xl">
             {eyebrowNode && <Reveal>{eyebrowNode}</Reveal>}

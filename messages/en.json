@@ -21,7 +21,8 @@
     "languageLabel": "Language",
     "switchToEnglish": "English",
     "switchToTurkish": "Türkçe",
-    "menuLabel": "Menu"
+    "menuLabel": "Menu",
+    "campaigns": "Campaigns"
   },
   "common": {
     "readMore": "Read more",
@@ -64,7 +65,12 @@
     "instagramBrowse": "Browse on Instagram",
     "variantsImageLoading": "Image coming soon",
     "dayDelivery": "Day Delivery",
-    "variantCount": "+{count} types of {service}"
+    "variantCount": "+{count} types of {service}",
+    "selectedVariant": "Selected type",
+    "chooseVariant": "Choose a type",
+    "beforeYouDecide": "Before you decide",
+    "aboutService": "About {service}",
+    "variantWhatsappPrefill": "Hello, I would like a price for {service} ({variant})."
   },
   "home": {
     "hero": {
@@ -196,6 +202,11 @@
       "headingTop": "Let’s talk about",
       "headingAccent": "your façade",
       "whatsappPrefill": "Hello Royal Reklam, I am writing from your website. I would like signage for my premises."
+    },
+    "campaigns": {
+      "eyebrow": "Campaigns",
+      "title": "Current offers",
+      "cta": "All campaigns"
     }
   },
   "servicesPage": {
@@ -217,6 +228,21 @@
     "loadMore": "Load more",
     "resultCount": "{count} projects",
     "noProjectsYet": "No photos in this category yet"
+  },
+  "campaignsPage": {
+    "title": "Campaigns",
+    "metaTitle": "Campaigns | Royal Reklam Samsun",
+    "metaDescription": "Current Royal Reklam campaigns and offers on signage, digital printing and facade cladding.",
+    "lead": "Our seasonal offers. Each campaign's terms and end date are on its own page.",
+    "empty": "There are no campaigns running right now. Tell us what you need and we will find you the best price.",
+    "endsOn": "Ends {date}",
+    "ongoing": "Ongoing",
+    "details": "View campaign",
+    "servicesTitle": "Applies to",
+    "whatsappPrefill": "Hello, I would like to know more about the \"{campaign}\" campaign.",
+    "askWhatsapp": "Ask on WhatsApp",
+    "backToCampaigns": "All campaigns",
+    "serviceBanner": "Campaign on this service"
   },
   "regionsPage": {
     "title": "Service Areas",

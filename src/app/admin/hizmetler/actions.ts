@@ -4,6 +4,7 @@ import { redirect } from "next/navigation";
 
 import { services } from "@/content/services";
 import { requireSession } from "@/lib/admin/auth";
+import { describeDbError } from "@/lib/admin/errors";
 import { UploadError, resolveImageField } from "@/lib/admin/media";
 import { publishContent } from "@/lib/admin/publish";
 import { SERVICES_TAG } from "@/lib/content/services";
@@ -83,7 +84,7 @@ export async function saveService(
     lead_time_max: number(formData, "lead_time_max"),
   });
 
-  if (error) return `Kaydedilemedi: ${error.message}`;
+  if (error) return describeDbError(error);
 
   publishContent(SERVICES_TAG);
   redirect("/admin/hizmetler?kaydedildi=1");

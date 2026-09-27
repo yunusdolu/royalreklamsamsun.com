@@ -3,6 +3,7 @@ import { Megaphone, Plus } from "lucide-react";
 
 import { requireSession } from "@/lib/admin/auth";
 import { getAllCampaignRows, type CampaignRow } from "@/lib/content/campaigns";
+import { PageHeaderCard } from "../sayfalar/header-card";
 import { Notice } from "../ui-server";
 import { toggleCampaign } from "./actions";
 
@@ -45,7 +46,8 @@ export default async function CampaignsPage({
           <h1 className="text-2xl font-semibold tracking-tight">Kampanyalar</h1>
           <p className="mt-1 max-w-2xl text-sm text-zinc-600">
             Tarihi geçen kampanya siteden kendiliğinden kalkar; elle kaldırman
-            gerekmez.
+            gerekmez. Yayındaki kampanyalar anasayfada, kampanyalar
+            sayfasında ve seçtiğin hizmet sayfalarında görünür.
           </p>
         </div>
         <Link
@@ -59,6 +61,8 @@ export default async function CampaignsPage({
 
       {params.kaydedildi && <Notice>Kaydedildi. Site tazelendi.</Notice>}
       {params.silindi && <Notice>Kampanya silindi.</Notice>}
+
+      <PageHeaderCard pageKey="kampanyalar" />
 
       {campaigns.length === 0 ? (
         <div className="rounded-xl border border-dashed border-black/15 bg-white px-6 py-14 text-center">

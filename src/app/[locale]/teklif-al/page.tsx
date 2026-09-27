@@ -12,6 +12,7 @@ import { JsonLd } from "@/components/seo/json-ld";
 import { type Locale, routing } from "@/i18n/routing";
 import { buildBreadcrumbSchema } from "@/lib/schema";
 import { buildAlternates, buildOpenGraph } from "@/lib/seo";
+import { getPageContent } from "@/lib/content/pages";
 
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
@@ -46,6 +47,9 @@ export default async function QuotePage({
   const { locale } = await params;
   setRequestLocale(locale);
 
+  /* Başlık bloğu panelden düzenlenebilir; boşsa koddaki metin gelir. */
+  const page = await getPageContent("teklif-al", locale);
+
   const t = await getTranslations("quotePage");
   const tCommon = await getTranslations("common");
 
@@ -72,12 +76,13 @@ export default async function QuotePage({
 
           <div className="relative mt-7 overflow-hidden rounded-3xl lg:mt-8">
             <Image
-              src="/images/hero/teklif-al.jpg"
+              src={page.image ?? "/images/hero/teklif-al.jpg"}
               alt={t("heroAlt")}
               fill
               priority
               sizes="(min-width: 1312px) 1248px, 100vw"
-              className="object-cover object-[72%_center]"
+              className="object-cover"
+              style={{ objectPosition: page.imageFocus ?? "72% center" }}
             />
             <span
               aria-hidden="true"
@@ -86,10 +91,10 @@ export default async function QuotePage({
 
             <div className="relative px-6 py-12 sm:px-10 sm:py-16 lg:px-14 lg:py-20">
               <h1 className="max-w-xl font-display text-3xl leading-[1.12] text-white sm:text-4xl lg:text-[2.75rem]">
-                {t("title")}
+                {page.title}
               </h1>
               <p className="mt-4 max-w-xl text-base leading-relaxed text-white/75 lg:text-lg">
-                {t("lead")}
+                {page.lead}
               </p>
 
               <RevealGroup as="ul" className="mt-9 grid gap-5 sm:grid-cols-3 lg:max-w-2xl">

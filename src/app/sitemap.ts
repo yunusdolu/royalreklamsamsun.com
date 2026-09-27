@@ -1,7 +1,8 @@
 import type { MetadataRoute } from "next";
 
 import { posts } from "@/content/posts";
-import { projects } from "@/content/projects";
+import { getCampaignSlugs } from "@/lib/content/campaigns";
+import { getProjects } from "@/lib/content/projects";
 import { regions } from "@/content/regions";
 import { services } from "@/content/services";
 import { hreflangMap, type Locale, routing } from "@/i18n/routing";
@@ -42,7 +43,12 @@ function buildEntry(entry: Entry): MetadataRoute.Sitemap {
   }));
 }
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  const [projects, campaignSlugs] = await Promise.all([
+    getProjects(),
+    getCampaignSlugs(),
+  ]);
+
   const entries: Entry[] = [
     { hrefFor: () => "/", priority: 1, changeFrequency: "weekly" },
     { hrefFor: () => "/hizmetler", priority: 0.9, changeFrequency: "monthly" },
@@ -97,6 +103,21 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.6,
       changeFrequency: "yearly",
     })),
+
+    /*
+      Kampanyalar yalnızca yayındayken haritada. Süresi dolan kampanyanın
+      sayfası 404 verdiği için onu Google'a bildirmek hata raporu doğururdu.
+    */
+    ...(campaignSlugs.length > 0
+      ? [
+          { hrefFor: () => "/kampanyalar", priority: 0.7, changeFrequency: "weekly" } as Entry,
+          ...campaignSlugs.map<Entry>((slug) => ({
+            hrefFor: () => ({ pathname: "/kampanyalar/[slug]", params: { slug } }),
+            priority: 0.6,
+            changeFrequency: "weekly",
+          })),
+        ]
+      : []),
   ];
 
   return entries.flatMap(buildEntry);

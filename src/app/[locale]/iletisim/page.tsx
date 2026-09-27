@@ -24,6 +24,7 @@ import {
   buildSpeakableSchema,
 } from "@/lib/schema";
 import { buildAlternates, buildOpenGraph } from "@/lib/seo";
+import { getPageContent } from "@/lib/content/pages";
 
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
@@ -57,6 +58,9 @@ export default async function ContactPage({
 }) {
   const { locale } = await params;
   setRequestLocale(locale);
+
+  /* Başlık bloğu panelden düzenlenebilir; boşsa koddaki metin gelir. */
+  const page = await getPageContent("iletisim", locale);
 
   const t = await getTranslations("contactPage");
   const tCommon = await getTranslations("common");
@@ -114,8 +118,10 @@ export default async function ContactPage({
           { name: tCommon("breadcrumbHome"), href: "/" },
           { name: t("title") },
         ]}
-        title={t("title")}
-        lead={t("lead")}
+        title={page.title}
+        lead={page.lead}
+        image={page.image}
+        imagePosition={page.imageFocus}
         answer={t("answer")}
       >
         <div className="mt-8 flex flex-wrap items-center gap-3">
@@ -204,7 +210,7 @@ export default async function ContactPage({
           <aside className="lg:col-span-5">
             <div className="lg:sticky lg:top-28">
               <Reveal direction="left">
-                <div className="overflow-hidden rounded-2xl bg-[linear-gradient(150deg,#141416_0%,#252017_58%,#141416_100%)] p-7 sm:p-8">
+                <div className="overflow-hidden rounded-2xl bg-[#121214] p-7 sm:p-8">
                   <span className="text-[0.6875rem] font-semibold uppercase tracking-[0.16em] text-gold-400">
                     {t("visitTitle")}
                   </span>

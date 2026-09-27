@@ -1,7 +1,7 @@
 import { ArrowUpRight } from "lucide-react";
 import { getLocale, getTranslations } from "next-intl/server";
 
-import { LogoMark } from "@/components/layout/logo";
+import { Logo } from "@/components/layout/logo";
 import { services } from "@/content/services";
 import { Link } from "@/i18n/navigation";
 import type { Locale } from "@/i18n/routing";
@@ -17,7 +17,7 @@ export default async function NotFound() {
   return (
     <section className="container-royal flex min-h-[60svh] flex-col justify-center py-24">
       <div className="max-w-2xl">
-        <LogoMark size={56} className="opacity-70" />
+        <Logo className="w-44 opacity-80" />
 
         <p className="mt-8 font-display text-6xl font-extrabold text-gold-700/60 lg:text-7xl">
           404

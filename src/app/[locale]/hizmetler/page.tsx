@@ -10,6 +10,7 @@ import { getServices } from "@/lib/content/services";
 import { type Locale, routing } from "@/i18n/routing";
 import { buildBreadcrumbSchema, buildSpeakableSchema } from "@/lib/schema";
 import { buildAlternates, buildOpenGraph } from "@/lib/seo";
+import { getPageContent } from "@/lib/content/pages";
 
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
@@ -44,6 +45,9 @@ export default async function ServicesPage({
   const { locale } = await params;
   setRequestLocale(locale);
 
+  /* Başlık bloğu panelden düzenlenebilir; boşsa koddaki metin gelir. */
+  const page = await getPageContent("hizmetler", locale);
+
   const t = await getTranslations("servicesPage");
   const tCommon = await getTranslations("common");
   const services = await getServices();
@@ -57,8 +61,10 @@ export default async function ServicesPage({
     <>
       <PageHeader
         crumbs={crumbs}
-        title={t("title")}
-        lead={t("lead")}
+        title={page.title}
+        lead={page.lead}
+        image={page.image}
+        imagePosition={page.imageFocus}
         answer={t("answer")}
       />
 

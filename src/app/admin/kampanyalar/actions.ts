@@ -3,6 +3,7 @@
 import { redirect } from "next/navigation";
 
 import { requireSession } from "@/lib/admin/auth";
+import { describeDbError } from "@/lib/admin/errors";
 import { UploadError, resolveImageField } from "@/lib/admin/media";
 import { publishContent } from "@/lib/admin/publish";
 import { CAMPAIGNS_TAG } from "@/lib/content/campaigns";
@@ -108,7 +109,7 @@ export async function saveCampaign(
     if (error.code === "23505") {
       return "Bu adres zaten kullanılıyor. Adres alanına farklı bir değer yaz.";
     }
-    return `Kaydedilemedi: ${error.message}`;
+    return describeDbError(error);
   }
 
   publishContent(CAMPAIGNS_TAG);

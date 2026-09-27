@@ -1,7 +1,9 @@
 import type { Locale } from "@/i18n/routing";
 import { servicesEn } from "./en";
 import { servicesTr } from "./tr";
-import type { Service, ServiceCopy } from "./types";
+import type { Service, ServiceCopy, VariantDetail } from "./types";
+import { variantDetailsEn } from "./variant-details.en";
+import { variantDetailsTr } from "./variant-details.tr";
 
 export type {
   Service,
@@ -9,6 +11,7 @@ export type {
   ServiceFaq,
   ServiceSpec,
   ServiceVariant,
+  VariantDetail,
 } from "./types";
 
 /**
@@ -149,11 +152,33 @@ const copyByLocale: Record<Locale, Record<string, ServiceCopy>> = {
   en: servicesEn,
 };
 
+/**
+ * Çeşit ayrıntılarını (teknik tablo, kimler için, öne çıkanlar) çeşitlerin
+ * üstüne sırayla ekler. Sayı tutmazsa geliştirme sırasında uyarır; eksik
+ * kalan çeşit sayfada hizmetin genel bilgisine düşer.
+ */
+function withVariantDetails(
+  id: string,
+  copy: ServiceCopy,
+  details: Record<string, VariantDetail[]>,
+): ServiceCopy {
+  const list = details[id] ?? [];
+  if (process.env.NODE_ENV !== "production" && list.length !== copy.variants.length) {
+    console.warn(
+      `[services] "${id}" için ${copy.variants.length} çeşit var ama ${list.length} ayrıntı var; sıralar kaymış olabilir.`,
+    );
+  }
+  return {
+    ...copy,
+    variants: copy.variants.map((variant, index) => ({ ...variant, ...list[index] })),
+  };
+}
+
 export const services: Service[] = definitions.map((definition) => ({
   ...definition,
   copy: {
-    tr: servicesTr[definition.id],
-    en: servicesEn[definition.id],
+    tr: withVariantDetails(definition.id, servicesTr[definition.id], variantDetailsTr),
+    en: withVariantDetails(definition.id, servicesEn[definition.id], variantDetailsEn),
   },
 }));
 
@@ -173,7 +198,7 @@ export function getServiceById(id: string): Service | undefined {
 
 /** Bir hizmetin belirli dildeki metinlerini döndürür. */
 export function getServiceCopy(id: string, locale: Locale): ServiceCopy {
-  return copyByLocale[locale][id];
+  return services.find((service) => service.id === id)?.copy[locale] ?? copyByLocale[locale][id];
 }
 
 /** sitemap.ts ve generateStaticParams için tüm slug'lar. */

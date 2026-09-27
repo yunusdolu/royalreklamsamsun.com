@@ -39,6 +39,7 @@ export interface Campaign {
   body: string[];
   badge?: string;
   image?: string;
+  imageFocus?: string;
   serviceIds: string[];
   endsAt?: string;
 }
@@ -63,6 +64,7 @@ function localized(row: CampaignRow, locale: Locale): Campaign {
     body: body ? body.split(/\n{2,}/).map((p) => p.trim()).filter(Boolean) : [],
     badge: text(row.badge_tr, row.badge_en) || undefined,
     image: row.image ?? undefined,
+    imageFocus: row.image_focus ?? undefined,
     serviceIds: row.service_ids ?? [],
     endsAt: row.ends_at ?? undefined,
   };

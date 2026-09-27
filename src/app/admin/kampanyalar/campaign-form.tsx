@@ -68,6 +68,7 @@ export function CampaignForm({
           <ImageField
             label="Kampanya görseli"
             name="image"
+            folder="campaigns"
             current={campaign?.image}
             currentFocus={campaign?.image_focus}
             hint="Yatay (16:9) bir görsel en iyi sonucu verir."

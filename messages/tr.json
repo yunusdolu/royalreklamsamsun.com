@@ -21,7 +21,8 @@
     "languageLabel": "Dil",
     "switchToEnglish": "English",
     "switchToTurkish": "Türkçe",
-    "menuLabel": "Menü"
+    "menuLabel": "Menü",
+    "campaigns": "Kampanyalar"
   },
   "common": {
     "readMore": "Detaylı bilgi",
@@ -64,7 +65,12 @@
     "instagramBrowse": "Instagram’da İncele",
     "variantsImageLoading": "Görsel hazırlanıyor",
     "dayDelivery": "Gün Teslim",
-    "variantCount": "+{count} çeşit {service}"
+    "variantCount": "+{count} çeşit {service}",
+    "selectedVariant": "Seçili çeşit",
+    "chooseVariant": "Çeşit seç",
+    "beforeYouDecide": "Karar vermeden önce",
+    "aboutService": "{service} hakkında",
+    "variantWhatsappPrefill": "Merhaba, {service} ({variant}) için fiyat almak istiyorum."
   },
   "home": {
     "hero": {
@@ -196,6 +202,11 @@
       "headingTop": "Cephenizi",
       "headingAccent": "Konuşalım",
       "whatsappPrefill": "Merhaba, Royal Reklam — web sitenizden yazıyorum. Cephem için tabela yaptırmak istiyorum."
+    },
+    "campaigns": {
+      "eyebrow": "Kampanyalar",
+      "title": "Şu an geçerli fırsatlar",
+      "cta": "Tüm kampanyalar"
     }
   },
   "servicesPage": {
@@ -217,6 +228,21 @@
     "loadMore": "Daha fazla göster",
     "resultCount": "{count} iş",
     "noProjectsYet": "Bu kategoride henüz fotoğraf yok"
+  },
+  "campaignsPage": {
+    "title": "Kampanyalar",
+    "metaTitle": "Kampanyalar | Royal Reklam Samsun",
+    "metaDescription": "Tabela, dijital baskı ve cephe giydirmede şu an geçerli Royal Reklam kampanyaları ve fırsatları.",
+    "lead": "Dönemsel fırsatlarımız. Her kampanyanın koşulları ve son günü kendi sayfasında yazıyor.",
+    "empty": "Şu an yayında bir kampanya yok. Yine de ihtiyacını yaz, sana en uygun fiyatı çıkaralım.",
+    "endsOn": "Son gün: {date}",
+    "ongoing": "Süresiz",
+    "details": "Kampanyayı incele",
+    "servicesTitle": "Geçerli olduğu hizmetler",
+    "whatsappPrefill": "Merhaba, \"{campaign}\" kampanyası hakkında bilgi almak istiyorum.",
+    "askWhatsapp": "WhatsApp'tan sor",
+    "backToCampaigns": "Tüm kampanyalar",
+    "serviceBanner": "Bu hizmette kampanya var"
   },
   "regionsPage": {
     "title": "Hizmet Bölgelerimiz",

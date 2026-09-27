@@ -158,7 +158,7 @@ export default async function BlogPostPage({
             )}
 
             <Reveal direction="left" delay={0.08}>
-              <div className="overflow-hidden rounded-2xl bg-[linear-gradient(150deg,#141416_0%,#252017_58%,#141416_100%)] p-6">
+              <div className="overflow-hidden rounded-2xl bg-[#121214] p-6">
                 <span className="text-[0.6875rem] font-semibold uppercase tracking-[0.16em] text-gold-400">
                   {tBlog("title")}
                 </span>

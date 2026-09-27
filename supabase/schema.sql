@@ -235,3 +235,36 @@ alter table public.hero_slides enable row level security;
 drop policy if exists "herkes okuyabilir" on public.hero_slides;
 create policy "herkes okuyabilir" on public.hero_slides
   for select using (true);
+
+-- ---------------------------------------------------------------------------
+-- 9) Sayfa başlıkları
+-- ---------------------------------------------------------------------------
+-- Sitedeki her iç sayfanın başlık bloğu: başlık, kısa açıklama ve isteğe
+-- bağlı bir görsel. Satır yoksa sayfa çeviri dosyasındaki metinle açılır.
+-- Anahtarlar src/lib/content/pages.ts içindeki EDITABLE_PAGES listesiyle
+-- aynı (hizmetler, hakkimizda, iletisim, kvkk…). Adres ve Google'da görünen
+-- sayfa başlığı (<title>) bilerek burada yok.
+create table if not exists public.page_content (
+  id          text primary key,
+
+  title_tr    text,
+  title_en    text,
+  lead_tr     text,
+  lead_en     text,
+
+  image       text,
+  image_focus text,
+
+  updated_at  timestamptz not null default now()
+);
+
+drop trigger if exists page_content_touch on public.page_content;
+create trigger page_content_touch
+  before update on public.page_content
+  for each row execute function public.touch_updated_at();
+
+alter table public.page_content enable row level security;
+
+drop policy if exists "herkes okuyabilir" on public.page_content;
+create policy "herkes okuyabilir" on public.page_content
+  for select using (true);

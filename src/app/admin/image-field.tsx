@@ -3,6 +3,8 @@
 import { useEffect, useRef, useState } from "react";
 import { Crosshair } from "lucide-react";
 
+import { DirectUploadError, blockSubmitWhile, formatBytes, uploadDirect } from "./upload-client";
+
 /**
  * Görsel alanı: yükleme + odak noktası + site önizlemesi.
  *
@@ -14,6 +16,10 @@ import { Crosshair } from "lucide-react";
  *
  * Önizleme kutuları sitedeki gerçek oranlar. Amaç "kaydet, siteye bak, geri
  * gel" döngüsünü tamamen ortadan kaldırmak.
+ *
+ * Dosya seçilir seçilmez, küçültülmeden doğrudan depoya yükleniyor; forma
+ * yalnızca adresi yazılıyor (bkz. upload-client). Dosya alanının bilerek
+ * `name`'i yok: form gönderilirken dosyanın kendisi bir daha gitmesin.
  */
 
 export interface PreviewSpec {
@@ -40,9 +46,12 @@ export function ImageField({
   currentFocus,
   hint,
   previews = [],
+  folder,
 }: {
   label: string;
   name: string;
+  /** Depodaki klasör — sunucudaki kayıt işlemiyle aynı ad. */
+  folder: string;
   current?: string | null;
   currentFocus?: string | null;
   hint?: string;
@@ -52,11 +61,46 @@ export function ImageField({
   const [preview, setPreview] = useState<string | null>(null);
   const [focus, setFocus] = useState(() => parseFocus(currentFocus));
   const [dragging, setDragging] = useState(false);
+  const [note, setNote] = useState<{ tone: "info" | "error"; text: string } | null>(null);
+  const [progress, setProgress] = useState<number | null>(null);
+  const busyRef = useRef(false);
   const fileRef = useRef<HTMLInputElement>(null);
   const frameRef = useRef<HTMLDivElement>(null);
 
   const shown = preview ?? (kept || null);
   const position = `${focus.x}% ${focus.y}%`;
+
+  useEffect(
+    () =>
+      blockSubmitWhile(
+        fileRef.current?.form,
+        () => busyRef.current,
+        () => setNote({ tone: "error", text: "Görsel hâlâ yükleniyor; bitince kaydet." }),
+      ),
+    [],
+  );
+
+  async function upload(file: File) {
+    busyRef.current = true;
+    setPreview(URL.createObjectURL(file));
+    setProgress(0);
+    setNote({ tone: "info", text: `Yükleniyor… (${formatBytes(file.size)}, özgün kalitede)` });
+    try {
+      const url = await uploadDirect(file, folder, setProgress);
+      setKept(url);
+      setNote({ tone: "info", text: `Yüklendi (${formatBytes(file.size)}). Kaydetmeyi unutma.` });
+    } catch (error) {
+      setPreview(null);
+      setNote({
+        tone: "error",
+        text: error instanceof DirectUploadError ? error.message : "Yükleme başarısız. Tekrar dene.",
+      });
+    } finally {
+      busyRef.current = false;
+      setProgress(null);
+      if (fileRef.current) fileRef.current.value = "";
+    }
+  }
 
   /* Seçilen dosyanın blob adresi bellekte kalmasın. */
   useEffect(() => {
@@ -136,15 +180,33 @@ export function ImageField({
       <input type="hidden" name={`${name}_focus`} value={shown ? position : ""} />
       <input
         ref={fileRef}
-        name={name}
         type="file"
+        disabled={progress !== null}
         accept="image/jpeg,image/png,image/webp,image/avif"
         onChange={(event) => {
-          const file = event.target.files?.[0];
-          setPreview(file ? URL.createObjectURL(file) : null);
+          const file = event.currentTarget.files?.[0];
+          if (file) void upload(file);
         }}
         className="text-sm file:mr-3 file:rounded-lg file:border-0 file:bg-zinc-900 file:px-3 file:py-2 file:text-sm file:font-medium file:text-white"
       />
+
+      {progress !== null && (
+        <span className="h-1.5 overflow-hidden rounded-full bg-zinc-200" aria-hidden="true">
+          <span
+            className="block h-full rounded-full bg-zinc-900 transition-[width]"
+            style={{ width: `${Math.round(progress * 100)}%` }}
+          />
+        </span>
+      )}
+
+      {note && (
+        <span
+          role={note.tone === "error" ? "alert" : "status"}
+          className={`text-xs ${note.tone === "error" ? "text-red-600" : "text-zinc-500"}`}
+        >
+          {note.text}
+        </span>
+      )}
 
       <div className="flex flex-wrap items-center gap-4">
         {shown && (
@@ -162,6 +224,7 @@ export function ImageField({
             onClick={() => {
               setKept("");
               setPreview(null);
+              setNote(null);
               if (fileRef.current) fileRef.current.value = "";
             }}
             className="text-xs text-zinc-500 underline underline-offset-2 hover:text-zinc-900"

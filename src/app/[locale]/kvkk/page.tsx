@@ -9,6 +9,7 @@ import { legalDocs } from "@/content/legal";
 import { type Locale, routing } from "@/i18n/routing";
 import { buildBreadcrumbSchema } from "@/lib/schema";
 import { buildAlternates, buildOpenGraph } from "@/lib/seo";
+import { getPageContent } from "@/lib/content/pages";
 
 const doc = legalDocs["kvkk"];
 
@@ -45,6 +46,9 @@ export default async function LegalPage({
   const { locale } = await params;
   setRequestLocale(locale);
 
+  /* Başlık bloğu panelden düzenlenebilir; boşsa koddaki metin gelir. */
+  const page = await getPageContent("kvkk", locale);
+
   const copy = doc.copy[locale];
   const tCommon = await getTranslations("common");
   const tLegal = await getTranslations("legal");
@@ -56,8 +60,10 @@ export default async function LegalPage({
           { name: tCommon("breadcrumbHome"), href: "/" },
           { name: copy.title },
         ]}
-        title={copy.title}
-        lead={copy.lead}
+        title={page.title}
+        lead={page.lead}
+        image={page.image}
+        imagePosition={page.imageFocus}
       />
 
       <section className="container-royal py-16 lg:py-20">

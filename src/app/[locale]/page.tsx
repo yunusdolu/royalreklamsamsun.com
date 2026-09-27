@@ -1,5 +1,6 @@
 import { setRequestLocale } from "next-intl/server";
 
+import { CampaignStrip } from "@/components/sections/campaign-strip";
 import { CtaSection } from "@/components/sections/cta-section";
 import { FaqSection } from "@/components/sections/faq-section";
 import { Hero } from "@/components/sections/hero";
@@ -27,6 +28,8 @@ export default async function HomePage({
     <>
       <Hero slides={heroSlides} />
       <StatsBar />
+      {/* Yayında kampanya yoksa hiçbir şey çizmez. */}
+      <CampaignStrip />
       <ServicesSection />
       <ProcessSection />
       <PortfolioTeaser />

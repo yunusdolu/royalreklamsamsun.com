@@ -105,9 +105,14 @@ const cachedProjects = unstable_cache(fetchProjects, ["projects"], {
 });
 
 export async function getProjects(): Promise<Project[]> {
-  const rows = (await cachedProjects()).filter((row) => row.is_published);
+  const rows = await cachedProjects();
+  /*
+    Koddaki listeye yalnızca tablo tümüyle boşken düşülüyor. "Yayında olan
+    yoksa" diye bakılsaydı, panelden bütün işleri yayından kaldıran kişi
+    sitede eski yer tutucu projelerin geri geldiğini görürdü.
+  */
   if (rows.length === 0) return baseProjects;
-  return rows.map(toProject);
+  return rows.filter((row) => row.is_published).map(toProject);
 }
 
 export async function getProjectBySlugAsync(

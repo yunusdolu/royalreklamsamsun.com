@@ -1,5 +1,3 @@
-import Image from "next/image";
-
 import { siteConfig } from "@/config/site";
 import { cn } from "@/lib/utils";
 
@@ -25,25 +23,6 @@ export function Logo({
       src="/brand/my-logo.png"
       alt={`${siteConfig.name} — ${siteConfig.tagline.tr}`}
       className={cn("h-auto w-full select-none object-contain", className)}
-    />
-  );
-}
-
-/** Yalnızca at figürü — dar alanlarda (mobil başlık, favicon alanı) */
-export function LogoMark({
-  className,
-  size = 36,
-}: {
-  className?: string;
-  size?: number;
-}) {
-  return (
-    <Image
-      src="/brand/mark-gold.png"
-      alt={siteConfig.name}
-      width={size}
-      height={size}
-      className={cn("select-none", className)}
     />
   );
 }

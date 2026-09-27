@@ -22,11 +22,24 @@ export interface ServiceHighlight {
  * bir şey anlatmaz; asıl değer hangi çeşidin ne zaman doğru olduğunu söyleyen
  * cümlede.
  */
-export interface ServiceVariant {
+export interface ServiceVariant extends Partial<VariantDetail> {
   name: string;
   description: string;
   /** Çeşidin 16:10 editoryal fotoğrafı (`public/images/services/variants/...`) */
   image?: string;
+}
+
+/**
+ * Çeşide özel ayrıntılar. Hizmet sayfasında ziyaretçi bir çeşidi seçince
+ * teknik tablo, "kimler için uygun" ve öne çıkanlar o çeşide göre değişiyor.
+ * Metinler `variant-details.{tr,en}.ts` içinde, çeşit sırasıyla eşleşiyor.
+ */
+export interface VariantDetail {
+  specs: ServiceSpec[];
+  bestFor: string[];
+  pros: string[];
+  /** Karar vermeden önce bilinmesi gereken tek cümle. */
+  watch: string;
 }
 
 /** Bir hizmetin tek dildeki tüm metinleri. */

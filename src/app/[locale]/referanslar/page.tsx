@@ -8,6 +8,8 @@ import { JsonLd } from "@/components/seo/json-ld";
 import { type Locale, routing } from "@/i18n/routing";
 import { buildBreadcrumbSchema } from "@/lib/schema";
 import { buildAlternates, buildOpenGraph } from "@/lib/seo";
+import { getPageContent } from "@/lib/content/pages";
+import { getProjects } from "@/lib/content/projects";
 
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
@@ -42,6 +44,12 @@ export default async function PortfolioPage({
   const { locale } = await params;
   setRequestLocale(locale);
 
+  /* Başlık bloğu panelden düzenlenebilir; boşsa koddaki metin gelir. */
+  const [page, projects] = await Promise.all([
+    getPageContent("referanslar", locale),
+    getProjects(),
+  ]);
+
   const t = await getTranslations("portfolioPage");
   const tCommon = await getTranslations("common");
 
@@ -52,12 +60,14 @@ export default async function PortfolioPage({
           { name: tCommon("breadcrumbHome"), href: "/" },
           { name: t("title") },
         ]}
-        title={t("title")}
-        lead={t("lead")}
+        title={page.title}
+        lead={page.lead}
+        image={page.image}
+        imagePosition={page.imageFocus}
       />
 
       <section className="container-royal py-16 lg:py-20">
-        <PortfolioGrid />
+        <PortfolioGrid projects={projects} />
       </section>
 
       <CtaSection />

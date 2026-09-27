@@ -11,6 +11,7 @@ import { SmoothScrollProvider } from "@/components/motion/smooth-scroll-provider
 import { JsonLd } from "@/components/seo/json-ld";
 import { siteConfig } from "@/config/site";
 import { type Locale, routing } from "@/i18n/routing";
+import { getLiveCampaigns } from "@/lib/content/campaigns";
 import { buildLocalBusinessSchema, buildWebSiteSchema } from "@/lib/schema";
 import { buildAlternates } from "@/lib/seo";
 
@@ -119,7 +120,11 @@ export default async function LocaleLayout({
   // Statik render için gerekli — olmadan tüm sayfalar dinamiğe düşer.
   setRequestLocale(locale);
 
-  const t = await getTranslations({ locale, namespace: "meta" });
+  const [t, liveCampaigns] = await Promise.all([
+    getTranslations({ locale, namespace: "meta" }),
+    getLiveCampaigns(locale),
+  ]);
+  const hasCampaigns = liveCampaigns.length > 0;
 
   return (
     <html
@@ -141,7 +146,7 @@ export default async function LocaleLayout({
             >
               {t("skipToContent")}
             </a>
-            <Header />
+            <Header showCampaigns={hasCampaigns} />
             <main id="main" className="flex-1">
               {children}
             </main>

@@ -8,8 +8,8 @@ import { Reveal } from "@/components/motion/reveal";
 import { CtaSection } from "@/components/sections/cta-section";
 import { JsonLd } from "@/components/seo/json-ld";
 import { PillLink } from "@/components/ui/pill-button";
-import { getProjectBySlug, projects } from "@/content/projects";
 import { getServiceById } from "@/content/services";
+import { getProjectBySlugAsync, getProjects } from "@/lib/content/projects";
 import { Link } from "@/i18n/navigation";
 import { type Locale, routing } from "@/i18n/routing";
 import { buildBreadcrumbSchema, schemaIds } from "@/lib/schema";
@@ -18,12 +18,12 @@ import { buildLocalizedAlternates, buildOpenGraph, localizedUrl } from "@/lib/se
 type Params = { locale: Locale; slug: string };
 
 /**
- * `projects` boşken bu rotanın hiçbir sayfası üretilmez ve tanımsız bir
- * slug istendiğinde 404 döner — `dynamicParams: false` bunu garanti eder.
+ * Derleme anındaki işler önceden üretilir. Panelden sonradan eklenen iş
+ * ilk ziyarette üretilir; bu yüzden `dynamicParams` açık kalıyor. Olmayan
+ * bir adres yine 404 döner: sayfa `notFound()` çağırıyor.
  */
-export const dynamicParams = false;
-
-export function generateStaticParams() {
+export async function generateStaticParams() {
+  const projects = await getProjects();
   return routing.locales.flatMap((locale) =>
     projects.map((project) => ({ locale, slug: project.slug[locale] })),
   );
@@ -35,7 +35,7 @@ export async function generateMetadata({
   params: Promise<Params>;
 }): Promise<Metadata> {
   const { locale, slug } = await params;
-  const project = getProjectBySlug(slug, locale);
+  const project = await getProjectBySlugAsync(slug, locale);
   if (!project) return {};
 
   const copy = project.copy[locale];
@@ -68,7 +68,7 @@ export default async function ProjectDetailPage({
   const { locale, slug } = await params;
   setRequestLocale(locale);
 
-  const project = getProjectBySlug(slug, locale);
+  const project = await getProjectBySlugAsync(slug, locale);
   if (!project) notFound();
 
   const copy = project.copy[locale];
@@ -107,6 +107,8 @@ export default async function ProjectDetailPage({
                       fill
                       priority={index === 0}
                       sizes="(min-width:1024px) 66vw, 100vw"
+                      /* Odak noktası panelde yalnızca kapak için seçiliyor. */
+                      style={index === 0 ? { objectPosition: project.coverFocus } : undefined}
                       className="object-cover"
                     />
                   </div>
@@ -131,7 +133,7 @@ export default async function ProjectDetailPage({
           {/* Proje künyesi — fotoğrafın yanında koyu plaka, altında teklif eylemi */}
           <aside className="lg:col-span-4">
             <Reveal direction="left">
-              <div className="overflow-hidden rounded-2xl bg-[linear-gradient(150deg,#141416_0%,#252017_58%,#141416_100%)] p-6 lg:sticky lg:top-28">
+              <div className="overflow-hidden rounded-2xl bg-[#121214] p-6 lg:sticky lg:top-28">
                 <span className="text-[0.6875rem] font-semibold uppercase tracking-[0.16em] text-gold-400">
                   {locale === "tr" ? "Proje künyesi" : "Project details"}
                 </span>

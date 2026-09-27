@@ -24,18 +24,21 @@ import CurvedMenu from "@/components/ui/curved-menu";
 import GradualBlur from "@/components/ui/gradual-blur";
 
 type NavKey =
-  "services" | "portfolio" | "regions" | "about" | "blog" | "contact";
+  "services" | "portfolio" | "campaigns" | "regions" | "about" | "blog" | "contact";
 
-const navItems: {
+type NavItem = {
   key: NavKey;
   href:
     | "/hizmetler"
     | "/referanslar"
+    | "/kampanyalar"
     | "/bolgeler"
     | "/hakkimizda"
     | "/blog"
     | "/iletisim";
-}[] = [
+};
+
+const baseNavItems: NavItem[] = [
   { key: "services", href: "/hizmetler" },
   { key: "portfolio", href: "/referanslar" },
   { key: "regions", href: "/bolgeler" },
@@ -44,7 +47,20 @@ const navItems: {
   { key: "contact", href: "/iletisim" },
 ];
 
-export function Header() {
+/**
+ * `showCampaigns`: yayında en az bir kampanya varsa düzen (layout) bunu
+ * açıyor. Kampanya yokken menüde boş bir sayfaya giden bağlantı durmasın.
+ */
+export function Header({ showCampaigns = false }: { showCampaigns?: boolean }) {
+  const navItems: NavItem[] = showCampaigns
+    ? [
+        baseNavItems[0],
+        baseNavItems[1],
+        { key: "campaigns", href: "/kampanyalar" },
+        ...baseNavItems.slice(2),
+      ]
+    : baseNavItems;
+
   const t = useTranslations("nav");
   const tCommon = useTranslations("common");
   const locale = useLocale() as Locale;
@@ -138,7 +154,10 @@ export function Header() {
                   key={item.key}
                   href={item.href}
                   className={cn(
-                    "relative px-1 py-2 text-[0.9375rem] font-medium tracking-wide transition-colors",
+                    "relative whitespace-nowrap px-1 py-2 text-[0.9375rem] font-medium tracking-wide transition-colors",
+                    /* Yedi bağlantı dar masaüstünde sığmıyor; kampanya
+                       bağlantısı orada mobil menüde ve anasayfa şeridinde. */
+                    item.key === "campaigns" && "hidden 2xl:block",
                     isActive
                       ? scrolled
                         ? "text-white drop-shadow-[0_0_12px_rgba(212,175,55,0.7)]"

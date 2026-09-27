@@ -83,3 +83,58 @@ export async function resolveImageField(
   if (typeof kept === "string") return kept.trim() || null;
   return current;
 }
+
+/**
+ * Tarayıcıdan doğrudan yükleme için büyük sınır. Fotoğraf küçültülmeden,
+ * olduğu gibi depoya gidiyor; sitede her ekran için uygun boyutu zaten
+ * next/image üretiyor. 25 MB telefonla çekilmiş en büyük fotoğrafı da
+ * karşılıyor.
+ */
+const MAX_DIRECT_BYTES = 25 * 1024 * 1024;
+
+/**
+ * Tarayıcının dosyayı doğrudan depoya yükleyebileceği tek kullanımlık adres.
+ *
+ * Neden: dosya panel formuyla (server action) gönderildiğinde istek
+ * gövdesi sınırına takılıyor — Next.js'te ayarlanabilir ama Vercel'de 4,5
+ * MB'ta sabit. Fotoğrafı küçültmek kaliteyi düşürüyordu. Bu yolda dosya
+ * sunucumuzdan hiç geçmiyor: sunucu yalnızca oturumu ve dosya türünü
+ * denetleyip Supabase'ten imzalı bir adres alıyor, dosyayı tarayıcı oraya
+ * yüklüyor, forma da yalnızca ortaya çıkan adres yazılıyor.
+ *
+ * Adres yalnızca bu tek yol için, iki saat geçerli; gizli anahtar tarayıcıya
+ * hiç gitmiyor.
+ */
+export async function createDirectUpload(
+  folder: string,
+  fileName: string,
+  type: string,
+  size: number,
+): Promise<{ signedUrl: string; publicUrl: string }> {
+  if (!ALLOWED.has(type)) {
+    throw new UploadError("Yalnızca JPG, PNG, WEBP veya AVIF yükleyebilirsin.");
+  }
+  if (!(size > 0) || size > MAX_DIRECT_BYTES) {
+    throw new UploadError("Dosya 25 MB'tan büyük olmamalı.");
+  }
+  /* Klasör adı istemciden geliyor; depo içinde başka yere yazılamasın. */
+  if (!/^[a-z0-9][a-z0-9-]*(\/[a-z0-9-]+)*$/.test(folder)) {
+    throw new UploadError("Geçersiz klasör.");
+  }
+
+  const db = adminClient();
+  if (!db) throw new UploadError("Supabase yazma anahtarı tanımlı değil.");
+
+  const ext = type.split("/")[1].replace("jpeg", "jpg");
+  const path = `${folder}/${Date.now()}-${slugifyName(fileName)}.${ext}`;
+
+  const { data, error } = await db.storage.from(BUCKET).createSignedUploadUrl(path);
+  if (error || !data) {
+    throw new UploadError(`Yükleme başlatılamadı: ${error?.message ?? "bilinmeyen hata"}`);
+  }
+
+  return {
+    signedUrl: data.signedUrl,
+    publicUrl: `${SUPABASE_URL}/storage/v1/object/public/${BUCKET}/${path}`,
+  };
+}
