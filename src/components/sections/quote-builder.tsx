@@ -219,21 +219,31 @@ export function QuoteBuilder({ services }: { services: Service[] }) {
 
   /** Panelin üstündeki tek satırlık özet çipleri */
   const summary = useMemo(() => {
-    const parts: string[] = [];
+    const parts: SummaryChip[] = [];
     if (selectedServices.length > 0) {
-      parts.push(
-        selectedServices.length === 1
-          ? serviceName(selectedServices[0])
-          : tMessage("summaryServices", { count: selectedServices.length }),
-      );
+      parts.push({
+        id: "hizmet",
+        label:
+          selectedServices.length === 1
+            ? serviceName(selectedServices[0])
+            : tMessage("summaryServices", { count: selectedServices.length }),
+      });
     }
     if (selectedVariants.length > 0) {
-      parts.push(t("variantSummary", { count: selectedVariants.length }));
+      parts.push({
+        id: "cesit",
+        label: t("variantSummary", { count: selectedVariants.length }),
+      });
     }
     if (quantity && quantity !== "1") {
-      parts.push(tMessage("summaryQuantity", { count: quantity }));
+      parts.push({
+        id: "adet",
+        label: tMessage("summaryQuantity", { count: quantity }),
+      });
     }
-    if (timing) parts.push(t(`timingOptions.${timing}`));
+    if (timing) {
+      parts.push({ id: "zaman", label: t(`timingOptions.${timing}`) });
+    }
     return parts;
     // serviceName yalnızca byId'ye bakıyor; ayrı bağımlılık gerekmiyor
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -601,6 +611,12 @@ interface StepState {
 
 type Translate = (key: string) => string;
 
+/** Özet çipi. Kimlik çipin türü — içeriği değişse de aynı öğe kalır. */
+interface SummaryChip {
+  id: string;
+  label: string;
+}
+
 /**
  * Özet ve gönderim kartı.
  *
@@ -622,7 +638,7 @@ function SummaryPanel({
   tReassure,
 }: {
   steps: StepState[];
-  summary: string[];
+  summary: SummaryChip[];
   message: string;
   isValid: boolean;
   area: string | null;
@@ -635,7 +651,7 @@ function SummaryPanel({
   const prefersReduced = useReducedMotion();
 
   const chips = [
-    ...summary.map((part) => ({ id: part, label: part, gold: false })),
+    ...summary.map((part) => ({ ...part, gold: false })),
     ...(area ? [{ id: "alan", label: `${area} m²`, gold: true }] : []),
   ];
 
@@ -784,7 +800,7 @@ function SummaryPanel({
             beliriş/kayboluşu canlandırıyoruz.
           */
           <div className="flex flex-wrap gap-1.5">
-            <AnimatePresence initial={false}>
+            <AnimatePresence initial={false} mode="popLayout">
               {chips.map((chip) => (
                 <motion.span
                   key={chip.id}
