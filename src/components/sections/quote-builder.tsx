@@ -758,20 +758,29 @@ function SummaryPanel({
 
       <div className="mt-6 border-t border-white/12 pt-5">
         {chips.length > 0 ? (
-          <motion.div layout className="flex flex-wrap gap-1.5">
-            <AnimatePresence mode="popLayout" initial={false}>
+          /*
+            Çiplerde konum animasyonu (layout) bilerek yok. Satır dolunca bir
+            sonraki çip alt satıra kayıyor; framer bu yeni konuma transform'la
+            uçurduğu için çip uçarken üstteki satırın üzerine biniyor ve
+            kopmuş gibi görünüyordu. Sarma işini tarayıcıya bırakıp yalnızca
+            beliriş/kayboluşu canlandırıyoruz.
+          */
+          <div className="flex flex-wrap gap-1.5">
+            <AnimatePresence initial={false}>
               {chips.map((chip) => (
                 <motion.span
                   key={chip.id}
-                  layout
-                  initial={prefersReduced ? false : { opacity: 0, scale: 0.85, y: 6 }}
-                  animate={{ opacity: 1, scale: 1, y: 0 }}
+                  initial={prefersReduced ? false : { opacity: 0, scale: 0.85 }}
+                  animate={{ opacity: 1, scale: 1 }}
                   exit={prefersReduced ? { opacity: 0 } : { opacity: 0, scale: 0.85 }}
                   transition={ease}
                   className={cn(
-                    "rounded-[0.3rem] px-3 py-1.5 text-[0.8125rem]",
+                    "rounded-[0.3rem] px-3 py-1.5 text-center text-[0.8125rem] tabular-nums",
                     chip.gold
-                      ? "bg-gold-500 font-bold text-black"
+                      ? // Genişlik sabit: kaydırak sürüklenirken rakam
+                        // değiştikçe çip büyüyüp küçülmesin, yoksa her
+                        // karede satır düzeni yeniden hesaplanıyor.
+                        "min-w-[5.5rem] bg-gold-500 font-bold text-black"
                       : "bg-white/10 font-medium text-white/90",
                   )}
                 >
@@ -779,7 +788,7 @@ function SummaryPanel({
                 </motion.span>
               ))}
             </AnimatePresence>
-          </motion.div>
+          </div>
         ) : (
           <p className="text-[0.875rem] text-white/45">{t("emptySummary")}</p>
         )}
