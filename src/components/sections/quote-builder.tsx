@@ -1,6 +1,7 @@
 "use client";
 
 import { Check, ChevronDown, MessageCircle, Phone } from "lucide-react";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { useLocale, useTranslations } from "next-intl";
 import { useMemo, useState } from "react";
 
@@ -198,12 +199,11 @@ export function QuoteBuilder({ services }: { services: Service[] }) {
     if (quantity && quantity !== "1") {
       parts.push(tMessage("summaryQuantity", { count: quantity }));
     }
-    if (area) parts.push(`${area} m²`);
     if (timing) parts.push(t(`timingOptions.${timing}`));
     return parts;
     // serviceName yalnızca byId'ye bakıyor; ayrı bağımlılık gerekmiyor
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [selectedServices, selectedVariants, byId, quantity, area, timing, t, tMessage]);
+  }, [selectedServices, selectedVariants, byId, quantity, timing, t, tMessage]);
 
   const reset = () => {
     setSelectedServices([]);
@@ -589,43 +589,112 @@ function SummaryPanel({
   tReassure: Translate;
 }) {
   const done = steps.filter((step) => step.done).length;
+  const prefersReduced = useReducedMotion();
 
-  /*
-    Sayfanın tek koyu öğesi. Beyaz üstüne beyaz form göz için düz bir yüzeydi;
-    gönderim tarafını siyaha çekmek hem onu ayırıyor hem de markanın
-    siyah-altın diline oturuyor.
-  */
+  /* Hareketi kapatmış kullanıcıda her şey anında yerine otursun. */
+  const ease = prefersReduced
+    ? { duration: 0 }
+    : { type: "spring" as const, stiffness: 260, damping: 26 };
+
   return (
-    <div className="rounded-xl bg-royal-fg p-6 text-white sm:p-7 lg:sticky lg:top-28">
+    <div className="relative overflow-hidden rounded-xl bg-royal-fg p-6 text-white sm:p-7 lg:sticky lg:top-28">
+      {/* Kartın tepesindeki ilerleme şeridi — formu doldurdukça soldan sağa dolar. */}
+      <span
+        aria-hidden="true"
+        className="absolute inset-x-0 top-0 h-[3px] bg-white/10"
+      >
+        <motion.span
+          className="block h-full origin-left bg-gold-500"
+          initial={false}
+          animate={{ scaleX: done / steps.length }}
+          transition={prefersReduced ? { duration: 0 } : { duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+        />
+      </span>
+
       <div className="flex items-baseline justify-between gap-4">
         <h2 className="font-display text-[1.125rem] font-bold text-white">
           {t("summaryTitle")}
         </h2>
-        <span className="text-[0.8125rem] font-medium tabular-nums text-gold-500">
-          {done}/3
+        {/*
+          Sayı değişince yerinde durup içeriği değişmiyor, eskisi yukarı
+          çıkıp yenisi alttan geliyor: ilerlediğini fark etmen için.
+        */}
+        <span className="relative h-5 w-10 overflow-hidden text-right">
+          <AnimatePresence initial={false} mode="popLayout">
+            <motion.span
+              key={done}
+              initial={prefersReduced ? false : { y: 14, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              exit={prefersReduced ? { opacity: 0 } : { y: -14, opacity: 0 }}
+              transition={{ duration: prefersReduced ? 0 : 0.28 }}
+              className="absolute inset-0 text-[0.8125rem] font-medium tabular-nums text-gold-500"
+            >
+              {done}/{steps.length}
+            </motion.span>
+          </AnimatePresence>
         </span>
       </div>
 
-      <ol className="mt-5 flex flex-col gap-2.5">
+      {/* Dikey adım çizgisi: rozetleri birbirine bağlayan hat altınla doluyor. */}
+      <ol className="relative mt-6 flex flex-col gap-4">
+        <span
+          aria-hidden="true"
+          className="absolute bottom-3 left-3 top-3 w-px bg-white/12"
+        />
+        <motion.span
+          aria-hidden="true"
+          className="absolute bottom-3 left-3 top-3 w-px origin-top bg-gold-500"
+          initial={false}
+          animate={{ scaleY: done === 0 ? 0 : (done - 1) / (steps.length - 1) }}
+          transition={prefersReduced ? { duration: 0 } : { duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+        />
+
         {steps.map((step, index) => (
-          <li key={step.label} className="flex items-center gap-3">
-            <span
+          <li key={step.label} className="relative flex items-center gap-3">
+            <motion.span
+              initial={false}
+              animate={
+                prefersReduced || !step.done
+                  ? { scale: 1 }
+                  : { scale: [1, 1.18, 1] }
+              }
+              transition={{ duration: prefersReduced ? 0 : 0.34 }}
               className={cn(
-                "grid size-6 shrink-0 place-items-center rounded-full text-[0.6875rem] font-bold transition-colors",
+                "relative z-10 grid size-6 shrink-0 place-items-center rounded-full text-[0.6875rem] font-bold transition-colors duration-300",
                 step.done
                   ? "bg-gold-500 text-black"
-                  : "border border-white/20 text-white/45",
+                  : "border border-white/20 bg-royal-fg text-white/45",
               )}
             >
-              {step.done ? (
-                <Check className="size-3.5" aria-hidden="true" />
-              ) : (
-                index + 1
-              )}
-            </span>
+              <AnimatePresence initial={false} mode="wait">
+                {step.done ? (
+                  <motion.span
+                    key="ok"
+                    initial={prefersReduced ? false : { scale: 0, rotate: -40 }}
+                    animate={{ scale: 1, rotate: 0 }}
+                    exit={{ scale: 0 }}
+                    transition={ease}
+                    className="grid place-items-center"
+                  >
+                    <Check className="size-3.5" aria-hidden="true" />
+                  </motion.span>
+                ) : (
+                  <motion.span
+                    key="no"
+                    initial={prefersReduced ? false : { scale: 0 }}
+                    animate={{ scale: 1 }}
+                    exit={{ scale: 0 }}
+                    transition={ease}
+                  >
+                    {index + 1}
+                  </motion.span>
+                )}
+              </AnimatePresence>
+            </motion.span>
+
             <span
               className={cn(
-                "text-[0.875rem] transition-colors",
+                "text-[0.875rem] transition-colors duration-300",
                 step.done ? "font-medium text-white" : "text-white/45",
               )}
             >
@@ -637,31 +706,41 @@ function SummaryPanel({
 
       <div className="mt-6 border-t border-white/12 pt-5">
         {summary.length > 0 ? (
-          <div className="flex flex-wrap gap-1.5">
-            {summary.map((part) => (
-              <span
-                key={part}
-                className="rounded-[0.3rem] bg-white/10 px-3 py-1.5 text-[0.8125rem] font-medium text-white/90"
-              >
-                {part}
-              </span>
-            ))}
-            {area && (
-              <span className="rounded-[0.3rem] bg-gold-500 px-3 py-1.5 text-[0.8125rem] font-bold text-black">
-                {area} m²
-              </span>
-            )}
-          </div>
+          <motion.div layout className="flex flex-wrap gap-1.5">
+            <AnimatePresence mode="popLayout" initial={false}>
+              {summary.map((part) => (
+                <motion.span
+                  key={part}
+                  layout
+                  initial={prefersReduced ? false : { opacity: 0, scale: 0.85, y: 6 }}
+                  animate={{ opacity: 1, scale: 1, y: 0 }}
+                  exit={prefersReduced ? { opacity: 0 } : { opacity: 0, scale: 0.85 }}
+                  transition={ease}
+                  className="rounded-[0.3rem] bg-white/10 px-3 py-1.5 text-[0.8125rem] font-medium text-white/90"
+                >
+                  {part}
+                </motion.span>
+              ))}
+              {area && (
+                <motion.span
+                  key={`alan-${area}`}
+                  layout
+                  initial={prefersReduced ? false : { opacity: 0, scale: 0.85, y: 6 }}
+                  animate={{ opacity: 1, scale: 1, y: 0 }}
+                  exit={prefersReduced ? { opacity: 0 } : { opacity: 0, scale: 0.85 }}
+                  transition={ease}
+                  className="rounded-[0.3rem] bg-gold-500 px-3 py-1.5 text-[0.8125rem] font-bold text-black"
+                >
+                  {area} m²
+                </motion.span>
+              )}
+            </AnimatePresence>
+          </motion.div>
         ) : (
           <p className="text-[0.875rem] text-white/45">{t("emptySummary")}</p>
         )}
       </div>
 
-      {/*
-        Mesaj önizlemesi katlanır. Kullanıcıların çoğu ona bakmadan
-        gönderiyor, ama bakmak isteyenden de gizlemek olmaz; açık haliyle
-        kartın yarısını kaplıyordu.
-      */}
       <details className="group mt-5 border-t border-white/12 pt-5">
         <summary className="flex cursor-pointer items-center justify-between gap-3 text-[0.8125rem] font-medium text-white/65 transition-colors hover:text-white">
           {t("previewTitle")}
@@ -678,25 +757,41 @@ function SummaryPanel({
         </pre>
       </details>
 
-      <a
-        href={isValid ? whatsappLink(message) : undefined}
-        target="_blank"
-        rel="noopener noreferrer"
-        onClick={(event) => {
-          onSend();
-          if (!isValid) event.preventDefault();
-        }}
-        aria-disabled={!isValid}
-        className={cn(
-          "mt-6 flex h-14 items-center justify-center gap-2.5 rounded-lg text-[0.9375rem] font-bold transition-colors",
-          isValid
-            ? "bg-[#25d366] text-black hover:bg-[#2ee674]"
-            : "cursor-not-allowed bg-white/10 text-white/40",
+      {/*
+        Form tamamlanınca butonun arkasında yumuşak bir yeşil nefes başlıyor.
+        Amaç süs değil: kart uzun ve kullanıcı en altta değilken bile "artık
+        gönderebilirsin" sinyalini kenar görüşle yakalasın.
+      */}
+      <div className="relative mt-6">
+        {isValid && !prefersReduced && (
+          <motion.span
+            aria-hidden="true"
+            className="pointer-events-none absolute -inset-1 rounded-xl bg-[#25d366]/35 blur-xl"
+            animate={{ opacity: [0.3, 0.75, 0.3] }}
+            transition={{ duration: 2.6, repeat: Infinity, ease: "easeInOut" }}
+          />
         )}
-      >
-        <MessageCircle className="size-5" aria-hidden="true" />
-        {t("submit")}
-      </a>
+        <motion.a
+          href={isValid ? whatsappLink(message) : undefined}
+          target="_blank"
+          rel="noopener noreferrer"
+          onClick={(event) => {
+            onSend();
+            if (!isValid) event.preventDefault();
+          }}
+          aria-disabled={!isValid}
+          whileTap={isValid && !prefersReduced ? { scale: 0.98 } : undefined}
+          className={cn(
+            "relative flex h-14 items-center justify-center gap-2.5 rounded-lg text-[0.9375rem] font-bold transition-colors duration-300",
+            isValid
+              ? "bg-[#25d366] text-black hover:bg-[#2ee674]"
+              : "cursor-not-allowed bg-white/10 text-white/40",
+          )}
+        >
+          <MessageCircle className="size-5" aria-hidden="true" />
+          {t("submit")}
+        </motion.a>
+      </div>
 
       <p className="mt-2.5 text-center text-[0.75rem] text-white/45">
         {isValid ? t("ready") : t("missing")}
