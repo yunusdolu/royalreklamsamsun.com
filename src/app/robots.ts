@@ -17,7 +17,7 @@ export default function robots(): MetadataRoute.Robots {
       {
         userAgent: "*",
         allow: "/",
-        disallow: ["/api/"],
+        disallow: ["/api/", "/admin"],
       },
       // Üretken arama motorları — GEO için açık
       { userAgent: "GPTBot", allow: "/" },
