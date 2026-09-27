@@ -3,6 +3,7 @@ import Link from "next/link";
 import { services } from "@/content/services";
 import { requireSession } from "@/lib/admin/auth";
 import { adminClient } from "@/lib/supabase/server";
+import { Notice, PageTitle } from "../ui-server";
 
 export default async function ServicesPage({
   searchParams,
@@ -24,20 +25,18 @@ export default async function ServicesPage({
   const edited = new Map((data ?? []).map((row) => [row.id, row]));
 
   return (
-    <div>
-      <h1 className="text-xl font-semibold tracking-tight">Hizmetler</h1>
-      <p className="mt-2 max-w-2xl text-sm leading-relaxed text-zinc-600">
-        Hizmet listesi ve adresleri sabittir; buradan görselleri, başlıkları ve
-        teslim sürelerini değiştirirsin. Boş bıraktığın her alan sitedeki
-        mevcut metniyle kalır.
-      </p>
+    <div className="flex flex-col gap-6">
+      <PageTitle
+        title="Hizmetler"
+        lead="Hizmet listesi ve adresleri sabittir; buradan görselleri, başlıkları ve teslim sürelerini değiştirirsin. Boş bıraktığın her alan sitedeki mevcut metniyle kalır."
+      />
 
       {params.kaydedildi && <Notice>Kaydedildi. Site tazelendi.</Notice>}
       {params.sifirlandi && (
         <Notice>Düzenlemeler silindi, hizmet eski haline döndü.</Notice>
       )}
 
-      <ul className="mt-8 divide-y divide-black/10 overflow-hidden rounded-xl border border-black/10 bg-white">
+      <ul className="divide-y divide-black/10 overflow-hidden rounded-xl border border-black/10 bg-white">
         {services.map((service) => {
           const row = edited.get(service.id);
           const cover = row?.card_image ?? service.image;
@@ -72,13 +71,5 @@ export default async function ServicesPage({
         })}
       </ul>
     </div>
-  );
-}
-
-function Notice({ children }: { children: React.ReactNode }) {
-  return (
-    <p className="mt-6 rounded-lg border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-900">
-      {children}
-    </p>
   );
 }

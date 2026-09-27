@@ -37,6 +37,8 @@ export interface ProjectRow {
   gallery: string[];
   is_published: boolean;
   sort: number;
+  created_at: string;
+  updated_at: string;
 }
 
 function toProject(row: ProjectRow): Project {

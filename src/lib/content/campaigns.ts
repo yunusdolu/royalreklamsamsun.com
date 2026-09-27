@@ -25,6 +25,8 @@ export interface CampaignRow {
   ends_at: string | null;
   is_active: boolean;
   sort: number;
+  created_at: string;
+  updated_at: string;
 }
 
 /** Sayfaların kullandığı, dili çözülmüş kampanya. */
