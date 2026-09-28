@@ -1,18 +1,25 @@
 "use client";
 
-import Lenis from "lenis";
+import type Lenis from "lenis";
 import { useEffect } from "react";
 
-import { gsap, prefersReducedMotion, ScrollTrigger } from "@/lib/gsap";
-
 /**
- * Lenis yumuşak kaydırma + GSAP ScrollTrigger senkronizasyonu.
+ * Lenis yumuşak kaydırma.
  *
- * Kritik nokta: Lenis kendi RAF döngüsünü çalıştırırsa ScrollTrigger ile
- * senkron kaybolur ve pinned bölümler titrer. Bu yüzden Lenis'i GSAP'in
- * ticker'ına bağlıyor, `lagSmoothing(0)` ile sekme geri geldiğinde oluşan
- * sıçramayı engelliyoruz.
+ * Performans: Lenis (ve önceden GSAP + ScrollTrigger) her sayfanın açılış
+ * paketindeydi. Mobilde hiç kullanılmadığı halde indiriliyor, masaüstünde de
+ * sayfa ilk çizilirken kuruluyordu; Lighthouse'ta ana iş parçacığı süresinin
+ * büyük kısmı buydu. Artık yalnızca fareli cihazda, sayfa yüklendikten ve
+ * tarayıcı boşa çıktıktan sonra ayrı bir paket olarak indiriliyor.
+ *
+ * ScrollTrigger bağlantısı kaldırıldı: sitede sabitlenen (pinned) bölüm ya
+ * da kaydırmaya bağlı GSAP animasyonu kalmadı; Lenis kendi rAF döngüsüyle
+ * çalışıyor.
  */
+function prefersReducedMotion(): boolean {
+  return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+}
+
 /**
  * Etkin Lenis örneği. Lenis kaydırma sınırını (`scrollHeight - innerHeight`)
  * önbelleğe alır; sayfaya sonradan içerik eklendiğinde bu sınır eski kalır,
@@ -24,7 +31,27 @@ let activeLenis: Lenis | null = null;
 /** Sayfa yüksekliğini değiştiren bileşenler bunu çağırmalı. */
 export function refreshScroll() {
   activeLenis?.resize();
-  ScrollTrigger.refresh();
+}
+
+/** Sayfa yüklendikten ve ana iş parçacığı boşaldıktan sonra çalıştırır. */
+function whenIdle(run: () => void): () => void {
+  let cancelled = false;
+  let idleId: number | undefined;
+  const schedule = () => {
+    if (cancelled) return;
+    if ("requestIdleCallback" in window) idleId = window.requestIdleCallback(run, { timeout: 2500 });
+    else idleId = setTimeout(run, 400) as unknown as number;
+  };
+  if (document.readyState === "complete") schedule();
+  else window.addEventListener("load", schedule, { once: true });
+  return () => {
+    cancelled = true;
+    window.removeEventListener("load", schedule);
+    if (idleId !== undefined) {
+      if ("cancelIdleCallback" in window) window.cancelIdleCallback(idleId);
+      else clearTimeout(idleId);
+    }
+  };
 }
 
 export function SmoothScrollProvider({
@@ -44,34 +71,40 @@ export function SmoothScrollProvider({
      */
     if (window.matchMedia("(pointer: coarse)").matches) return;
 
-    const lenis = new Lenis({
-      duration: 1.05,
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-      smoothWheel: true,
-      // Dokunmatik cihazlarda native kaydırma daha akıcı ve pil dostudur.
-      syncTouch: false,
+    let disposed = false;
+    let cleanup = () => {};
+    const cancelIdle = whenIdle(async () => {
+      const { default: LenisClass } = await import("lenis");
+      if (disposed) return;
+      const lenis = new LenisClass({
+        duration: 1.05,
+        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+        smoothWheel: true,
+        // Dokunmatik cihazlarda native kaydırma daha akıcı ve pil dostudur.
+        syncTouch: false,
+        autoRaf: true,
+      });
+      activeLenis = lenis;
+
+      /**
+       * Lenis'in kendi gözlemcisi `document.documentElement` üzerinde ve
+       * 250 ms geciktirmeli çalışır; bu aralıkta kaydırma eski sınıra takılır.
+       * Gövde yüksekliğini gecikmesiz izleyip sınırı anında tazeliyoruz.
+       */
+      const bodyObserver = new ResizeObserver(() => lenis.resize());
+      bodyObserver.observe(document.body);
+
+      cleanup = () => {
+        bodyObserver.disconnect();
+        lenis.destroy();
+        activeLenis = null;
+      };
     });
 
-    activeLenis = lenis;
-    lenis.on("scroll", ScrollTrigger.update);
-
-    const raf = (time: number) => lenis.raf(time * 1000);
-    gsap.ticker.add(raf);
-    gsap.ticker.lagSmoothing(0);
-
-    /**
-     * Lenis'in kendi gözlemcisi `document.documentElement` üzerinde ve
-     * 250 ms geciktirmeli çalışır; bu aralıkta kaydırma eski sınıra takılır.
-     * Gövde yüksekliğini gecikmesiz izleyip sınırı anında tazeliyoruz.
-     */
-    const bodyObserver = new ResizeObserver(() => lenis.resize());
-    bodyObserver.observe(document.body);
-
     return () => {
-      bodyObserver.disconnect();
-      gsap.ticker.remove(raf);
-      lenis.destroy();
-      activeLenis = null;
+      disposed = true;
+      cancelIdle();
+      cleanup();
     };
   }, []);
 

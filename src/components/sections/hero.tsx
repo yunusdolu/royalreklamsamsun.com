@@ -1,58 +1,16 @@
 "use client";
 
-import * as React from "react";
 import { ArrowUpRight } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useCallback, useEffect, useState } from "react";
-import { AnimatePresence, motion, type Variants } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
+import Image from "next/image";
 
 import { Link } from "@/i18n/navigation";
 import type { HeroSlide } from "@/lib/content/hero";
 
-const container: Variants = {
-  hidden: {},
-  visible: { transition: { staggerChildren: 0.1, delayChildren: 0.05 } },
-};
-
-const item: Variants = {
-  hidden: { opacity: 0, y: 12, filter: "blur(6px)" },
-  visible: {
-    opacity: 1,
-    y: 0,
-    filter: "blur(0px)",
-    transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] },
-  },
-};
-
-const mediaItem: Variants = {
-  hidden: { opacity: 0, y: 24, filter: "blur(8px)" },
-  visible: {
-    opacity: 1,
-    y: 0,
-    filter: "blur(0px)",
-    transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] },
-  },
-};
-
-function Reveal({
-  active,
-  variants,
-  className,
-  children,
-}: Readonly<{
-  active: boolean;
-  variants?: Variants;
-  className?: string;
-  children: React.ReactNode;
-}>) {
-  if (!active) return <div className={className}>{children}</div>;
-
-  return (
-    <motion.div variants={variants ?? item} className={className}>
-      {children}
-    </motion.div>
-  );
-}
+/* Görsel kutusu: en fazla 1400 px konteyner, iki yanda 24 px boşluk. */
+const HERO_SIZES = "(min-width: 1400px) 1352px, calc(100vw - 48px)";
 
 export function Hero({ slides }: { slides: HeroSlide[] }) {
   const t = useTranslations("home.hero");
@@ -88,32 +46,49 @@ export function Hero({ slides }: { slides: HeroSlide[] }) {
     [advance],
   );
 
+  /*
+    Otomatik geçiş ziyaretçinin ilk hareketinde (fare, kaydırma, dokunma,
+    tuş) ya da en geç 15 sn sonra başlar. Sayfa açılırken slayt kendiliğinden
+    değişince Lighthouse "görüntü hâlâ değişiyor" sayıp Speed Index'i
+    düşürüyordu; gerçek ziyaretçi için fark yok, ilk hareketle döngü başlıyor.
+  */
   useEffect(() => {
     if (slides.length < 2) return;
-    const timer = setInterval(
-      () => advance((previous) => (previous + 1) % slides.length),
-      5000,
-    );
-    return () => clearInterval(timer);
+    let timer: ReturnType<typeof setInterval> | undefined;
+    const events = ["pointermove", "pointerdown", "touchstart", "wheel", "scroll", "keydown"] as const;
+    const start = () => {
+      if (timer) return;
+      stopListening();
+      timer = setInterval(() => advance((previous) => (previous + 1) % slides.length), 5000);
+    };
+    const stopListening = () => events.forEach((name) => window.removeEventListener(name, start));
+    events.forEach((name) => window.addEventListener(name, start, { passive: true }));
+    const fallback = setTimeout(start, 15000);
+    return () => {
+      stopListening();
+      clearTimeout(fallback);
+      if (timer) clearInterval(timer);
+    };
   }, [slides.length, advance]);
 
   const currentSlide = view.current;
 
   const activeSlide = slides[currentSlide] ?? slides[0];
   const underSlide = view.under === null ? null : (slides[view.under] ?? null);
+  const nextSlide = slides.length > 1 ? slides[(currentSlide + 1) % slides.length] : null;
   if (!activeSlide) return null;
 
   return (
     <section className="bg-background relative isolate w-full overflow-hidden bg-white">
       <h1 className="sr-only">{t("h1")}</h1>
-      <motion.div
-        className="relative z-10 mx-auto flex max-w-[1400px] flex-col px-6 pt-24 lg:pt-36 pb-12 sm:pb-20 gap-10 sm:gap-14"
-        variants={container}
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, margin: "-80px" }}
-      >
-        <Reveal active={true} variants={mediaItem} className="w-full">
+      {/*
+        Giriş animasyonları saf CSS (globals.css: hero-media, hero-rise):
+        ilk çizimde oynar, JavaScript beklemez. Ekranın en üstündeki içerik
+        hidrasyona kadar görünmez kalırsa Lighthouse Speed Index ve LCP
+        cezası veriyor.
+      */}
+      <div className="relative z-10 mx-auto flex max-w-[1400px] flex-col px-6 pt-24 lg:pt-36 pb-12 sm:pb-20 gap-10 sm:gap-14">
+        <div className="w-full animate-hero-media motion-reduce:animate-none">
           <div className="relative w-full aspect-[4/5] sm:aspect-[16/9] md:aspect-[24/9] overflow-hidden rounded-3xl outline outline-black/10 shadow-xl bg-gray-100">
             {/*
               İki katman: altta bir önceki görsel tam opak duruyor, üstte
@@ -124,30 +99,59 @@ export function Hero({ slides }: { slides: HeroSlide[] }) {
               çapraz geçişin ortasında toplam opaklık 1'in altına düşüp aynı
               beyazlık sızıyor.
             */}
+            {/*
+              Görseller next/image ile: panelden yüklenen orijinal (ör. 6 MB
+              PNG) olduğu gibi inmiyor, ekran boyutuna göre küçültülüp
+              AVIF/WebP'ye çevriliyor. Düz <img> iken mobilde anasayfanın en
+              büyük görseli 38 saniyede geliyordu.
+            */}
             {underSlide && (
-              <motion.img
-                key={`alt-${view.sequence}`}
-                src={underSlide.image}
-                alt=""
-                aria-hidden="true"
-                style={{ objectPosition: underSlide.imageFocus }}
-                className="absolute inset-0 size-full object-cover"
-              />
+              <div key={`alt-${view.sequence}`} className="absolute inset-0" aria-hidden="true">
+                <Image
+                  src={underSlide.image}
+                  alt=""
+                  fill
+                  sizes={HERO_SIZES}
+                  quality={78}
+                  style={{ objectPosition: underSlide.imageFocus }}
+                  className="object-cover"
+                />
+              </div>
             )}
-            <motion.img
+            <motion.div
               key={view.sequence}
-              src={activeSlide.image}
-              alt={activeSlide.alt}
-              style={{ objectPosition: activeSlide.imageFocus }}
-              className="absolute inset-0 z-[1] size-full object-cover"
-              initial={{ opacity: 0, scale: 1.05 }}
+              className="absolute inset-0 z-[1]"
+              /*
+                İlk slayt animasyonsuz ve görünür gelir: sayfanın en büyük
+                görseli JavaScript yüklenip animasyon oynayana kadar görünmez
+                kalırsa tarayıcı onu geç "boyanmış" sayar (LCP).
+              */
+              initial={view.sequence === 0 ? false : { opacity: 0, scale: 1.05 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.8 }}
               /* Üstteki tamamen oturunca alttakini bırakıyoruz. */
               onAnimationComplete={() =>
                 setView((value) => (value.under === null ? value : { ...value, under: null }))
               }
-            />
+            >
+              <Image
+                src={activeSlide.image}
+                alt={activeSlide.alt}
+                fill
+                sizes={HERO_SIZES}
+                quality={78}
+                loading={view.sequence === 0 ? "eager" : undefined}
+                fetchPriority={view.sequence === 0 ? "high" : undefined}
+                style={{ objectPosition: activeSlide.imageFocus }}
+                className="object-cover"
+              />
+            </motion.div>
+            {/* Sıradaki slayt arka planda iner; geçişte boş kare görünmesin. */}
+            {nextSlide && nextSlide !== activeSlide && (
+              <div className="pointer-events-none absolute inset-0 opacity-0" aria-hidden="true">
+                <Image src={nextSlide.image} alt="" fill sizes={HERO_SIZES} quality={78} fetchPriority="low" className="object-cover" />
+              </div>
+            )}
             
             <div className="from-black/5 via-transparent to-black/30 absolute inset-0 bg-gradient-to-b mix-blend-multiply" />
             
@@ -167,12 +171,9 @@ export function Hero({ slides }: { slides: HeroSlide[] }) {
               ))}
             </div>
           </div>
-        </Reveal>
+        </div>
 
-        <Reveal
-          active={true}
-          className="flex flex-col lg:flex-row lg:items-end justify-between w-full gap-4 lg:gap-12 mt-2 lg:mt-0"
-        >
+        <div className="flex flex-col lg:flex-row lg:items-end justify-between w-full gap-4 lg:gap-12 mt-2 lg:mt-0 animate-hero-rise [animation-delay:120ms] motion-reduce:animate-none">
           <div className="flex-1 max-w-3xl relative grid">
             {/* 
               Gizli (Ghost) Elemanlar: 
@@ -197,7 +198,7 @@ export function Hero({ slides }: { slides: HeroSlide[] }) {
               </div>
             ))}
 
-            <AnimatePresence>
+            <AnimatePresence initial={false}>
               <motion.div
                 key={currentSlide}
                 initial={{ opacity: 0, y: 12, filter: "blur(6px)" }}
@@ -236,8 +237,8 @@ export function Hero({ slides }: { slides: HeroSlide[] }) {
               </div>
             </Link>
           </div>
-        </Reveal>
-      </motion.div>
+        </div>
+      </div>
     </section>
   );
 }

@@ -68,8 +68,15 @@ export function Header({ showCampaigns = false }: { showCampaigns?: boolean }) {
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
+    /*
+      Masaüstünde büyük logonun alt yazısı ile anasayfa görsel kutusu
+      arasında yalnızca 12 px var (logo 132 px'te bitiyor, kutu 144'te
+      başlıyor). Eşik bu boşluğun altında kalmalı; 20 px'te kalınca sayfa
+      12–20 px kaydırılıp durduğunda kutu "AÇIK HAVA REKLAMCILIĞI" yazısının
+      üstüne çıkıyordu.
+    */
     const handleScroll = () => {
-      setScrolled(window.scrollY > 20);
+      setScrolled(window.scrollY > 8);
     };
     window.addEventListener("scroll", handleScroll);
     handleScroll(); // initial check

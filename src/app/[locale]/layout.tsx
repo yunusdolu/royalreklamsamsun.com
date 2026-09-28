@@ -27,12 +27,21 @@ const montserrat = Montserrat({
   subsets: ["latin", "latin-ext"],
   weight: ["500", "600", "700", "800"],
   display: "swap",
+  /*
+    Önden yükleme kapalı: dört font dosyası (~234 KB) CSS ile aynı anda en
+    yüksek öncelikle iniyor ve yavaş bağlantıda ilk çizimi ~1 saniye
+    geciktiriyordu. `swap` sayesinde metin önce yedek fontla hemen görünür;
+    font inince yerine geçer. Yedek fontun ölçüleri Next tarafından
+    ayarlandığı için geçişte sayfa kaymaz.
+  */
+  preload: false,
 });
 
 const inter = Inter({
   variable: "--font-inter",
   subsets: ["latin", "latin-ext"],
   display: "swap",
+  preload: false,
 });
 
 export function generateStaticParams() {

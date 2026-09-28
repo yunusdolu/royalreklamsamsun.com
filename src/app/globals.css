@@ -45,6 +45,22 @@
   /* --- Animasyonlar --- */
   --animate-accordion-down: accordion-down 0.2s ease-out;
   --animate-accordion-up: accordion-up 0.2s ease-out;
+  /*
+    Anasayfa kahramanı: saf CSS girişi. JavaScript beklemeden ilk çizimde
+    oynar; framer-motion ile yapıldığında başlık ve buton sayfa hidrate
+    olana kadar görünmez kalıyor, yavaş telefonda saniyelerce boş duruyordu.
+  */
+  --animate-hero-media: hero-media 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
+  --animate-hero-rise: hero-rise 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+
+  @keyframes hero-media {
+    from { transform: translateY(24px); }
+    to { transform: none; }
+  }
+  @keyframes hero-rise {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: none; }
+  }
 
   @keyframes accordion-down {
     from { height: 0; }
@@ -144,6 +160,18 @@
    */
   html {
     overflow-x: clip;
+  }
+
+  /*
+   * Kaydırma çapası kapalı. Tarayıcı yenilemede konumu ekrandaki bir öğeye
+   * göre geri yüklüyor; o öğe giriş animasyonuyla aşağıdan kayarak geliyorsa
+   * (anasayfa görseli 24 px, Reveal 28 px) kaymayı "içerik yer değiştirdi"
+   * sanıp sayfayı aynı miktarda aşağı itiyordu. En üstteyken yenileyen
+   * ziyaretçi sayfayı 15–24 px kaymış, menüyü küçülmüş görüyordu. Kapalıyken
+   * yenilemede düz kaydırma değeri geri geliyor.
+   */
+  html {
+    overflow-anchor: none;
   }
 
   body {
