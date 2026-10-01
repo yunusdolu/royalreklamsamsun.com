@@ -79,7 +79,7 @@ export default async function ServicesPage({
               <ServiceCard
                 service={service}
                 locale={locale}
-                daysLabel={tCommon("days")}
+                daysLabel={tCommon("dayDelivery")}
                 readMoreLabel={tCommon("readMore")}
               />
             </RevealItem>

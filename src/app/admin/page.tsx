@@ -1,5 +1,6 @@
 import Link from "next/link";
 import {
+  ArrowUpDown,
   ArrowUpRight,
   CalendarClock,
   CheckCircle2,
@@ -188,7 +189,32 @@ export default async function Dashboard({
     value: publishedProjects.filter((row) => row.service_id === service.id).length,
   }));
 
-  const kpis = [
+  /*
+    "/ N" yalnızca N sabit bir sayıyken yazılıyor (sitedeki hizmet ve
+    düzenlenebilir sayfa sayısı). Kampanya ve referans işte sınır yok;
+    orada "50 / 50" sanki en fazla 50 iş eklenebilirmiş gibi okunuyordu.
+    Bu ikisinde toplam yerine yayında olmayanlar not olarak yazılıyor.
+  */
+  const draftProjects = projects.length - publishedProjects.length;
+  const campaignNote =
+    campaigns.length === 0
+      ? "Henüz kampanya yok"
+      : [
+          counts.scheduled && `${counts.scheduled} tarihi bekliyor`,
+          counts.expired && `${counts.expired} süresi doldu`,
+          counts.off && `${counts.off} kapalı`,
+        ]
+          .filter(Boolean)
+          .join(" · ") || "Hepsi yayında";
+
+  const kpis: {
+    label: string;
+    value: number;
+    of?: number;
+    note?: string;
+    href: string;
+    icon: typeof Package;
+  }[] = [
     {
       label: "Özelleştirilen hizmet",
       value: overrides.length,
@@ -199,14 +225,19 @@ export default async function Dashboard({
     {
       label: "Yayındaki kampanya",
       value: counts.live,
-      of: campaigns.length,
+      note: campaignNote,
       href: "/admin/kampanyalar",
       icon: Megaphone,
     },
     {
       label: "Yayındaki referans iş",
       value: publishedProjects.length,
-      of: projects.length,
+      note:
+        projects.length === 0
+          ? "Henüz iş eklenmedi"
+          : draftProjects === 0
+            ? "Hepsi yayında"
+            : `${draftProjects} taslak`,
       href: "/admin/referanslar",
       icon: Images,
     },
@@ -317,9 +348,12 @@ export default async function Dashboard({
             {/* Büyük tek sayıda orantılı rakamlar; hizalı sütun yok. */}
             <span className="mt-3 text-3xl font-semibold tracking-tight text-zinc-900">
               {kpi.value}
-              <span className="ml-1 text-sm font-normal text-zinc-400">/ {kpi.of}</span>
+              {kpi.of !== undefined && (
+                <span className="ml-1 text-sm font-normal text-zinc-400">/ {kpi.of}</span>
+              )}
             </span>
             <span className="mt-1 text-xs text-zinc-600">{kpi.label}</span>
+            {kpi.note && <span className="mt-0.5 text-[11px] text-zinc-400">{kpi.note}</span>}
           </Link>
         ))}
       </section>
@@ -406,15 +440,19 @@ export default async function Dashboard({
               href="/admin/sayfalar"
               note={pages.length === 0 ? "Hepsi özgün başlığıyla" : "Kalanlar özgün başlığıyla"}
             />
+            {/* Slayt sayısında sınır yok; oran, girilen slaytların kaçının
+                yayında olduğu. */}
             <Meter
               label="Anasayfa slaytları"
               value={activeSlides.length}
-              max={Math.max(3, activeSlides.length)}
+              max={slides.length}
               href="/admin/anasayfa"
               note={
                 activeSlides.length === 0
                   ? "Koddaki üç özgün slayt görünüyor"
-                  : "Panelden girilen slaytlar yayında"
+                  : slides.length > activeSlides.length
+                    ? `${slides.length - activeSlides.length} slayt kapalı`
+                    : "Hepsi yayında"
               }
             />
           </div>
@@ -429,6 +467,7 @@ export default async function Dashboard({
             <QuickAction href="/admin/kampanyalar/yeni" icon={Megaphone} title="Yeni kampanya" note="Tarih ver, hizmetlerini seç" />
             <QuickAction href="/admin/referanslar/yeni" icon={Images} title="Yeni referans iş" note="Fotoğraflarını yükle" />
             <QuickAction href="/admin/anasayfa" icon={Home} title="Anasayfa slaytları" note="Görsel ve başlıklar" />
+            <QuickAction href="/admin/anasayfa/duzen" icon={ArrowUpDown} title="Anasayfa bölüm sırası" note="Hangi bölüm üstte, hangisi altta" />
             <QuickAction href="/admin/sayfalar" icon={PencilLine} title="Sayfa başlıkları" note="Her sayfanın başlığı ve görseli" />
           </div>
         </div>

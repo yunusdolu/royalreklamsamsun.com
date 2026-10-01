@@ -12,7 +12,18 @@ import type { HeroSlide } from "@/lib/content/hero";
 /* Görsel kutusu: en fazla 1400 px konteyner, iki yanda 24 px boşluk. */
 const HERO_SIZES = "(min-width: 1400px) 1352px, calc(100vw - 48px)";
 
-export function Hero({ slides }: { slides: HeroSlide[] }) {
+export function Hero({
+  slides,
+  first = true,
+}: {
+  slides: HeroSlide[];
+  /**
+   * Sayfanın ilk bölümü mü? Sıra panelden değişebiliyor. İlk değilse üstte
+   * sabit logoya yer açan büyük boşluk gerekmez ve görsel ekranın altında
+   * kaldığı için öncelikli yüklenmez.
+   */
+  first?: boolean;
+}) {
   const t = useTranslations("home.hero");
   const tCommon = useTranslations("common");
   /*
@@ -87,7 +98,11 @@ export function Hero({ slides }: { slides: HeroSlide[] }) {
         hidrasyona kadar görünmez kalırsa Lighthouse Speed Index ve LCP
         cezası veriyor.
       */}
-      <div className="relative z-10 mx-auto flex max-w-[1400px] flex-col px-6 pt-24 lg:pt-36 pb-12 sm:pb-20 gap-10 sm:gap-14">
+      <div
+        className={`relative z-10 mx-auto flex max-w-[1400px] flex-col px-6 pb-12 sm:pb-20 gap-10 sm:gap-14 ${
+          first ? "pt-24 lg:pt-36" : "pt-10 lg:pt-14"
+        }`}
+      >
         <div className="w-full animate-hero-media motion-reduce:animate-none">
           <div className="relative w-full aspect-[4/5] sm:aspect-[16/9] md:aspect-[24/9] overflow-hidden rounded-3xl outline outline-black/10 shadow-xl bg-gray-100">
             {/*
@@ -140,8 +155,8 @@ export function Hero({ slides }: { slides: HeroSlide[] }) {
                 fill
                 sizes={HERO_SIZES}
                 quality={78}
-                loading={view.sequence === 0 ? "eager" : undefined}
-                fetchPriority={view.sequence === 0 ? "high" : undefined}
+                loading={first && view.sequence === 0 ? "eager" : undefined}
+                fetchPriority={first && view.sequence === 0 ? "high" : undefined}
                 style={{ objectPosition: activeSlide.imageFocus }}
                 className="object-cover"
               />

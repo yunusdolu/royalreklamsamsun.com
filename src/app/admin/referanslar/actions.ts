@@ -8,6 +8,7 @@ import { UploadError, resolveImageField, uploadImage } from "@/lib/admin/media";
 import { publishContent } from "@/lib/admin/publish";
 import { projects as baseProjects } from "@/content/projects";
 import { PROJECTS_TAG } from "@/lib/content/projects";
+import { slugify } from "@/lib/slugify";
 import { adminClient } from "@/lib/supabase/server";
 
 function text(formData: FormData, key: string): string | null {
@@ -21,23 +22,6 @@ function lines(formData: FormData, key: string): string[] {
     .split(/\r?\n/)
     .map((line) => line.trim())
     .filter(Boolean);
-}
-
-function slugify(value: string): string {
-  return (
-    value
-      .toLowerCase()
-      .replace(/ğ/g, "g")
-      .replace(/ü/g, "u")
-      .replace(/ş/g, "s")
-      .replace(/ı/g, "i")
-      .replace(/İ/g, "i")
-      .replace(/ö/g, "o")
-      .replace(/ç/g, "c")
-      .replace(/[^a-z0-9]+/g, "-")
-      .replace(/^-+|-+$/g, "")
-      .slice(0, 70) || "proje"
-  );
 }
 
 export async function saveProject(
@@ -88,7 +72,7 @@ export async function saveProject(
     throw error;
   }
 
-  const base = text(formData, "slug_tr") ?? slugify(title);
+  const base = text(formData, "slug_tr") ?? slugify(title, "proje");
   const row = {
     slug_tr: base,
     slug_en: text(formData, "slug_en") ?? base,

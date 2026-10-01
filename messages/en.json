@@ -242,7 +242,16 @@
     "whatsappPrefill": "Hello, I would like to know more about the \"{campaign}\" campaign.",
     "askWhatsapp": "Ask on WhatsApp",
     "backToCampaigns": "All campaigns",
-    "serviceBanner": "Campaign on this service"
+    "serviceBanner": "Campaign on this service",
+    "live": "Live campaign",
+    "discount": "Off",
+    "timeLeft": "Ends in",
+    "units": {
+      "days": "Days",
+      "hours": "Hours",
+      "minutes": "Min",
+      "seconds": "Sec"
+    }
   },
   "regionsPage": {
     "title": "Service Areas",

@@ -116,8 +116,9 @@ export default async function ServiceDetailPage({
         lead={copy.summary}
         image={service.heroImage || service.image}
         imagePosition={service.heroFocus}
+        imageLayout="stacked"
       >
-        <PillLink href="/teklif-al" tone="onDark">{t("getQuote")}</PillLink>
+        <PillLink href="/teklif-al" tone="dark">{t("getQuote")}</PillLink>
       </PageHeader>
 
       <ServiceCampaigns campaigns={campaigns} locale={locale} />
@@ -153,7 +154,7 @@ export default async function ServiceDetailPage({
                 <ServiceCard
                   service={item}
                   locale={locale}
-                  daysLabel={t("days")}
+                  daysLabel={t("dayDelivery")}
                   readMoreLabel={t("readMore")}
                 />
               </RevealItem>

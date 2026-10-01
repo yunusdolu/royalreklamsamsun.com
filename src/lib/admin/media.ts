@@ -1,5 +1,6 @@
 import "server-only";
 
+import { slugify } from "@/lib/slugify";
 import { SUPABASE_URL } from "@/lib/supabase/env";
 import { adminClient } from "@/lib/supabase/server";
 
@@ -15,19 +16,7 @@ export class UploadError extends Error {}
 
 function slugifyName(name: string): string {
   const base = name.replace(/\.[^.]+$/, "");
-  return (
-    base
-      .toLowerCase()
-      .replace(/ğ/g, "g")
-      .replace(/ü/g, "u")
-      .replace(/ş/g, "s")
-      .replace(/ı/g, "i")
-      .replace(/ö/g, "o")
-      .replace(/ç/g, "c")
-      .replace(/[^a-z0-9]+/g, "-")
-      .replace(/^-+|-+$/g, "")
-      .slice(0, 60) || "gorsel"
-  );
+  return slugify(base, "gorsel", 60);
 }
 
 /**

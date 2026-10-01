@@ -29,7 +29,22 @@ export async function signIn(
     Supabase "Invalid login credentials" döndürüyor; hangi alanın yanlış
     olduğunu söylemiyoruz, e-posta taraması yapılmasını kolaylaştırmasın.
   */
-  if (error) return "E-posta veya şifre hatalı.";
+  if (error) {
+    /*
+      Supabase panelinden "Auto Confirm User" işaretlenmeden açılan hesap
+      doğrulanmamış kalıyor ve şifre doğru olsa da giriş reddediliyor. Genel
+      "hatalı" mesajı burada yanıltıcı: kişi şifresini yanlış sanıyor. Bu
+      kod yalnızca şifre doğruyken döndüğü için ayrı söylemek dışarıya yeni
+      bir bilgi vermiyor.
+    */
+    if (error.code === "email_not_confirmed") {
+      return (
+        "Bu hesabın e-postası doğrulanmamış. Supabase → Authentication → Users'da " +
+        "kullanıcıyı silip \"Auto Confirm User\" işaretli olarak yeniden ekle."
+      );
+    }
+    return "E-posta veya şifre hatalı.";
+  }
 
   redirect("/admin");
 }

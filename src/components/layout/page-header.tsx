@@ -20,6 +20,10 @@ import { cn } from "@/lib/utils";
  *    sağ tarafta daha açık kaldığı için konusu yine seçiliyor. Butonlar
  *    koyu zemin üstünde duracağı için çağıran sayfa `tone="onDark"`
  *    vermeli.
+ *  - `image` + `imageLayout="stacked"`: hizmet detay sayfaları, anasayfa
+ *    hero'suyla aynı kurgu. Üstte tam genişlikte, karartmasız fotoğraf;
+ *    altında solda başlık ve açıklama, sağda buton. Hiçbir şey fotoğrafın
+ *    üstüne binmez. Buton açık zeminde durduğu için `tone="dark"`.
  */
 export function PageHeader({
   crumbs,
@@ -29,6 +33,7 @@ export function PageHeader({
   answer,
   image,
   imagePosition,
+  imageLayout = "overlay",
   children,
   className,
 }: {
@@ -39,9 +44,12 @@ export function PageHeader({
   answer?: string;
   image?: string;
   imagePosition?: string;
+  imageLayout?: "overlay" | "stacked";
   children?: React.ReactNode;
   className?: string;
 }) {
+  const overlay = Boolean(image) && imageLayout === "overlay";
+
   const eyebrowNode = eyebrow ? (
     <p className="text-[0.6875rem] font-semibold uppercase tracking-[0.22em] text-gold-500">
       {eyebrow}
@@ -56,7 +64,7 @@ export function PageHeader({
       <p
         className={cn(
           "text-[0.9375rem] leading-relaxed",
-          image ? "text-white/85" : "text-royal-fg/90",
+          overlay ? "text-white/85" : "text-royal-fg/90",
         )}
       >
         {answer}
@@ -80,7 +88,56 @@ export function PageHeader({
       <div className="container-royal relative pt-28 pb-12 lg:pt-40 lg:pb-16">
         <Breadcrumbs items={crumbs} />
 
-        {image ? (
+        {image && imageLayout === "stacked" ? (
+          <>
+            {/*
+              Hizmet fotoğrafları geniş (2400×800, 3:1); kutu da md'den
+              itibaren aynı oranda, kırpılmadan tam görünüyor. Kırpan bir
+              kutuda tarayıcı kutu genişliğine göre küçük dosyayı indirip
+              yarısını büyütüyordu — fotoğraf bulanık çıkıyordu. Mobilde
+              16:9 kırpılıyor; `170vw` bu kırpmayı karşılıyor (3:1'in 16:9'luk
+              kesiti genişliğin ~%59'u).
+              Animasyonsuz: sayfanın en büyük görseli, hemen görünmeli.
+            */}
+            <div className="relative mt-7 aspect-[16/9] overflow-hidden rounded-3xl bg-royal-graphite shadow-xl outline outline-black/5 md:aspect-[3/1] lg:mt-8">
+              <Image
+                src={image}
+                alt={title}
+                fill
+                quality={85}
+                loading="eager"
+                fetchPriority="high"
+                sizes="(min-width: 1312px) 1248px, (min-width: 768px) calc(100vw - 64px), 170vw"
+                style={{ objectPosition: imagePosition }}
+                className="object-cover object-center"
+              />
+            </div>
+
+            <div className="mt-8 flex flex-col gap-7 lg:mt-10 lg:flex-row lg:items-end lg:justify-between lg:gap-12">
+              <div className="min-w-0 max-w-3xl">
+                {eyebrowNode && <Reveal>{eyebrowNode}</Reveal>}
+                <Reveal delay={0.05}>
+                  <h1 className="font-display text-3xl leading-[1.12] text-royal-fg sm:text-4xl lg:text-[2.75rem]">
+                    {title}
+                  </h1>
+                </Reveal>
+                {lead && (
+                  <Reveal delay={0.1}>
+                    <p className="mt-4 text-base leading-relaxed text-royal-muted lg:text-lg">
+                      {lead}
+                    </p>
+                  </Reveal>
+                )}
+                {answerNode && <Reveal delay={0.15}>{answerNode}</Reveal>}
+              </div>
+              {children && (
+                <Reveal delay={0.15} className="shrink-0 lg:pb-1">
+                  {children}
+                </Reveal>
+              )}
+            </div>
+          </>
+        ) : image ? (
           <Reveal>
             <div className="relative mt-7 overflow-hidden rounded-3xl bg-royal-graphite lg:mt-8">
               <Image

@@ -102,6 +102,10 @@ export const PinPerspective = ({
   title?: string;
   isActive?: boolean;
 }) => {
+  const needleHeight = isActive
+    ? "h-[11.25rem]"
+    : "h-[5.625rem] group-hover/pin:h-[11.25rem]";
+
   return (
     <motion.div
       className={cn(
@@ -114,7 +118,7 @@ export const PinPerspective = ({
             taşıyorsa (anasayfadaki hizmet kartları gibi) aynı yazının iki
             kez görünmemesi için başlık geçilmez. */}
         {title && (
-          <div className="absolute top-0 inset-x-0  flex justify-center">
+          <div className="absolute top-8 inset-x-0 flex justify-center">
             <div className="relative flex space-x-2 items-center z-10 py-0.5 px-4">
               <span className="relative z-20 inline-block whitespace-nowrap py-0.5 text-[0.8125rem] font-semibold text-royal-fg">
                 {title}
@@ -195,35 +199,47 @@ export const PinPerspective = ({
         </div>
 
         {/*
-          İğne çizgisi. Alt ucu kartın dikey ortasına sabitli
-          (`bottom-1/2` + 14px), yüksekliği yukarı doğru uzuyor. Eski 10rem
-          değerinde çizginin tepesi başlığın 60px altında kalıyor, gradyan da
-          orada tamamen saydam olduğu için altın renk "İncele" yazısına hiç
-          ulaşmıyordu. 13.25rem tepeyi başlığın hemen altına taşıyor; gradyan
-          da baştan görünür bir altınla başlıyor ki bağ kopuk görünmesin.
-        */}
-        {/*
-          İğne çizgisi: kartın tepesindeki etiketi karta bağlar. Yükseklik
-          13.25rem, çünkü çizginin alt ucu kart kutusunun dikey ortasına
-          sabitli ve üst ucunun etiketin hemen altına ulaşması gerekiyor.
+          İğne çizgisi: kartın tepesindeki etiketi karta bağlar. Alt ucu kart
+          kutusunun dikey ortasına sabitli (`bottom-1/2` + 14px), yüksekliği
+          yukarı doğru uzuyor; 11.25rem üst ucu etiketin hemen altına
+          ulaştırıyor (etiket `top-8`; biri değişirse öteki de değişmeli).
+          Kart yatıkken çizginin kart dışında kalan kısmı uzun olsun diye
+          etiket yukarıda: kısa kaldığında çizgi fotoğrafın içinde
+          kayboluyordu.
+          İnce bir iğne: tabanı dar (2px), etikete bakan üst %22'si tek
+          noktaya daralarak sivri biter. Renk uca kadar koyu altın: açık
+          altına dönen uç beyaz zeminde kayboluyordu. Çevresinde yumuşak altın parıltı var
+          ve çizgi boyunca aşağıdan yukarı bir ışık süzülüp uçta söner
+          (globals.css `pin-spark`). Işık da aynı kama biçimine kırpıldığı
+          için ucu kalınlaştırmaz.
         */}
         <>
-          <motion.div
+          {/* Dış parıltı: yukarı doğru söner */}
+          <div
             className={cn(
-              "absolute right-1/2 bottom-1/2 bg-gradient-to-b from-gold-500/35 via-gold-500/60 to-gold-500/70 translate-y-[14px] w-px blur-[2px] transition-all duration-500",
-              isActive
-                ? "h-[13.25rem]"
-                : "h-[6.625rem] group-hover/pin:h-[13.25rem]",
+              "absolute right-1/2 bottom-1/2 w-[6px] translate-x-[3px] translate-y-[14px] bg-gold-400/60 blur-[4px] transition-[height] duration-500 [mask-image:linear-gradient(to_top,black_55%,transparent_98%)]",
+              needleHeight,
             )}
           />
-          <motion.div
+          {/* Çekirdek iğne + süzülen ışık */}
+          <div
             className={cn(
-              "absolute right-1/2 bottom-1/2 bg-gradient-to-b from-gold-500/35 via-gold-500/60 to-gold-500/70 translate-y-[14px] w-px transition-all duration-500",
-              isActive
-                ? "h-[13.25rem]"
-                : "h-[6.625rem] group-hover/pin:h-[13.25rem]",
+              "absolute right-1/2 bottom-1/2 w-[2px] translate-x-[1px] translate-y-[14px] overflow-hidden transition-[height] duration-500 [clip-path:polygon(50%_0,100%_22%,100%_100%,0_100%,0_22%)]",
+              needleHeight,
             )}
-          />
+          >
+            <span className="absolute inset-0 bg-gradient-to-t from-gold-600 via-gold-500 to-gold-500" />
+            <span className="absolute inset-x-0 h-10 animate-pin-spark bg-gradient-to-t from-transparent via-white to-transparent motion-reduce:hidden" />
+          </div>
+          {/* Süzülen ışığın parıltısı: iğnenin yanında yumuşak hale */}
+          <div
+            className={cn(
+              "absolute right-1/2 bottom-1/2 w-[8px] translate-x-[4px] translate-y-[14px] overflow-hidden transition-[height] duration-500 [mask-image:linear-gradient(to_top,black_60%,transparent_100%)]",
+              needleHeight,
+            )}
+          >
+            <span className="absolute inset-x-0 h-12 animate-pin-spark bg-gradient-to-t from-transparent via-gold-200/80 to-transparent blur-[3px] motion-reduce:hidden" />
+          </div>
           <motion.div className="absolute right-1/2 translate-x-[1.5px] bottom-1/2 bg-gold-600 translate-y-[14px] w-[4px] h-[4px] rounded-full z-40 blur-[3px]" />
           <motion.div className="absolute right-1/2 translate-x-[0.5px] bottom-1/2 bg-gold-300 translate-y-[14px] w-[2px] h-[2px] rounded-full z-40" />
         </>

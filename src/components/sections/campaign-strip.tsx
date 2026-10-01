@@ -5,7 +5,7 @@ import { SectionHeading } from "@/components/sections/section-heading";
 import { PillLink } from "@/components/ui/pill-button";
 import type { Locale } from "@/i18n/routing";
 import { getLiveCampaigns } from "@/lib/content/campaigns";
-import { CampaignCard, formatCampaignEnd } from "./campaign-card";
+import { CampaignCard, campaignCountdownCopy, formatCampaignEnd } from "./campaign-card";
 
 /**
  * Anasayfadaki kampanya şeridi.
@@ -23,6 +23,7 @@ export async function CampaignStrip() {
   const tPage = await getTranslations("campaignsPage");
 
   const shown = campaigns.slice(0, 3);
+  const countdown = campaignCountdownCopy(tPage);
 
   return (
     <section className="container-royal py-20 lg:py-24">
@@ -54,6 +55,8 @@ export async function CampaignStrip() {
               }
               ongoingLabel={tPage("ongoing")}
               detailsLabel={tPage("details")}
+              liveLabel={tPage("live")}
+              countdown={countdown}
               wide={shown.length === 1}
             />
           </RevealItem>

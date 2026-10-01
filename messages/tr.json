@@ -242,7 +242,16 @@
     "whatsappPrefill": "Merhaba, \"{campaign}\" kampanyası hakkında bilgi almak istiyorum.",
     "askWhatsapp": "WhatsApp'tan sor",
     "backToCampaigns": "Tüm kampanyalar",
-    "serviceBanner": "Bu hizmette kampanya var"
+    "serviceBanner": "Bu hizmette kampanya var",
+    "live": "Aktif kampanya",
+    "discount": "İndirim",
+    "timeLeft": "Bitmesine kalan",
+    "units": {
+      "days": "Gün",
+      "hours": "Saat",
+      "minutes": "Dakika",
+      "seconds": "Saniye"
+    }
   },
   "regionsPage": {
     "title": "Hizmet Bölgelerimiz",

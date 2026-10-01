@@ -53,6 +53,22 @@
   --animate-hero-media: hero-media 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
   --animate-hero-rise: hero-rise 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
 
+  /* Hizmet kartı iğnesi: çizgi boyunca aşağıdan yukarı süzülen ışık */
+  --animate-pin-spark: pin-spark 1.9s cubic-bezier(0.5, 0, 0.75, 0.6) infinite;
+  @keyframes pin-spark {
+    0% { top: 100%; opacity: 0; }
+    12% { opacity: 1; }
+    80% { opacity: 1; }
+    100% { top: -30%; opacity: 0; }
+  }
+
+  /* Kampanya indirim plakası: arada bir üstünden geçen beyaz ışık */
+  --animate-sheen: sheen 3.6s ease-in-out infinite;
+  @keyframes sheen {
+    0% { transform: translateX(-160%) skewX(-18deg); }
+    45%, 100% { transform: translateX(320%) skewX(-18deg); }
+  }
+
   @keyframes hero-media {
     from { transform: translateY(24px); }
     to { transform: none; }

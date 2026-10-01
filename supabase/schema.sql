@@ -268,3 +268,29 @@ alter table public.page_content enable row level security;
 drop policy if exists "herkes okuyabilir" on public.page_content;
 create policy "herkes okuyabilir" on public.page_content
   for select using (true);
+
+-- ---------------------------------------------------------------------------
+-- 10) Site ayarları
+-- ---------------------------------------------------------------------------
+-- Tek tek tablo açmaya değmeyen küçük ayarlar; her ayar bir satır.
+--   home_layout → anasayfadaki bölümlerin sırası, anahtar dizisi olarak:
+--                 ["hero","stats","campaigns","services",…]
+--                 Anahtarlar src/lib/content/home-layout.ts içindeki
+--                 HOME_SECTIONS listesiyle aynı. Satır yoksa site koddaki
+--                 varsayılan sırayla açılır.
+create table if not exists public.site_settings (
+  key        text primary key,
+  value      jsonb not null,
+  updated_at timestamptz not null default now()
+);
+
+drop trigger if exists site_settings_touch on public.site_settings;
+create trigger site_settings_touch
+  before update on public.site_settings
+  for each row execute function public.touch_updated_at();
+
+alter table public.site_settings enable row level security;
+
+drop policy if exists "herkes okuyabilir" on public.site_settings;
+create policy "herkes okuyabilir" on public.site_settings
+  for select using (true);

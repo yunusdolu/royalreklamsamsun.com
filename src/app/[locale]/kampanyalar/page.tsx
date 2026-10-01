@@ -3,7 +3,11 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 
 import { PageHeader } from "@/components/layout/page-header";
 import { RevealGroup, RevealItem } from "@/components/motion/reveal";
-import { CampaignCard, formatCampaignEnd } from "@/components/sections/campaign-card";
+import {
+  CampaignCard,
+  campaignCountdownCopy,
+  formatCampaignEnd,
+} from "@/components/sections/campaign-card";
 import { CtaSection } from "@/components/sections/cta-section";
 import { JsonLd } from "@/components/seo/json-ld";
 import { PillAnchor, PillLink } from "@/components/ui/pill-button";
@@ -90,7 +94,10 @@ export default async function CampaignsPage({
             </div>
           </div>
         ) : (
-          <RevealGroup as="ul" className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          <RevealGroup
+            as="ul"
+            className={campaigns.length === 1 ? "grid gap-5" : "grid gap-5 sm:grid-cols-2 lg:grid-cols-3"}
+          >
             {campaigns.map((campaign) => (
               <RevealItem as="li" key={campaign.id}>
                 <CampaignCard
@@ -102,6 +109,9 @@ export default async function CampaignsPage({
                   }
                   ongoingLabel={t("ongoing")}
                   detailsLabel={t("details")}
+                  liveLabel={t("live")}
+                  countdown={campaignCountdownCopy(t)}
+                  wide={campaigns.length === 1}
                 />
               </RevealItem>
             ))}

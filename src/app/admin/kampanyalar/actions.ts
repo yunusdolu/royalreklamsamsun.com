@@ -7,6 +7,7 @@ import { describeDbError } from "@/lib/admin/errors";
 import { UploadError, resolveImageField } from "@/lib/admin/media";
 import { publishContent } from "@/lib/admin/publish";
 import { CAMPAIGNS_TAG } from "@/lib/content/campaigns";
+import { slugify } from "@/lib/slugify";
 import { adminClient } from "@/lib/supabase/server";
 
 function text(formData: FormData, key: string): string | null {
@@ -14,26 +15,6 @@ function text(formData: FormData, key: string): string | null {
   return value === "" ? null : value;
 }
 
-/**
- * Başlıktan adres parçası üretir. Kampanya adresleri Google'a düşebildiği
- * için Türkçe harfler sadeleştiriliyor.
- */
-function slugify(value: string): string {
-  return (
-    value
-      .toLowerCase()
-      .replace(/ğ/g, "g")
-      .replace(/ü/g, "u")
-      .replace(/ş/g, "s")
-      .replace(/ı/g, "i")
-      .replace(/İ/g, "i")
-      .replace(/ö/g, "o")
-      .replace(/ç/g, "c")
-      .replace(/[^a-z0-9]+/g, "-")
-      .replace(/^-+|-+$/g, "")
-      .slice(0, 70) || "kampanya"
-  );
-}
 
 /** Tarih alanı boşsa null; `datetime-local` yerel saat verir, ISO'ya çeviriyoruz. */
 function timestamp(formData: FormData, key: string): string | null {
@@ -81,7 +62,8 @@ export async function saveCampaign(
   }
 
   const row = {
-    slug: text(formData, "slug") ?? slugify(title),
+    /* Kampanya adresleri Google'a düşebildiği için Türkçe harfler sadeleşiyor. */
+    slug: text(formData, "slug") ?? slugify(title, "kampanya"),
     title_tr: title,
     title_en: text(formData, "title_en"),
     excerpt_tr: text(formData, "excerpt_tr"),

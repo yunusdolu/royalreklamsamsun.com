@@ -22,7 +22,7 @@ export function ServiceCard({
 }: {
   service: Service;
   locale: Locale;
-  /** "iş günü" / "business days" */
+  /** "Gün Teslim" / "Day Delivery" */
   daysLabel: string;
   /** "Detaylı bilgi" / "Read more" */
   readMoreLabel: string;
@@ -53,8 +53,17 @@ export function ServiceCard({
         />
         <span className="absolute inset-0 bg-gradient-to-t from-black/55 via-black/10 to-black/5" />
 
-        <span className="absolute right-3 top-3 rounded-full bg-white/90 px-2.5 py-1 text-[0.6875rem] font-semibold text-royal-fg shadow-sm backdrop-blur-sm">
-          {service.leadTimeDays[0]}–{service.leadTimeDays[1]} {daysLabel}
+        {/* Anasayfadaki hizmet kartlarıyla aynı teslim rozeti: beyaz yazı,
+            okunsun diye üstten inen koyu geçiş. */}
+        <span
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-x-0 top-0 h-1/2 bg-gradient-to-b from-black/55 via-black/20 to-transparent"
+        />
+        <span className="absolute right-5 top-4 text-right drop-shadow-md">
+          <span className="block text-[22px] font-bold leading-none text-white">
+            {service.leadTimeDays[1] || 5}+
+          </span>
+          <span className="mt-1 block text-[11px] text-white/90">{daysLabel}</span>
         </span>
       </span>
 

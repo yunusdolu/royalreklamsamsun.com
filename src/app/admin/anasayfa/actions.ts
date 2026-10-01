@@ -7,6 +7,19 @@ import { describeDbError } from "@/lib/admin/errors";
 import { UploadError, resolveImageField } from "@/lib/admin/media";
 import { publishContent } from "@/lib/admin/publish";
 import { HERO_TAG, getCodeSlides } from "@/lib/content/hero";
+import {
+  DEFAULT_HOME_ORDER,
+  HOME_LAYOUT_KEY,
+  HOME_LAYOUT_TAG,
+  normalizeHomeOrder,
+} from "@/lib/content/home-layout";
+import {
+  MARQUEE_KEY,
+  MARQUEE_MAX_ITEMS,
+  MARQUEE_MAX_LENGTH,
+  MARQUEE_TAG,
+  cleanMarqueeItems,
+} from "@/lib/content/marquee";
 import { adminClient } from "@/lib/supabase/server";
 
 function text(formData: FormData, key: string): string | null {
@@ -147,4 +160,82 @@ export async function importCodeSlides() {
 
   publishContent(HERO_TAG);
   redirect(`/admin/anasayfa?aktarildi=${rows.length}`);
+}
+
+/**
+ * Anasayfa bölümlerinin sırasını kaydeder. Form tek bir gizli alan
+ * gönderiyor: virgülle ayrılmış bölüm anahtarları, yukarıdan aşağıya.
+ */
+export async function saveHomeLayout(
+  _prev: string | undefined,
+  formData: FormData,
+): Promise<string | undefined> {
+  await requireSession();
+
+  const db = adminClient();
+  if (!db) return "Supabase yazma anahtarı tanımlı değil.";
+
+  const sent = String(formData.get("order") ?? "")
+    .split(",")
+    .map((key) => key.trim())
+    .filter(Boolean);
+  const order = normalizeHomeOrder(sent);
+  /* Eksik ya da tanınmayan anahtar geldiyse form bozulmuş demektir. */
+  if (sent.length !== DEFAULT_HOME_ORDER.length || sent.join() !== order.join()) {
+    return "Sıra okunamadı. Sayfayı yenileyip tekrar dene.";
+  }
+
+  const { error } = await db
+    .from("site_settings")
+    .upsert({ key: HOME_LAYOUT_KEY, value: order }, { onConflict: "key" });
+  if (error) return describeDbError(error);
+
+  publishContent(HOME_LAYOUT_TAG);
+  redirect("/admin/anasayfa/duzen?kaydedildi=1");
+}
+
+/** Çok satırlı alanı ifade listesine çevirir: her satır bir ifade. */
+function marqueeLines(formData: FormData, key: string): string[] {
+  return String(formData.get(key) ?? "")
+    .split(/\r?\n/)
+    .map((line) => line.trim())
+    .filter(Boolean);
+}
+
+/**
+ * Kayan şeridin yazılarını kaydeder. Türkçe boş bırakılırsa şerit koddaki
+ * özgün ifadelere döner; İngilizce boşsa İngilizce sayfa koddaki İngilizce
+ * ifadeleri gösterir.
+ */
+export async function saveMarquee(
+  _prev: string | undefined,
+  formData: FormData,
+): Promise<string | undefined> {
+  await requireSession();
+
+  const db = adminClient();
+  if (!db) return "Supabase yazma anahtarı tanımlı değil.";
+
+  const tr = marqueeLines(formData, "items_tr");
+  const en = marqueeLines(formData, "items_en");
+  for (const list of [tr, en]) {
+    if (list.length > MARQUEE_MAX_ITEMS) {
+      return `En fazla ${MARQUEE_MAX_ITEMS} ifade girilebilir.`;
+    }
+    const long = list.find((item) => item.length > MARQUEE_MAX_LENGTH);
+    if (long) {
+      return `"${long.slice(0, 30)}…" çok uzun. Bir ifade en fazla ${MARQUEE_MAX_LENGTH} karakter olabilir; şerit kısa ifadelerle güzel durur.`;
+    }
+  }
+
+  const { error } = await db
+    .from("site_settings")
+    .upsert(
+      { key: MARQUEE_KEY, value: { tr: cleanMarqueeItems(tr), en: cleanMarqueeItems(en) } },
+      { onConflict: "key" },
+    );
+  if (error) return describeDbError(error);
+
+  publishContent(MARQUEE_TAG);
+  redirect("/admin/anasayfa/serit?kaydedildi=1");
 }

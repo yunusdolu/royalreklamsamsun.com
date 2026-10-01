@@ -169,7 +169,7 @@ export default async function RegionDetailPage({
                   <ServiceCard
                     service={service}
                     locale={locale}
-                    daysLabel={t("days")}
+                    daysLabel={t("dayDelivery")}
                     readMoreLabel={t("readMore")}
                   />
                 </RevealItem>

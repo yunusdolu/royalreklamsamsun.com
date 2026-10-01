@@ -42,7 +42,12 @@ interface PillProps {
 const shell =
   "group inline-flex cursor-pointer items-center justify-center rounded-full transition-transform duration-300 hover:scale-[1.03] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-gold-500";
 
-function PillBody({
+/**
+ * Yalnızca görünüm: kartın tamamı zaten bağlantıyken (bağlantı içinde
+ * bağlantı olamaz) hap butonu çizmek için. Üst öğe `group` olmalı —
+ * hover'daki ok kayması oradan tetikleniyor.
+ */
+export function PillBody({
   children,
   tone = "dark",
   icon: Icon = ArrowUpRight,
